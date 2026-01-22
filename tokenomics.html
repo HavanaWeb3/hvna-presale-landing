@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"="width=device-width, initial-scale=1.0">
+    <title>$HVNA Tokenomics | Token Distribution & Utility</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .content-page {
+            max-width: 900px;
+            margin: 100px auto 50px;
+            padding: 40px;
+            background: white;
+            border-radius: 12px;
+        }
+        .content-page h1 {
+            color: var(--color-primary);
+            margin-bottom: 30px;
+        }
+        .content-page h2 {
+            color: var(--color-dark);
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        .content-page p, .content-page li {
+            line-height: 1.8;
+            color: #333;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .stat-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--color-primary);
+            display: block;
+        }
+        .stat-label {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Contract Addresses Section */
+        .contract-addresses {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .contract-addresses h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #FF6B35 0%, #F7931E 50%, #8B5CF6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Security Warning Banner */
+        .security-warning-banner {
+            background: linear-gradient(135deg, #FFF4ED 0%, #FEF3C7 100%);
+            border: 2px solid #F59E0B;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .security-warning-banner h3 {
+            color: #D97706;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .security-warning-banner ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .security-warning-banner li {
+            color: #92400E;
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .security-warning-banner li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #F59E0B;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        /* Contract Cards */
+        .contract-card {
+            background: white;
+            border: 2px solid #E5E7EB;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .contract-card:hover {
+            border-color: #FF6B35;
+            box-shadow: 0 8px 16px rgba(255, 107, 53, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .contract-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .contract-label {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1F2937;
+        }
+
+        .verified-badge {
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .contract-address-display {
+            background: #F9FAFB;
+            border: 1px solid #E5E7EB;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            overflow-x: auto;
+        }
+
+        .contract-address-display code {
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            color: #6366F1;
+            word-break: break-all;
+        }
+
+        .contract-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-copy,
+        .btn-basescan {
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-copy {
+            background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+            color: white;
+        }
+
+        .btn-copy:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+        }
+
+        .btn-copy.copied {
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+        }
+
+        .btn-basescan {
+            background: white;
+            color: #6366F1;
+            border: 2px solid #6366F1;
+        }
+
+        .btn-basescan:hover {
+            background: #6366F1;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Verification Info Box */
+        .verification-info-box {
+            background: linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 100%);
+            border: 2px solid #818CF8;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .verification-info-box h3 {
+            color: #4338CA;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .verification-info-box p {
+            color: #4338CA;
+            margin-bottom: 1rem;
+        }
+
+        .verification-checklist {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .verification-checklist li {
+            color: #3730A3;
+            padding: 0.5rem 0;
+            font-weight: 500;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .contract-addresses h2 {
+                font-size: 1.75rem;
+            }
+
+            .contract-card {
+                padding: 1.5rem;
+            }
+
+            .contract-address-display code {
+                font-size: 0.75rem;
+            }
+
+            .contract-actions {
+                flex-direction: column;
+            }
+
+            .btn-copy,
+            .btn-basescan {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="content-page">
+        <a href="/" class="back-link">← Back to Presale</a>
+
+        <h1>$HVNA Tokenomics</h1>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-number">1B</span>
+                <span class="stat-label">Total Supply</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">€0.001</span>
+                <span class="stat-label">Current Price</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">€0.07+</span>
+                <span class="stat-label">Launch Target</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">Q4 2026</span>
+                <span class="stat-label">Launch Date</span>
+            </div>
+        </div>
+
+        <h2>Token Distribution</h2>
+        <ul>
+            <li><strong>45%</strong> - Presale (Public & Private rounds)</li>
+            <li><strong>25%</strong> - Team & Advisors (vested)</li>
+            <li><strong>15%</strong> - Liquidity Pool</li>
+            <li><strong>10%</strong> - Marketing & Partnerships</li>
+            <li><strong>5%</strong> - Reserve Fund</li>
+        </ul>
+
+        <h2>Token Utility</h2>
+        <p><strong>$HVNA is the governance and utility token for the Havana Elephant ecosystem:</strong></p>
+
+        <h3>1. Governance Rights</h3>
+        <p>Token holders can vote on:</p>
+        <ul>
+            <li>Platform feature priorities</li>
+            <li>Revenue share percentages</li>
+            <li>Partnership decisions</li>
+            <li>Treasury allocation</li>
+        </ul>
+
+        <h3>2. Revenue Sharing</h3>
+        <p>55-75% of Contentlynk platform revenue is distributed to $HVNA token holders proportional to holdings.</p>
+
+        <h3>3. Platform Access</h3>
+        <ul>
+            <li>Priority beta access to Contentlynk</li>
+            <li>Exclusive NFT drops</li>
+            <li>Premium features and tools</li>
+            <li>Early access to new products</li>
+        </ul>
+
+        <h3>4. Staking Rewards</h3>
+        <p>Stake $HVNA tokens to earn additional rewards and boost governance power.</p>
+
+        <h2>Deflationary Mechanism</h2>
+        <p>2% of all platform transaction fees are used to buy back and burn $HVNA tokens, reducing supply over time and increasing scarcity.</p>
+
+        <h2>Vesting Schedule</h2>
+        <ul>
+            <li><strong>Presale Tokens:</strong> Unlocked at TGE (Token Generation Event)</li>
+            <li><strong>Team Tokens:</strong> 12-month cliff, then 24-month linear vesting</li>
+            <li><strong>Advisor Tokens:</strong> 6-month cliff, then 18-month linear vesting</li>
+        </ul>
+
+        <h2>Security</h2>
+        <p><strong>Smart Contract Audit:</strong> Contracts will be audited by reputable third-party firms prior to launch.</p>
+        <p><strong>Blockchain:</strong> Built on Base (Ethereum Layer 2) for low fees and high security.</p>
+
+        <section class="contract-addresses">
+            <h2>🔐 Official Smart Contracts</h2>
+
+            <!-- Security Warning Banner -->
+            <div class="security-warning-banner">
+                <h3>⚠️ SECURITY NOTICE</h3>
+                <ul>
+                    <li>Always verify contract addresses match our official website</li>
+                    <li>We will NEVER DM you asking for funds or wallet details</li>
+                    <li>Beware of fake contracts with similar addresses</li>
+                    <li>Only interact with contracts listed on this official page</li>
+                </ul>
+            </div>
+
+            <!-- Token Contract Card -->
+            <div class="contract-card">
+                <div class="contract-header">
+                    <span class="contract-label">$HVNA Token Contract</span>
+                    <span class="verified-badge">✓ Verified</span>
+                </div>
+                <div class="contract-address-display">
+                    <code>0xb5561d071b39221239a56f0379a6bb96c85fb94f</code>
+                </div>
+                <div class="contract-actions">
+                    <button class="btn-copy" data-address="0xb5561d071b39221239a56f0379a6bb96c85fb94f">
+                        📋 Copy Address
+                    </button>
+                    <a href="https://basescan.org/address/0xb5561d071b39221239a56f0379a6bb96c85fb94f"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="btn-basescan">
+                        🔍 View on BaseScan →
+                    </a>
+                </div>
+            </div>
+
+            <!-- Presale Contract Card -->
+            <div class="contract-card">
+                <div class="contract-header">
+                    <span class="contract-label">Presale Contract</span>
+                    <span class="verified-badge">✓ Verified</span>
+                </div>
+                <div class="contract-address-display">
+                    <code>0x390Bdc27F8488915AC5De3fCd43c695b41f452FA</code>
+                </div>
+                <div class="contract-actions">
+                    <button class="btn-copy" data-address="0x390Bdc27F8488915AC5De3fCd43c695b41f452FA">
+                        📋 Copy Address
+                    </button>
+                    <a href="https://basescan.org/address/0x390Bdc27F8488915AC5De3fCd43c695b41f452FA"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="btn-basescan">
+                        🔍 View on BaseScan →
+                    </a>
+                </div>
+            </div>
+
+            <!-- Contract Verification Info Box -->
+            <div class="verification-info-box">
+                <h3>🔐 Contract Verification</h3>
+                <p>All contracts are verified on BaseScan. Click 'View on BaseScan' to:</p>
+                <ul class="verification-checklist">
+                    <li>✓ Read the source code</li>
+                    <li>✓ Verify deployment details</li>
+                    <li>✓ See real-time transaction history</li>
+                    <li>✓ Confirm contract ownership</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Copy to Clipboard Functionality
+        document.querySelectorAll('.btn-copy').forEach(button => {
+            button.addEventListener('click', async function() {
+                const address = this.getAttribute('data-address');
+                const originalText = this.innerHTML;
+
+                try {
+                    await navigator.clipboard.writeText(address);
+
+                    // Success feedback
+                    this.innerHTML = '✓ Copied!';
+                    this.classList.add('copied');
+
+                    // Reset after 2 seconds
+                    setTimeout(() => {
+                        this.innerHTML = originalText;
+                        this.classList.remove('copied');
+                    }, 2000);
+
+                } catch (err) {
+                    // Fallback for older browsers
+                    const textArea = document.createElement('textarea');
+                    textArea.value = address;
+                    textArea.style.position = 'fixed';
+                    textArea.style.left = '-999999px';
+                    document.body.appendChild(textArea);
+                    textArea.select();
+
+                    try {
+                        document.execCommand('copy');
+                        this.innerHTML = '✓ Copied!';
+                        this.classList.add('copied');
+
+                        setTimeout(() => {
+                            this.innerHTML = originalText;
+                            this.classList.remove('copied');
+                        }, 2000);
+                    } catch (err) {
+                        console.error('Copy failed:', err);
+                        alert('Failed to copy. Please copy manually.');
+                    }
+
+                    document.body.removeChild(textArea);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

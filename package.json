@@ -1,0 +1,38 @@
+{
+  "name": "hvna-presale-landing",
+  "version": "1.0.0",
+  "description": "Token presale landing page for Havana Elephant ($HVNA) with integrated wallet purchase flow",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo 'No build step required for static site'",
+    "deploy": "vercel --prod",
+    "preview": "vercel"
+  },
+  "keywords": [
+    "cryptocurrency",
+    "token",
+    "presale",
+    "web3",
+    "blockchain",
+    "ethereum",
+    "base-network",
+    "landing-page"
+  ],
+  "author": "David Sime <hello@contentlynk.com>",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "resend": "^3.0.0"
+  },
+  "devDependencies": {
+    "vercel": "^33.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/havanaelephant/hvna-presale"
+  }
+}

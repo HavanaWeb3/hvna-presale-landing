@@ -1,0 +1,1728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Join the $HVNA presale at €0.001 before launch at €0.07+. Governance token for the Havana Elephant creator economy platform. 470+ early believers, doxxed founder with 35+ years experience.">
+    <meta name="keywords" content="HVNA, token presale, cryptocurrency, Base blockchain, creator economy, Contentlynk, David Sime">
+    <meta name="author" content="Havana Elephant Global S.A.">
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://presale.havanaelephant.com/">
+    <meta property="og:title" content="$HVNA Presale - Get In at €0.001 Before Launch">
+    <meta property="og:description" content="Join 470+ early believers in the creator economy revolution. Seed round at €0.001, launching at €0.07+">
+    <meta property="og:image" content="/images/og-image.jpg">
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://presale.havanaelephant.com/">
+    <meta property="twitter:title" content="$HVNA Presale - Get In at €0.001 Before Launch">
+    <meta property="twitter:description" content="Join 470+ early believers in the creator economy revolution. Seed round at €0.001, launching at €0.07+">
+    <meta property="twitter:image" content="/images/og-image.jpg">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+    <link rel="alternate icon" href="/images/favicon.ico">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+
+    <title>$HVNA Presale - Get In at €0.001 Before Launch at €0.07+</title>
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Havana Elephant Global S.A.",
+      "url": "https://presale.havanaelephant.com",
+      "logo": "https://presale.havanaelephant.com/images/logo.svg",
+      "founder": {
+        "@type": "Person",
+        "name": "David Sime",
+        "jobTitle": "Founder & CEO",
+        "description": "Chartered Financial Planner with 35+ years business experience"
+      }
+    }
+    </script>
+</head>
+<body>
+    <!-- Sticky Header (appears after scroll) -->
+    <header id="sticky-header" class="sticky-header hidden">
+        <div class="container">
+            <div class="header-content">
+                <div class="header-logo">
+                    <img src="/images/logo.jpg" alt="HVNA Logo" class="logo-icon">
+                    <span class="header-token-name">$HVNA Presale</span>
+                </div>
+                <div class="header-info">
+                    <div class="header-price">Current: <strong>€0.001</strong></div>
+                    <div id="header-countdown" class="header-countdown"></div>
+                    <button class="btn btn-primary btn-header" onclick="openPurchaseModal()">Buy Now</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero-section">
+        <div class="hero-background"></div>
+        <div class="container">
+            <div class="hero-content">
+                <img src="/images/logo.jpg" alt="Havana Elephant Logo" class="hero-logo">
+
+                <h1 class="hero-headline">Get $HVNA at €0.001 Before Launch at €0.07+</h1>
+                <p class="hero-subheadline">Join 470+ Early Believers Building the Creator Economy Revolution</p>
+
+                <!-- Current Phase Box -->
+                <div class="phase-indicator">
+                    <div class="phase-status">🔥 SEED ROUND ACTIVE</div>
+                    <div class="phase-details">
+                        <div class="phase-item">
+                            <span class="phase-label">Current Price:</span>
+                            <span class="phase-value">€0.001</span>
+                        </div>
+                        <div class="phase-item">
+                            <span class="phase-label">Next Phase:</span>
+                            <span class="phase-value">€0.002 <span class="phase-increase">(+100%)</span></span>
+                        </div>
+                        <div class="phase-item">
+                            <span class="phase-label">Blockchain:</span>
+                            <span class="phase-value" id="tokens-remaining">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Countdown Timer -->
+                <div class="countdown-timer">
+                    <div class="countdown-label">Phase Ends In:</div>
+                    <div id="main-countdown" class="countdown-display">
+                        <div class="countdown-unit">
+                            <span class="countdown-number" id="days">00</span>
+                            <span class="countdown-text">Days</span>
+                        </div>
+                        <div class="countdown-separator">:</div>
+                        <div class="countdown-unit">
+                            <span class="countdown-number" id="hours">00</span>
+                            <span class="countdown-text">Hours</span>
+                        </div>
+                        <div class="countdown-separator">:</div>
+                        <div class="countdown-unit">
+                            <span class="countdown-number" id="minutes">00</span>
+                            <span class="countdown-text">Minutes</span>
+                        </div>
+                        <div class="countdown-separator">:</div>
+                        <div class="countdown-unit">
+                            <span class="countdown-number" id="seconds">00</span>
+                            <span class="countdown-text">Seconds</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trust Badges -->
+                <div class="trust-badges">
+                    <div class="trust-badge">✓ Doxxed Founder (CFP)</div>
+                    <div class="trust-badge-separator">|</div>
+                    <div class="trust-badge">✓ Proven Business Model</div>
+                    <div class="trust-badge-separator">|</div>
+                    <div class="trust-badge">✓ Base Blockchain</div>
+                    <div class="trust-badge-separator">|</div>
+                    <div class="trust-badge">✓ 470+ Beta Users</div>
+                </div>
+
+                <!-- Primary CTA -->
+                <button class="btn btn-primary btn-large btn-cta" onclick="openPurchaseModal()">
+                    Buy $HVNA Now →
+                </button>
+
+                <!-- Secondary Link -->
+                <a href="#white-paper" onclick="event.preventDefault(); openWhitePaperModal();" class="secondary-link">View Full White Paper</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Honest Progress Dashboard -->
+    <section id="progress-dashboard" class="presale-progress-section">
+        <div class="container">
+            <h2>Presale Phase 1 Progress</h2>
+            <p class="subtitle">Track real-time progress across our presale journey</p>
+
+            <div class="progress-grid">
+                <!-- Phase Progress -->
+                <div class="progress-card">
+                    <div class="progress-label">
+                        <span class="icon">📅</span>
+                        <span>Presale Phase</span>
+                    </div>
+                    <div class="progress-visual">
+                        <div class="phase-indicator">
+                            <div class="phase active">1</div>
+                            <div class="phase">2</div>
+                            <div class="phase">3</div>
+                            <div class="phase">4</div>
+                            <div class="phase">5</div>
+                            <div class="phase">6</div>
+                        </div>
+                        <p class="progress-text">Phase 1 of 6 Active</p>
+                    </div>
+                    <div class="progress-detail">
+                        <span class="current-price">€0.001/token</span>
+                        <span class="next-price">Next: €0.002</span>
+                    </div>
+                </div>
+
+                <!-- Beta Registration Progress -->
+                <div class="progress-card">
+                    <div class="progress-label">
+                        <span class="icon">👥</span>
+                        <span>Beta Access Spots</span>
+                    </div>
+                    <div class="progress-visual">
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" style="width: 47%">
+                                <span class="progress-percentage">47%</span>
+                            </div>
+                        </div>
+                        <p class="progress-text">470 / 1,000 Registered</p>
+                    </div>
+                    <div class="progress-detail">
+                        <span class="highlight">530 spots remaining</span>
+                    </div>
+                </div>
+
+                <!-- Time Remaining -->
+                <div class="progress-card">
+                    <div class="progress-label">
+                        <span class="icon">⏰</span>
+                        <span>Phase 1 Ends In</span>
+                    </div>
+                    <div class="progress-visual">
+                        <div class="countdown">
+                            <div class="countdown-unit">
+                                <span class="countdown-number" id="dashboard-days">00</span>
+                                <span class="countdown-label">Days</span>
+                            </div>
+                            <div class="countdown-unit">
+                                <span class="countdown-number" id="dashboard-hours">00</span>
+                                <span class="countdown-label">Hours</span>
+                            </div>
+                            <div class="countdown-unit">
+                                <span class="countdown-number" id="dashboard-minutes">00</span>
+                                <span class="countdown-label">Minutes</span>
+                            </div>
+                        </div>
+                        <p class="progress-text">March 16, 2026</p>
+                    </div>
+                    <div class="progress-detail">
+                        <span class="warning">⚡ Price doubles after deadline</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BaseScan link temporarily removed during Genesis phase - restore when contract value >$5K -->
+            <!-- Contract address preserved: 0x390Bdc27F8488915AC5De3fCd43c695b41f452FA -->
+            <!--
+            <div class="verification-link">
+                <p>🔍 All presale transactions are publicly visible on Base blockchain</p>
+                <a href="https://basescan.org/address/0x390Bdc27F8488915AC5De3fCd43c695b41f452FA" target="_blank" rel="noopener noreferrer">
+                    View Real-Time Contract Data →
+                </a>
+            </div>
+            -->
+        </div>
+    </section>
+
+    <!-- Credibility Section -->
+    <section id="credibility" class="credibility-section">
+        <div class="container">
+            <div class="credibility-grid">
+                <div class="credibility-image">
+                    <img src="/images/david-sime.jpg" alt="David Sime - Founder & CEO" class="founder-photo">
+                    <div class="founder-title">Founder & CEO</div>
+                </div>
+                <div class="credibility-content">
+                    <h2>Meet David: Not Another Anonymous Crypto Project</h2>
+                    <p class="credibility-intro">Unlike 99% of crypto projects, you know exactly who's building this.</p>
+
+                    <ul class="credibility-list">
+                        <li><strong>Chartered Financial Planner</strong> (35+ years experience)</li>
+                        <li><strong>Author of 3 cryptocurrency books:</strong> "Crypto Made Simple," "Canvass to Code," "Zero to NFT Hero"</li>
+                        <li><strong>Built multiple successful businesses:</strong>
+                            <ul>
+                                <li>Elmswood Private Finance (£1.2M year 2 revenue)</li>
+                                <li>Havana Elephant Brand (established e-commerce)</li>
+                                <li>Contentlynk platform (470+ beta registrations)</li>
+                            </ul>
+                        </li>
+                        <li><strong>Fully doxxed:</strong> LinkedIn, public business history, author credentials</li>
+                    </ul>
+
+                    <blockquote class="founder-quote">
+                        "I'm putting my name and reputation behind this project. That's rare in crypto—and it should matter to you."
+                        <cite>— David Sime</cite>
+                    </blockquote>
+
+                    <a href="https://www.linkedin.com/in/davidjsime" target="_blank" rel="noopener" class="btn btn-secondary">View David's LinkedIn Profile →</a>
+                </div>
+            </div>
+
+            <!-- Stats Bar -->
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <span class="stat-number">470+</span>
+                    <span class="stat-label">Beta Users</span>
+                </div>
+                <div class="stat-separator">|</div>
+                <div class="stat-item">
+                    <span class="stat-number">1,000</span>
+                    <span class="stat-label">Beta Spots</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Opportunity Section -->
+    <section id="opportunity" class="opportunity-section">
+        <div class="container">
+            <h2 class="section-heading">The €0.001 Window Won't Last</h2>
+
+            <!-- Price Evolution Table -->
+            <div class="price-table-wrapper">
+                <table class="price-table">
+                    <thead>
+                        <tr>
+                            <th>Phase</th>
+                            <th>Price</th>
+                            <th>vs Now</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="phase-active">
+                            <td>Seed Round</td>
+                            <td>€0.001</td>
+                            <td>—</td>
+                            <td><span class="status-badge status-active">⚡ NOW ACTIVE</span></td>
+                        </tr>
+                        <tr>
+                            <td>Private Round</td>
+                            <td>€0.002</td>
+                            <td>+100%</td>
+                            <td><span class="status-badge status-locked">🔒 Next Phase</span></td>
+                        </tr>
+                        <tr>
+                            <td>Early Access</td>
+                            <td>€0.004</td>
+                            <td>+300%</td>
+                            <td><span class="status-badge status-locked">🔒 Upcoming</span></td>
+                        </tr>
+                        <tr>
+                            <td>Community</td>
+                            <td>€0.008</td>
+                            <td>+700%</td>
+                            <td><span class="status-badge status-locked">🔒 Upcoming</span></td>
+                        </tr>
+                        <tr>
+                            <td>Growth Round</td>
+                            <td>€0.015</td>
+                            <td>+1,400%</td>
+                            <td><span class="status-badge status-locked">🔒 Upcoming</span></td>
+                        </tr>
+                        <tr>
+                            <td>Final Round</td>
+                            <td>€0.025</td>
+                            <td>+2,400%</td>
+                            <td><span class="status-badge status-locked">🔒 Upcoming</span></td>
+                        </tr>
+                        <tr class="phase-launch">
+                            <td>Launch Target</td>
+                            <td>€0.07+</td>
+                            <td>+6,900%</td>
+                            <td><span class="status-badge status-launch">📈 Q4 2026</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Investment Calculator -->
+            <div class="calculator-card">
+                <h3>Investment Calculator</h3>
+                <div class="calculator-input-group">
+                    <label for="investment-amount">I want to invest:</label>
+                    <div class="input-wrapper">
+                        <span class="input-prefix">€</span>
+                        <input type="number" id="investment-amount" placeholder="1000" min="10" step="10">
+                    </div>
+                </div>
+
+                <div class="calculator-results">
+                    <div class="calculator-result-item">
+                        <span class="result-label">You receive:</span>
+                        <span class="result-value" id="tokens-received">0</span>
+                        <span class="result-unit">$HVNA tokens</span>
+                    </div>
+
+                    <div class="calculator-result-item">
+                        <span class="result-label">If launch price hits €0.07:</span>
+                        <span class="result-value result-highlight" id="future-value">€0</span>
+                        <span class="result-icon">💰</span>
+                    </div>
+
+                    <div class="calculator-result-item">
+                        <span class="result-label">Potential gain:</span>
+                        <span class="result-value result-success" id="potential-gain">+0%</span>
+                        <span class="result-icon">🚀</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Value Propositions -->
+            <h3 class="subsection-heading">Why $HVNA Has Value</h3>
+            <div class="value-grid">
+                <div class="value-card">
+                    <div class="value-icon">🎯</div>
+                    <h4>Governance</h4>
+                    <p>Vote on platform decisions & features</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">💰</div>
+                    <h4>Revenue Share</h4>
+                    <p>Creators earn 55-75% via $HVNA</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🛍️</div>
+                    <h4>Platform Access</h4>
+                    <p>Discounts, premium features, early access</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🔥</div>
+                    <h4>Deflationary</h4>
+                    <p>Token burns reduce supply over time</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How to Buy Section -->
+    <section id="how-to-buy" class="how-to-buy-section">
+        <div class="container">
+            <h2 class="section-heading">Buy in 60 Seconds</h2>
+
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">
+                        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                            <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                        </svg>
+                    </div>
+                    <h3>Connect Wallet</h3>
+                    <p>MetaMask, Rabby, or WalletConnect</p>
+                </div>
+
+                <div class="step-arrow">→</div>
+
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">
+                        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="1" x2="12" y2="23"></line>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                        </svg>
+                    </div>
+                    <h3>Enter Amount</h3>
+                    <p>Choose how much to invest</p>
+                </div>
+
+                <div class="step-arrow">→</div>
+
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">
+                        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                    </div>
+                    <h3>Receive Tokens</h3>
+                    <p>$HVNA sent instantly to your wallet</p>
+                </div>
+            </div>
+
+            <!-- Supported Wallets -->
+            <div class="supported-wallets">
+                <h4>Supported Wallets:</h4>
+                <div class="wallet-icons">
+                    <img src="/images/wallets/metamask.svg" alt="MetaMask" title="MetaMask">
+                    <img src="/images/wallets/rabby.svg" alt="Rabby" title="Rabby">
+                    <img src="/images/wallets/walletconnect.svg" alt="WalletConnect" title="WalletConnect">
+                    <img src="/images/wallets/coinbase.svg" alt="Coinbase Wallet" title="Coinbase Wallet">
+                </div>
+            </div>
+
+            <!-- Network Info -->
+            <div class="network-info">
+                <p>Using <strong>Base Network</strong> (Low fees, Fast transactions)</p>
+                <div class="network-links">
+                    <a href="#" class="info-link" onclick="showBaseInfo(event)">What is Base?</a>
+                    <span>|</span>
+                    <a href="#" class="info-link" onclick="showAddBaseInfo(event)">How to add Base to wallet</a>
+                </div>
+            </div>
+
+            <button class="btn btn-primary btn-large" onclick="openPurchaseModal()">Start Buying Now →</button>
+        </div>
+    </section>
+
+    <!-- Social Proof Section -->
+    <section id="social-proof" class="social-proof-section">
+        <div class="container">
+            <h2 class="section-heading">Join the Growing Community</h2>
+
+            <!-- Community Stats -->
+            <div class="community-stats">
+                <div class="community-stat">
+                    <span class="community-number" id="token-holders">122</span>
+                    <span class="community-label">Token Holders</span>
+                </div>
+                <div class="stat-separator">|</div>
+                <div class="community-stat">
+                    <span class="community-number">336</span>
+                    <span class="community-label">Discord Members</span>
+                </div>
+                <div class="stat-separator">|</div>
+                <div class="community-stat">
+                    <span class="community-number">512</span>
+                    <span class="community-label">Telegram Users</span>
+                </div>
+                <div class="stat-separator">|</div>
+                <div class="community-stat">
+                    <span class="community-number">820</span>
+                    <span class="community-label">X Followers</span>
+                </div>
+                <div class="stat-separator">|</div>
+                <div class="community-stat">
+                    <span class="community-number">470+</span>
+                    <span class="community-label">Beta Registrations</span>
+                </div>
+            </div>
+
+            <!-- Live Activity Feed -->
+            <div class="activity-feed">
+                <h4>🔔 Recent Activity:</h4>
+                <div id="activity-list" class="activity-list">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Comparison Table -->
+            <h3 class="subsection-heading">What Makes This Different</h3>
+            <div class="comparison-wrapper">
+                <div class="comparison-grid">
+                    <div class="comparison-column comparison-other">
+                        <h4>❌ Other Crypto Projects</h4>
+                        <ul>
+                            <li>Anonymous founders</li>
+                            <li>No proven business</li>
+                            <li>Vague roadmaps</li>
+                            <li>Speculative value only</li>
+                            <li>Copy-paste white papers</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-column comparison-hvna">
+                        <h4>✅ Havana Elephant</h4>
+                        <ul>
+                            <li>Fully doxxed CFP founder</li>
+                            <li>Established e-commerce</li>
+                            <li>Working platform (beta)</li>
+                            <li>Real utility + revenue</li>
+                            <li>Original creator economy</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Community Links -->
+            <div class="community-links">
+                <a href="https://discord.gg/hzfTpjgy4" target="_blank" rel="noopener noreferrer" class="btn btn-community discord">Join Discord</a>
+                <a href="https://t.me/havanaelephantbrand" target="_blank" rel="noopener noreferrer" class="btn btn-community telegram">Join Telegram</a>
+                <a href="https://twitter.com/havanaWeb3" target="_blank" rel="noopener noreferrer" class="btn btn-community twitter">Follow on X</a>
+                <a href="https://www.linkedin.com/in/davidjsime" target="_blank" rel="noopener noreferrer" class="btn btn-community linkedin">LinkedIn</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq-section">
+        <div class="container">
+            <h2 class="section-heading">Common Questions</h2>
+
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>❓ What is $HVNA?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>$HVNA is the governance and utility token for the Havana Elephant ecosystem, including Contentlynk - a revolutionary creator platform where content creators earn 55-75% of revenue (vs 0-5% on traditional platforms).</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>❓ Why is the price so low now?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>You're getting the earliest possible entry price before public launch. Each presale phase increases the price. Current seed round: €0.001. Launch target: €0.07+.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>❓ When does the price increase to €0.002?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>When the current seed round sells out or the countdown timer expires. This phase has limited tokens available.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>❓ How do I buy on Base network?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Connect your wallet (MetaMask, Rabby, etc.), make sure you're on Base network (we'll help you switch), enter your purchase amount, and confirm. Tokens arrive in seconds.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>❓ Is this a security/investment contract?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>$HVNA is a utility token with governance rights and platform benefits. This is not financial advice. Please review full terms and conditions. We comply with applicable regulations.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>❓ Who is David Sime?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>David is a Chartered Financial Planner with 35+ years business experience, author of 3 crypto books, and founder of multiple successful ventures. Fully doxxed with public business history. <a href="https://www.linkedin.com/in/davidjsime" target="_blank" rel="noopener">View LinkedIn →</a></p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>❓ What gives $HVNA its value?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Real utility: governance voting, creator revenue sharing, platform discounts (10-30%), NFT benefits, and deflationary tokenomics with burns from platform revenue.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>❓ When does Contentlynk launch?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Beta launch Q2 2026 with 1,000 spots (470+ already registered). Platform will support millions of creators earning fair compensation.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>❓ Can I sell my tokens later?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Tokens will be tradeable on DEXs after launch. Early buyers have the longest holding advantage for maximum potential gains.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>❓ What if I need help?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Join our Discord or Telegram for community support, or email hello@contentlynk.com for direct assistance.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Urgency Section -->
+    <section id="urgency" class="urgency-section">
+        <div class="container">
+            <h2 class="section-heading">The €0.001 Window Is Closing</h2>
+
+            <div class="urgency-content">
+                <!-- Transparency Box -->
+                <div class="transparency-box" style="background: rgba(255,107,53,0.1); border: 2px solid #FF6B35; border-radius: 12px; padding: 24px; margin-bottom: 24px;">
+                    <h3 style="color: #FF6B35; margin-top: 0;">🔍 Complete Transparency</h3>
+                    <p style="margin-bottom: 16px;">All transactions are verifiable on Base blockchain. No hidden wallets, no fake numbers.</p>
+                    <!-- BaseScan link temporarily removed during Genesis phase - restore when contract value >$5K -->
+                    <!-- <a href="https://basescan.org/address/0x390Bdc27F8488915AC5De3fCd43c695b41f452FA" target="_blank" class="btn btn-secondary" style="display: inline-block;">View Contract on BaseScan →</a> -->
+                </div>
+
+                <p class="urgency-text">Ground floor opportunity at €0.001 - Next phase increases to €0.002</p>
+
+                <div class="urgency-countdown">
+                    <div class="urgency-countdown-label">⏰ Next Price Increase In:</div>
+                    <div id="urgency-countdown-display" class="urgency-countdown-numbers"></div>
+                </div>
+
+                <div class="price-change-reminder">
+                    <div class="reminder-row">
+                        <span class="reminder-label">Current Price:</span>
+                        <span class="reminder-value">€0.001</span>
+                    </div>
+                    <div class="reminder-row">
+                        <span class="reminder-label">Next Phase:</span>
+                        <span class="reminder-value">€0.002 <span class="reminder-increase">(+100%)</span></span>
+                    </div>
+                    <p class="reminder-warning">Waiting costs you half your tokens</p>
+                </div>
+
+                <button class="btn btn-primary btn-large btn-urgency" onclick="openPurchaseModal()">
+                    Lock In €0.001 Price Now →
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section id="final-cta" class="final-cta-section">
+        <div class="cta-background"></div>
+        <div class="container">
+            <h2 class="cta-headline">Don't Miss the €0.001 Entry Point</h2>
+            <p class="cta-subheadline">Join 470+ early believers building the creator economy</p>
+
+            <button class="btn btn-primary btn-extra-large btn-glow" onclick="openPurchaseModal()">
+                Buy $HVNA Now →
+            </button>
+
+            <div class="cta-benefits">
+                <span>✓ Instant delivery</span>
+                <span>✓ Secure blockchain</span>
+                <span>✓ Low gas fees</span>
+                <span>✓ 24/7 community support</span>
+            </div>
+
+            <div class="security-badges">
+                <div class="security-badge">🔒 SSL Secured</div>
+                <div class="security-badge">✓ Base Verified</div>
+                <div class="security-badge">✓ Audited</div>
+                <div class="security-badge">✓ Doxxed Founder</div>
+            </div>
+
+            <p class="social-proof-line">✓ All transactions verified on Base blockchain</p>
+            <!-- BaseScan link temporarily removed during Genesis phase - restore when contract value >$5K -->
+            <!-- Original: <a href="https://basescan.org/address/0x390Bdc27F8488915AC5De3fCd43c695b41f452FA" target="_blank" style="color: #FF6B35; text-decoration: underline;">Base blockchain</a> -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4>About</h4>
+                    <ul>
+                        <li><a href="https://havanaelephant.com" target="_blank" rel="noopener noreferrer">Havana Elephant Global S.A.</a></li>
+                        <li><a href="/about-david.html">About David</a></li>
+                        <li><a href="#white-paper" onclick="event.preventDefault(); openWhitePaperModal();">White Paper</a></li>
+                        <li><a href="#brand-story" onclick="event.preventDefault(); openBrandStoryModal();">Brand Story</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="/contentlynk.html">Contentlynk</a></li>
+                        <li><a href="/tokenomics.html">Tokenomics</a></li>
+                        <li><a href="https://havanaelephant.com#roadmap" target="_blank" rel="noopener noreferrer">Roadmap</a></li>
+                        <li><a href="https://havanaelephant.com" target="_blank" rel="noopener noreferrer">NFT Collections</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="https://discord.gg/hzfTpjgy4" target="_blank" rel="noopener noreferrer">Discord</a></li>
+                        <li><a href="https://t.me/havanaelephantbrand" target="_blank" rel="noopener noreferrer">Telegram</a></li>
+                        <li><a href="https://twitter.com/havanaWeb3" target="_blank" rel="noopener noreferrer">X/Twitter</a></li>
+                        <li><a href="https://www.linkedin.com/in/davidjsime" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="/terms.html">Terms & Conditions</a></li>
+                        <li><a href="/privacy.html">Privacy Policy</a></li>
+                        <li><a href="/risk-disclosure.html">Risk Disclosure</a></li>
+                        <li><a href="/cookies.html">Cookie Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p class="footer-copyright">© 2026 Havana Elephant Global S.A. | Panama</p>
+                <p class="footer-disclaimer">"Not financial advice. Cryptocurrency investments carry risk."</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Purchase Modal -->
+    <div id="purchase-modal" class="modal">
+        <div class="modal-overlay" onclick="closePurchaseModal()"></div>
+        <div class="modal-content">
+            <button class="modal-close" onclick="closePurchaseModal()">✖️</button>
+
+            <div id="modal-wallet-selection" class="modal-screen active">
+                <h2>Choose Your Wallet</h2>
+                <div class="wallet-options">
+                    <button class="wallet-option" onclick="web3Helpers.connectWallet('metamask')">
+                        <img src="/images/wallets/metamask.svg" alt="MetaMask">
+                        <span>MetaMask</span>
+                    </button>
+                    <button class="wallet-option" onclick="web3Helpers.connectWallet('rabby')">
+                        <img src="/images/wallets/rabby.svg" alt="Rabby">
+                        <span>Rabby</span>
+                    </button>
+                    <button class="wallet-option" onclick="web3Helpers.connectWallet('walletconnect')">
+                        <img src="/images/wallets/walletconnect.svg" alt="WalletConnect">
+                        <span>WalletConnect</span>
+                    </button>
+                    <button class="wallet-option" onclick="web3Helpers.connectWallet('coinbase')">
+                        <img src="/images/wallets/coinbase.svg" alt="Coinbase Wallet">
+                        <span>Coinbase Wallet</span>
+                    </button>
+                </div>
+            </div>
+
+            <div id="modal-purchase-form" class="modal-screen">
+                <h2>Buy $HVNA at €0.001</h2>
+
+                <div class="connected-wallet-info">
+                    <div class="wallet-status">🟢 Connected: <span id="connected-address">0x0000...0000</span></div>
+                    <div class="wallet-balance">Balance: <span id="wallet-balance">0.00</span> ETH on Base</div>
+                </div>
+
+                <div class="purchase-form">
+                    <div class="form-group">
+                        <label for="eur-amount">Amount in EUR:</label>
+                        <div class="input-wrapper">
+                            <span class="input-prefix">€</span>
+                            <input type="number" id="eur-amount" placeholder="1000" min="10" step="10">
+                        </div>
+                    </div>
+
+                    <div class="quick-amounts">
+                        <button class="quick-amount" onclick="setQuickAmount(100)">€100</button>
+                        <button class="quick-amount" onclick="setQuickAmount(250)">€250</button>
+                        <button class="quick-amount" onclick="setQuickAmount(500)">€500</button>
+                        <button class="quick-amount" onclick="setQuickAmount(1000)">€1,000</button>
+                        <button class="quick-amount" onclick="setQuickAmount(5000)">€5,000</button>
+                    </div>
+
+                    <div class="purchase-summary">
+                        <div class="summary-row">
+                            <span>You receive:</span>
+                            <span><strong id="purchase-tokens">0</strong> $HVNA</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Current rate:</span>
+                            <span>1 $HVNA = €0.001</span>
+                        </div>
+                    </div>
+
+                    <div class="transaction-details">
+                        <div class="detail-row">
+                            <span>Token amount:</span>
+                            <span id="detail-tokens">0 $HVNA</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>ETH equivalent:</span>
+                            <span id="detail-eth">0.000 ETH (~€0.00)</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>Estimated gas:</span>
+                            <span id="detail-gas">~0.0001 ETH (~€0.XX)</span>
+                        </div>
+                        <div class="detail-row total">
+                            <span>Total cost:</span>
+                            <span id="detail-total">~0.000 ETH (~€0.00)</span>
+                        </div>
+                    </div>
+
+                    <p class="gas-note">Gas prices update in real-time based on Base network conditions</p>
+
+                    <button class="btn btn-primary btn-large btn-purchase" id="purchase-button" onclick="web3Helpers.executePurchase()">
+                        Buy <span id="button-tokens">0</span> $HVNA for ~€<span id="button-amount">0</span>
+                    </button>
+
+                    <div class="purchase-terms">
+                        <p>By proceeding, you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a></p>
+                        <p>Not financial advice. See <a href="#">Risk Disclosure</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="modal-success" class="modal-screen">
+                <div class="success-animation">
+                    <div class="checkmark-circle">
+                        <div class="checkmark">✓</div>
+                    </div>
+                </div>
+
+                <h2>✅ Purchase Successful!</h2>
+
+                <div class="success-details">
+                    <p class="success-message"><strong id="success-tokens">XXX,XXX</strong> $HVNA tokens sent to your wallet</p>
+
+                    <div class="transaction-info">
+                        <div class="info-row">
+                            <span>Transaction:</span>
+                            <a href="#" id="tx-link" target="_blank" rel="noopener">View on Basescan →</a>
+                        </div>
+                        <div class="info-row">
+                            <span>Wallet:</span>
+                            <span id="success-wallet">0x0000...0000</span>
+                        </div>
+                        <div class="info-row">
+                            <span>Amount:</span>
+                            <span id="success-amount">€0.00</span>
+                        </div>
+                        <div class="info-row">
+                            <span>Tokens:</span>
+                            <span id="success-token-amount">0 $HVNA</span>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-secondary" onclick="web3Helpers.addTokenToWallet()">Add $HVNA to Wallet</button>
+
+                    <div class="next-steps">
+                        <h3>What's Next:</h3>
+                        <ul>
+                            <li>✓ Tokens in your wallet now</li>
+                            <li>✓ Join Discord for community</li>
+                            <li>✓ Contentlynk beta launching Q2 2026</li>
+                        </ul>
+                    </div>
+
+                    <div class="success-actions">
+                        <a href="https://discord.gg/hzfTpjgy4" target="_blank" rel="noopener noreferrer" class="btn btn-community discord">Join Discord</a>
+                        <a href="https://t.me/havanaelephantbrand" target="_blank" rel="noopener noreferrer" class="btn btn-community telegram">Join Telegram</a>
+                        <button class="btn btn-secondary" onclick="closePurchaseModal()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Email Collection Modal -->
+    <div id="email-modal" class="modal email-modal">
+        <div class="modal-overlay" onclick="closeEmailModal()"></div>
+        <div class="modal-content modal-slide-up">
+            <button class="modal-close" onclick="closeEmailModal()">✖️</button>
+
+            <h2>📬 Get VIP Presale Updates?</h2>
+
+            <div class="email-benefits">
+                <p>Join insiders getting:</p>
+                <ul>
+                    <li>✓ Exclusive presale alerts before price increases</li>
+                    <li>✓ Guaranteed Contentlynk beta access</li>
+                    <li>✓ Founder insights from David directly</li>
+                    <li>✓ Early access to new features</li>
+                </ul>
+            </div>
+
+            <form id="email-form" onsubmit="submitEmail(event)">
+                <div class="form-group">
+                    <label for="subscriber-email">Email:</label>
+                    <input type="email" id="subscriber-email" placeholder="your@email.com" required>
+                </div>
+
+                <div class="email-actions">
+                    <button type="submit" class="btn btn-primary btn-large">Yes, Keep Me Updated →</button>
+                    <button type="button" class="btn-skip" onclick="skipEmail()">Skip for Now</button>
+                </div>
+
+                <div class="email-privacy">
+                    <p>🔒 No spam, ever. Unsubscribe anytime.<br>Used only for $HVNA & Contentlynk updates.</p>
+                    <p class="privacy-warning">⚠️ Privacy Note: Your wallet address is NOT connected to your email unless you choose to link them.</p>
+                </div>
+            </form>
+
+            <div id="email-success" class="email-success-message" style="display: none;">
+                <h3>✅ You're In!</h3>
+                <p>Check your email for:</p>
+                <ul>
+                    <li>• Confirmation message from David</li>
+                    <li>• Your purchase receipt</li>
+                    <li>• Discord/Telegram invite links</li>
+                    <li>• What happens next timeline</li>
+                </ul>
+                <p class="email-help">Didn't get it? Check spam or email hello@contentlynk.com</p>
+                <button class="btn btn-primary" onclick="closeEmailModal()">Got It!</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Exit Intent Modal -->
+    <div id="exit-intent-modal" class="modal exit-modal">
+        <div class="modal-overlay" onclick="closeExitModal()"></div>
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeExitModal()">✖️</button>
+
+            <h2>⚠️ Wait! Special Offer</h2>
+
+            <div class="exit-content">
+                <p class="exit-headline">Don't miss the €0.001 price!</p>
+                <p>The seed round is filling fast. Once it's gone, the next price is <strong>€0.002 (+100%)</strong>.</p>
+
+                <div class="exit-bonus">
+                    <h3>🎁 BONUS: Buy €100+ right now and we'll include:</h3>
+                    <ul>
+                        <li>• Priority Contentlynk beta access</li>
+                        <li>• Exclusive founder updates</li>
+                        <li>• Early notification of next phase</li>
+                    </ul>
+                </div>
+
+                <div class="exit-actions">
+                    <button class="btn btn-primary btn-large" onclick="closeExitModal(); openPurchaseModal();">
+                        Yes, Take Me to Purchase
+                    </button>
+                    <button class="btn-skip" onclick="closeExitModal()">No Thanks, I'll Pass</button>
+                </div>
+
+                <p class="exit-social-proof">✓ Seed Round ends March 16, 2026 - Price increases 5x next phase ⚡</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Brand Story Modal -->
+    <div id="brand-story-modal" class="modal brand-story-modal">
+        <div class="modal-overlay" onclick="closeBrandStoryModal()"></div>
+        <div class="modal-content brand-story-content">
+            <button class="modal-close" onclick="closeBrandStoryModal()">✖️</button>
+
+            <div class="brand-story-container">
+                <!-- Header -->
+                <header class="story-header">
+                    <h1 class="story-title gradient-text">The Brand Story</h1>
+                    <p class="story-tagline">From Wall Street to Web3: A Creator Revolution Born in the Adriatic</p>
+                </header>
+
+                <!-- Main Content -->
+                <article class="story-content">
+                    <!-- Introduction -->
+                    <section class="story-section">
+                        <p class="story-lead">Picture this: A British financial advisor with 35 years of business experience, author of three cryptocurrency books, sitting in a café overlooking the ancient walls of Dubrovnik, Croatia. That's where David Sime had his epiphany.</p>
+
+                        <blockquote class="story-quote">
+                            "Why are creators building billion-dollar platforms and getting paid in pocket change?"
+                        </blockquote>
+                    </section>
+
+                    <!-- Birth of an Elephant -->
+                    <section class="story-section">
+                        <h2>🐘 The Birth of an Elephant</h2>
+                        <p>The Havana Elephant wasn't born from a whiteboard in Silicon Valley. It emerged from decades of watching value extraction, seeing talented creators work for free, and understanding that blockchain could finally fix what traditional social media broke.</p>
+
+                        <p>David had built successful businesses across three countries—from managing £1.2M in fees at Elmswood Private Finance to creating sustainable fashion brands. But something was missing. The creator economy was thriving, yet 95% of creators earned nothing.</p>
+
+                        <p class="story-emphasis">That's when the elephant in the room became impossible to ignore.</p>
+                    </section>
+
+                    <!-- Why a Havana Elephant -->
+                    <section class="story-section">
+                        <h2>🎯 Why a Havana Elephant?</h2>
+                        <p>The elephant represents memory, wisdom, and community—animals that never forget and always protect their herd. The Havana cigar? That's the celebration. The style. The audacity to live life on your own terms.</p>
+
+                        <p class="story-mission">"Live Life Big in Style Celebrate" isn't just a tagline—it's a rebellion against the algorithm overlords who've convinced creators that exposure pays rent.</p>
+                    </section>
+
+                    <!-- Web3 Revolution -->
+                    <section class="story-section">
+                        <h2>⚡ The Web3 Revolution</h2>
+                        <p>Armed with blockchain expertise and a Chartered Financial Planner's understanding of value distribution, David built what traditional platforms wouldn't: <strong>a social media ecosystem where creators actually own the platform they build.</strong></p>
+
+                        <div class="numbers-showcase">
+                            <h3>The Numbers That Changed Everything</h3>
+                            <div class="numbers-grid">
+                                <div class="number-card">
+                                    <div class="number-label">Traditional platforms</div>
+                                    <div class="number-value bad">0-5%</div>
+                                    <div class="number-desc">revenue share to creators</div>
+                                </div>
+                                <div class="number-card">
+                                    <div class="number-label">Contentlynk</div>
+                                    <div class="number-value good">55-75%</div>
+                                    <div class="number-desc">revenue share to creators</div>
+                                </div>
+                                <div class="number-card">
+                                    <div class="number-label">Instagram/TikTok</div>
+                                    <div class="number-value bad">10K+</div>
+                                    <div class="number-desc">followers to earn first dollar</div>
+                                </div>
+                                <div class="number-card">
+                                    <div class="number-label">Contentlynk</div>
+                                    <div class="number-value good">Zero</div>
+                                    <div class="number-desc">follower requirements. Day one earnings.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Three Pillars -->
+                    <section class="story-section">
+                        <h2>🏛️ Three Pillars, One Ecosystem</h2>
+
+                        <div class="pillars-grid">
+                            <div class="pillar-card">
+                                <div class="pillar-number">1</div>
+                                <h3>The Fashion Foundation</h3>
+                                <p>Sustainable luxury through havanaelephantbrand.com—proving you can celebrate style while respecting the planet. Physical products with digital soul.</p>
+                            </div>
+
+                            <div class="pillar-card">
+                                <div class="pillar-number">2</div>
+                                <h3>The Creator Platform</h3>
+                                <p>Contentlynk.com—where your viral content finally pays what it's worth. Not in exposure. In actual money. In governance rights. In ownership.</p>
+                            </div>
+
+                            <div class="pillar-card">
+                                <div class="pillar-number">3</div>
+                                <h3>The Community Backbone</h3>
+                                <p>100 Genesis NFTs for founding members who believe. 9,900 community NFTs for the revolution. $HVNA tokens giving you voting rights on the platform you're building.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Doxxed Difference -->
+                    <section class="story-section">
+                        <h2>🔍 The Doxxed Difference</h2>
+                        <p>In a crypto world of anonymous founders and rug pulls, David stands in the light. Full name. Full history. Full accountability.</p>
+
+                        <blockquote class="story-quote">
+                            "If I'm asking creators to trust me with their content and community to trust me with their investment, they deserve to know exactly who I am."
+                        </blockquote>
+
+                        <p>Three published books. Decades of financial planning. A trail of successful businesses. This isn't a quick flip—it's a legacy build.</p>
+                    </section>
+
+                    <!-- Adriatic Advantage -->
+                    <section class="story-section">
+                        <h2>🌊 The Adriatic Advantage</h2>
+                        <p>Based in Dubrovnik but building for the world, the Havana Elephant ecosystem combines:</p>
+                        <ul class="advantage-list">
+                            <li><strong>European regulatory understanding</strong> (because compliance matters)</li>
+                            <li><strong>Mediterranean lifestyle philosophy</strong> (because life's too short for toxic platforms)</li>
+                            <li><strong>Global crypto vision</strong> (because revolutions don't respect borders)</li>
+                        </ul>
+                    </section>
+
+                    <!-- The Q2 2026 Moment -->
+                    <section class="story-section highlight-section">
+                        <h2>🚀 The Q2 2026 Moment</h2>
+                        <p>Right now, 470 beta testers have already registered. 530 spots remain. The presale is live. The smart contracts are deployed on Base blockchain. The revolution has begun.</p>
+
+                        <p class="story-emphasis">But here's what makes this different:</p>
+
+                        <p>This isn't about quick profits or hype cycles. This is about fundamentally restructuring how value flows in the creator economy. It's about building a platform that can't be bought out, can't change its terms on a whim, and can't forget who actually creates the value.</p>
+                    </section>
+
+                    <!-- Join the Herd -->
+                    <section class="story-section cta-section">
+                        <h2>🐘 Join the Herd</h2>
+                        <p>Whether you're:</p>
+                        <ul class="join-list">
+                            <li><strong>A creator</strong> tired of working for free</li>
+                            <li><strong>An investor</strong> seeking genuine utility in Web3</li>
+                            <li><strong>A believer</strong> that creators deserve better</li>
+                            <li><strong>A rebel</strong> against algorithm tyranny</li>
+                        </ul>
+
+                        <p class="story-mission">The Havana Elephant remembers one thing: <strong>Communities that celebrate together, succeed together.</strong></p>
+
+                        <div class="mission-box">
+                            <h3>The mission is clear:</h3>
+                            <p class="mission-statement">By 2030, pay <strong>$350M</strong> directly to creators. Not to ad networks. Not to platform shareholders. To the people who actually create the content that makes the internet worth visiting.</p>
+                            <p class="story-emphasis">That's not a moon shot. That's a revolution.</p>
+                        </div>
+                    </section>
+
+                    <!-- Final CTA -->
+                    <section class="story-section final-cta">
+                        <h1 class="final-headline gradient-text">Live Life Big in Style Celebrate</h1>
+                        <p class="final-message">The champagne is ready. The blockchain is live. The community is gathering.</p>
+                        <p class="final-question">The only question is: <strong>Will you join the founding herd, or watch the revolution from the sidelines?</strong></p>
+
+                        <div class="cta-buttons">
+                            <button class="btn btn-primary btn-extra-large btn-glow" onclick="closeBrandStoryModal(); openPurchaseModal();">
+                                Join the Revolution - Buy $HVNA Now
+                            </button>
+                            <button class="btn btn-secondary btn-large" onclick="closeBrandStoryModal();">
+                                Continue Reading Site
+                            </button>
+                        </div>
+                    </section>
+
+                    <!-- Footer -->
+                    <footer class="story-footer">
+                        <p class="story-location">Built in Dubrovnik. Deployed on Base. Powered by creators. Owned by community.</p>
+                        <p class="story-welcome"><strong>Welcome to the Havana Elephant Web3 Ecosystem—where creators become partners, not products.</strong></p>
+                    </footer>
+                </article>
+            </div>
+        </div>
+    </div>
+
+    <!-- White Paper Modal -->
+    <div id="white-paper-modal" class="modal brand-story-modal">
+        <div class="modal-overlay" onclick="closeWhitePaperModal()"></div>
+        <div class="modal-content brand-story-content">
+            <button class="modal-close" onclick="closeWhitePaperModal()">✖️</button>
+
+            <div class="brand-story-container">
+                <!-- Header -->
+                <header class="story-header">
+                    <div class="logo" style="font-size: 3em; margin-bottom: 10px;">🐘</div>
+                    <h1 class="story-title gradient-text">Havana Elephant Brand Web3 Ecosystem</h1>
+                    <p class="story-tagline">White Paper v4.1</p>
+                    <p class="version" style="color: #999; font-size: 0.9em; margin-top: 10px;">
+                        Token Symbol: $HVNA | Blockchain: Base (Layer 2) | August 2025
+                    </p>
+                </header>
+
+                <!-- Main Content -->
+                <article class="story-content">
+                    <!-- Philosophy -->
+                    <section class="story-section highlight-section">
+                        <h1 class="final-headline gradient-text" style="font-size: 1.8em; margin-bottom: 20px;">
+                            "Live Life Big in Style Celebrate"
+                        </h1>
+                    </section>
+
+                    <!-- Executive Summary -->
+                    <section class="story-section">
+                        <h2>🚀 Executive Summary</h2>
+                        <p>Havana Elephant Brand is launching a comprehensive Web3 ecosystem that transforms how fashion enthusiasts and content creators engage with brands through blockchain-powered community membership and revolutionary creator compensation.</p>
+
+                        <div class="numbers-showcase" style="background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(251, 176, 59, 0.1) 100%); border-left: 4px solid #FF6B35; padding: 20px; margin: 20px 0; border-radius: 8px;">
+                            <h4 style="color: #FBB03B; margin-bottom: 10px;">The Problem We're Solving:</h4>
+                            <p>The $104 billion creator economy pays creators virtually nothing. Traditional platforms like Instagram, TikTok, and Facebook extract maximum value while providing 0-5% revenue share. Meanwhile, 95% of creators earn $0 despite generating billions in platform value.</p>
+                        </div>
+                    </section>
+
+                    <!-- Key Community Metrics -->
+                    <section class="story-section">
+                        <h2>📊 Key Community Metrics</h2>
+                        <div class="stats-bar" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0;">
+                            <div class="stat-item" style="background: rgba(255, 107, 53, 0.1); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid rgba(255, 107, 53, 0.3);">
+                                <span class="stat-number" style="font-size: 2em; font-weight: bold; color: #FF6B35; display: block; margin-bottom: 8px;">$2.29M</span>
+                                <span class="stat-label" style="color: #FBB03B; font-size: 0.9em;">Funding Target</span>
+                            </div>
+                            <div class="stat-item" style="background: rgba(255, 107, 53, 0.1); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid rgba(255, 107, 53, 0.3);">
+                                <span class="stat-number" style="font-size: 2em; font-weight: bold; color: #FF6B35; display: block; margin-bottom: 8px;">1B</span>
+                                <span class="stat-label" style="color: #FBB03B; font-size: 0.9em;">Initial Token Supply</span>
+                            </div>
+                            <div class="stat-item" style="background: rgba(255, 107, 53, 0.1); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid rgba(255, 107, 53, 0.3);">
+                                <span class="stat-number" style="font-size: 2em; font-weight: bold; color: #FF6B35; display: block; margin-bottom: 8px;">55-75%</span>
+                                <span class="stat-label" style="color: #FBB03B; font-size: 0.9em;">Creator Revenue Share</span>
+                            </div>
+                            <div class="stat-item" style="background: rgba(255, 107, 53, 0.1); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid rgba(255, 107, 53, 0.3);">
+                                <span class="stat-number" style="font-size: 2em; font-weight: bold; color: #FF6B35; display: block; margin-bottom: 8px;">10,000+</span>
+                                <span class="stat-label" style="color: #FBB03B; font-size: 0.9em;">Community Target (18 months)</span>
+                            </div>
+                            <div class="stat-item" style="background: rgba(255, 107, 53, 0.1); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid rgba(255, 107, 53, 0.3);">
+                                <span class="stat-number" style="font-size: 2em; font-weight: bold; color: #FF6B35; display: block; margin-bottom: 8px;">100</span>
+                                <span class="stat-label" style="color: #FBB03B; font-size: 0.9em;">Genesis NFTs</span>
+                            </div>
+                            <div class="stat-item" style="background: rgba(255, 107, 53, 0.1); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid rgba(255, 107, 53, 0.3);">
+                                <span class="stat-number" style="font-size: 2em; font-weight: bold; color: #FF6B35; display: block; margin-bottom: 8px;">9,900</span>
+                                <span class="stat-label" style="color: #FBB03B; font-size: 0.9em;">Main Collection NFTs</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Three-Pillar Ecosystem -->
+                    <section class="story-section">
+                        <h2>🎯 The Three-Pillar Ecosystem</h2>
+
+                        <div class="pillars-grid">
+                            <div class="pillar-card">
+                                <h3 style="color: #F7931E; margin-bottom: 10px;">1. 🛍️ Sustainable Fashion</h3>
+                                <h4 style="color: #FBB03B; font-size: 1em; margin-bottom: 10px;">havanaelephantbrand.com</h4>
+                                <p>Established e-commerce platform featuring print-on-demand sustainable luxury products with NFT-integrated discounts and exclusive member benefits.</p>
+                            </div>
+
+                            <div class="pillar-card">
+                                <h3 style="color: #F7931E; margin-bottom: 10px;">2. 💰 Contentlynk Creator Platform</h3>
+                                <h4 style="color: #FBB03B; font-size: 1em; margin-bottom: 10px;">contentlynk.com</h4>
+                                <p>Revolutionary social media platform where content creators receive fair compensation:</p>
+                                <ul style="margin-left: 20px; margin-top: 10px;">
+                                    <li><strong>55-75% revenue share</strong> based on community tier (vs 0-5% traditional)</li>
+                                    <li><strong>Zero follower requirements</strong> - earn from day one</li>
+                                    <li><strong>Transparent blockchain payments</strong> with real-time analytics</li>
+                                    <li><strong>Beta Launch:</strong> Q2 2026 with 1,000 beta testers</li>
+                                </ul>
+                            </div>
+
+                            <div class="pillar-card">
+                                <h3 style="color: #F7931E; margin-bottom: 10px;">3. 🗳️ Community Governance</h3>
+                                <h4 style="color: #FBB03B; font-size: 1em; margin-bottom: 10px;">havanaelephant.com</h4>
+                                <p>NFT-based membership tiers providing voting rights, exclusive access, and platform ownership.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- NFT Membership Structure -->
+                    <section class="story-section">
+                        <h2>💎 NFT Membership Structure</h2>
+
+                        <h3 style="color: #F7931E; margin: 30px 0 15px 0;">Genesis Elephants (100 NFTs)</h3>
+                        <div class="price-table-wrapper">
+                            <table class="price-table">
+                                <thead>
+                                    <tr>
+                                        <th>Feature</th>
+                                        <th>Benefit</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Investment</td>
+                                        <td>1-2.5 ETH per NFT</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Product Discounts</td>
+                                        <td>30% (maximum tier)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Contentlynk Revenue Share</td>
+                                        <td>75% (vs standard 55%)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Governance Rights</td>
+                                        <td>Platform voting + VIP access</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Beta Access</td>
+                                        <td>6 months before public launch</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3 style="color: #F7931E; margin: 30px 0 15px 0;">Boldly Elephunky Main Collection (9,900 NFTs)</h3>
+                        <div class="stats-bar" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0;">
+                            <div class="stat-item" style="background: rgba(255, 107, 53, 0.1); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid rgba(255, 107, 53, 0.3);">
+                                <span class="stat-number" style="font-size: 2em; font-weight: bold; color: #FF6B35; display: block; margin-bottom: 8px;">$150</span>
+                                <span class="stat-label" style="color: #FBB03B; font-size: 0.9em;">Silver Tier (30%)<br>10% discounts, 55% revenue share</span>
+                            </div>
+                            <div class="stat-item" style="background: rgba(255, 107, 53, 0.1); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid rgba(255, 107, 53, 0.3);">
+                                <span class="stat-number" style="font-size: 2em; font-weight: bold; color: #FF6B35; display: block; margin-bottom: 8px;">$300</span>
+                                <span class="stat-label" style="color: #FBB03B; font-size: 0.9em;">Gold Tier (50%)<br>20% discounts, 65% revenue share</span>
+                            </div>
+                            <div class="stat-item" style="background: rgba(255, 107, 53, 0.1); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid rgba(255, 107, 53, 0.3);">
+                                <span class="stat-number" style="font-size: 2em; font-weight: bold; color: #FF6B35; display: block; margin-bottom: 8px;">$500</span>
+                                <span class="stat-label" style="color: #FBB03B; font-size: 0.9em;">Platinum Tier (20%)<br>30% discounts, 70% revenue share</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Token Distribution -->
+                    <section class="story-section">
+                        <h2>🪙 $HVNA Token Distribution</h2>
+                        <div class="price-table-wrapper">
+                            <table class="price-table">
+                                <thead>
+                                    <tr>
+                                        <th>Allocation</th>
+                                        <th>Percentage</th>
+                                        <th>Tokens</th>
+                                        <th>Purpose</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Pre-sale Program</td>
+                                        <td>20%</td>
+                                        <td>200,000,000</td>
+                                        <td>Community funding (12-month progressive)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Community Treasury</td>
+                                        <td>25%</td>
+                                        <td>250,000,000</td>
+                                        <td>Platform development & ecosystem growth</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Contentlynk Development</td>
+                                        <td>20%</td>
+                                        <td>200,000,000</td>
+                                        <td>Creator platform development</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Founder & Team</td>
+                                        <td>12%</td>
+                                        <td>120,000,000</td>
+                                        <td>Long-term commitment (24-month vest)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Platform Liquidity</td>
+                                        <td>10%</td>
+                                        <td>100,000,000</td>
+                                        <td>Community trading and utility</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Community Marketing</td>
+                                        <td>5%</td>
+                                        <td>50,000,000</td>
+                                        <td>Growth and engagement</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Strategic Partnerships</td>
+                                        <td>5%</td>
+                                        <td>50,000,000</td>
+                                        <td>Industry collaborations and integrations</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Strategic Reserves</td>
+                                        <td>3%</td>
+                                        <td>30,000,000</td>
+                                        <td>Emergency fund and future initiatives</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Token Presale Structure -->
+                    <section class="story-section">
+                        <h2>💸 Token Presale Structure</h2>
+                        <div class="price-table-wrapper">
+                            <table class="price-table">
+                                <thead>
+                                    <tr>
+                                        <th>Phase</th>
+                                        <th>Timeline</th>
+                                        <th>Price</th>
+                                        <th>Tokens</th>
+                                        <th>Target Revenue</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Seed Round</td>
+                                        <td>Month 1-2</td>
+                                        <td>$0.001</td>
+                                        <td>30,000,000</td>
+                                        <td>$30,000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Private Round</td>
+                                        <td>Month 3-4</td>
+                                        <td>$0.002</td>
+                                        <td>30,000,000</td>
+                                        <td>$60,000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Early Access</td>
+                                        <td>Month 5-6</td>
+                                        <td>$0.004</td>
+                                        <td>37,500,000</td>
+                                        <td>$150,000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Community Round</td>
+                                        <td>Month 7-8</td>
+                                        <td>$0.008</td>
+                                        <td>31,250,000</td>
+                                        <td>$250,000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Growth Round</td>
+                                        <td>Month 9-10</td>
+                                        <td>$0.015</td>
+                                        <td>26,670,000</td>
+                                        <td>$400,000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Final Round</td>
+                                        <td>Month 11-12</td>
+                                        <td>$0.025</td>
+                                        <td>24,000,000</td>
+                                        <td>$600,000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Last Call</td>
+                                        <td>Final 2 weeks</td>
+                                        <td>$0.035</td>
+                                        <td>21,000,000</td>
+                                        <td>$800,000</td>
+                                    </tr>
+                                    <tr style="background: rgba(255, 107, 53, 0.1); font-weight: bold;">
+                                        <td><strong>Total</strong></td>
+                                        <td><strong>12 months</strong></td>
+                                        <td><strong>$0.001-0.035</strong></td>
+                                        <td><strong>200,000,000</strong></td>
+                                        <td><strong>$2,290,000</strong></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Development Roadmap -->
+                    <section class="story-section">
+                        <h2>📅 Development Roadmap</h2>
+
+                        <h3 style="color: #F7931E; margin: 25px 0 15px 0;">Q4 2025: Foundation & Genesis Launch</h3>
+                        <ul class="advantage-list">
+                            <li>Smart contract development and security auditing</li>
+                            <li>Genesis NFT collection completion (35 additional pieces)</li>
+                            <li>Discord community growth to 2,000 members</li>
+                            <li>Contentlynk technical specifications finalized</li>
+                        </ul>
+
+                        <h3 style="color: #F7931E; margin: 25px 0 15px 0;">Q1 2026: Genesis Community Building</h3>
+                        <ul class="advantage-list">
+                            <li>Genesis NFT public launch</li>
+                            <li>$HVNA token presale begins (Seed & Private rounds)</li>
+                            <li>Web3 Shopify integration go-live</li>
+                            <li>Contentlynk alpha development begins</li>
+                        </ul>
+
+                        <h3 style="color: #F7931E; margin: 25px 0 15px 0;">Q2 2026: Platform Beta Launch</h3>
+                        <ul class="advantage-list">
+                            <li>Contentlynk beta testing with 1,000 creators</li>
+                            <li>Main NFT collection development completion</li>
+                            <li>Community governance implementation</li>
+                            <li>International expansion planning</li>
+                        </ul>
+
+                        <h3 style="color: #F7931E; margin: 25px 0 15px 0;">Q3 2026: Main Collection & Scaling</h3>
+                        <ul class="advantage-list">
+                            <li>9,900 NFT main collection public launch</li>
+                            <li>Contentlynk public beta launch</li>
+                            <li>Creator onboarding program (1,000 target)</li>
+                            <li>Community exchange listing preparation</li>
+                        </ul>
+
+                        <h3 style="color: #F7931E; margin: 25px 0 15px 0;">Q4 2026+: Global Expansion</h3>
+                        <ul class="advantage-list">
+                            <li>Platform feature expansion and mobile app development</li>
+                            <li>Major brand partnerships (3 target)</li>
+                            <li>International market expansion</li>
+                            <li>$250K+ monthly creator payouts through platform</li>
+                        </ul>
+                    </section>
+
+                    <!-- Leadership Team -->
+                    <section class="story-section">
+                        <h2>👨‍💼 Leadership Team</h2>
+
+                        <h3 style="color: #F7931E; margin: 25px 0 15px 0;">Founder & CEO: David Sime</h3>
+                        <ul class="advantage-list">
+                            <li><strong>Experience:</strong> 35+ years diversified business leadership</li>
+                            <li><strong>Web3 Expertise:</strong> 65+ NFTs created and minted</li>
+                            <li><strong>Publications:</strong> Author of 3 books: "Crypto Made Simple," "Canvass to Code," "Zero to NFT Hero"</li>
+                            <li><strong>Qualifications:</strong> Chartered Financial Planner</li>
+                            <li><strong>Track Record:</strong> Founded Elmswood Private Finance (£1.2M fees year 2), Vintage Entrepreneur Ltd</li>
+                            <li><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/davidjsime" target="_blank" rel="noopener noreferrer" style="color: #FF6B35;">linkedin.com/in/davidjsime</a></li>
+                        </ul>
+
+                        <h3 style="color: #F7931E; margin: 25px 0 15px 0;">Extended Team</h3>
+                        <p>Hybrid approach combining core full-time positions (CTO, CMO/Community Manager, Legal/Compliance) with specialized contractors for frontend development, creative design, content creation, and QA testing.</p>
+                    </section>
+
+                    <!-- Security & Compliance -->
+                    <section class="story-section">
+                        <h2>🔐 Security & Compliance</h2>
+                        <ul class="advantage-list">
+                            <li>Multiple independent smart contract security audits</li>
+                            <li>Multi-signature community treasury controls</li>
+                            <li>Time-locked upgrade mechanisms with community approval</li>
+                            <li>Emergency pause functionality for member protection</li>
+                            <li>Comprehensive audit trail for all community decisions</li>
+                            <li>Proactive legal compliance monitoring and advisory</li>
+                        </ul>
+                    </section>
+
+                    <!-- Financial Projections -->
+                    <section class="story-section">
+                        <h2>💰 Financial Projections</h2>
+
+                        <h3 style="color: #F7931E; margin: 25px 0 15px 0;">5-Year Contentlynk Growth</h3>
+                        <div class="price-table-wrapper">
+                            <table class="price-table">
+                                <thead>
+                                    <tr>
+                                        <th>Year</th>
+                                        <th>Community Users</th>
+                                        <th>Active Creators</th>
+                                        <th>Platform Revenue</th>
+                                        <th>Creator Payouts</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>2026</td>
+                                        <td>25K</td>
+                                        <td>1K</td>
+                                        <td>$1M</td>
+                                        <td>$600K</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2027</td>
+                                        <td>250K</td>
+                                        <td>10K</td>
+                                        <td>$15M</td>
+                                        <td>$10M</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2028</td>
+                                        <td>1M</td>
+                                        <td>50K</td>
+                                        <td>$75M</td>
+                                        <td>$50M</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2029</td>
+                                        <td>2.5M</td>
+                                        <td>125K</td>
+                                        <td>$200M</td>
+                                        <td>$140M</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2030</td>
+                                        <td>5M</td>
+                                        <td>250K</td>
+                                        <td>$500M</td>
+                                        <td>$350M</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Investment Thesis -->
+                    <section class="story-section">
+                        <h2>🎯 Investment Thesis</h2>
+                        <div class="numbers-showcase" style="background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(251, 176, 59, 0.1) 100%); border-left: 4px solid #FF6B35; padding: 20px; margin: 20px 0; border-radius: 8px;">
+                            <h4 style="color: #FBB03B; margin-bottom: 15px;">Why Havana Elephant Brand?</h4>
+                            <ul class="advantage-list">
+                                <li><strong>Proven Foundation:</strong> Built on established e-commerce business, reducing execution risk</li>
+                                <li><strong>Revolutionary Creator Model:</strong> Addresses fundamental inequity in $104B creator economy</li>
+                                <li><strong>Genuine Utility Focus:</strong> Immediate tangible benefits through product discounts, platform access, and governance rights</li>
+                                <li><strong>Transformative Potential:</strong> 55-75% creator revenue share vs 0-5% traditional platforms</li>
+                                <li><strong>Multiple Revenue Streams:</strong> NFT sales, token utility, product sales, platform revenue, brand partnerships</li>
+                                <li><strong>Scalable Technology:</strong> Layer 2 solutions enable cost-effective scaling to millions of users</li>
+                                <li><strong>Enhanced Tokenomics:</strong> Extended 18-month presale with adaptive burn mechanisms</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Community Vision -->
+                    <section class="story-section">
+                        <h2>🌍 Community Vision</h2>
+                        <p>Havana Elephant Brand invites community members to join not just a Web3 project, but a movement toward fair creator compensation and sustainable luxury. This isn't speculation—it's a complete paradigm shift in how platforms and creators share value.</p>
+
+                        <p style="margin-top: 15px;">Early community members position themselves as pioneers in three major trends:</p>
+                        <ol style="margin-left: 20px; margin-top: 10px;">
+                            <li style="margin-bottom: 10px;"><strong>Web3 Utility Revolution:</strong> Moving beyond speculation to genuine utility-driven ecosystems</li>
+                            <li style="margin-bottom: 10px;"><strong>Creator Economy Transformation:</strong> Fair compensation models for the $104B creator economy</li>
+                            <li style="margin-bottom: 10px;"><strong>Sustainable E-commerce Evolution:</strong> Blockchain integration with environmental responsibility</li>
+                        </ol>
+                    </section>
+
+                    <!-- CTA Section -->
+                    <section class="story-section highlight-section">
+                        <h2 style="text-align: center;">🐘 Join the Community</h2>
+                        <p style="text-align: center;">Be part of the revolution that puts creators first, celebrates style, and builds sustainable value.</p>
+
+                        <div class="cta-buttons" style="margin-top: 30px;">
+                            <button class="btn btn-primary btn-extra-large btn-glow" onclick="closeWhitePaperModal(); openPurchaseModal();">
+                                Buy $HVNA Now
+                            </button>
+                            <a href="https://havanaelephant.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-large">
+                                Visit Main Ecosystem Site
+                            </a>
+                        </div>
+                    </section>
+
+                    <!-- Contact Information -->
+                    <section class="story-section">
+                        <div class="numbers-showcase" style="background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(251, 176, 59, 0.1) 100%); border-left: 4px solid #FF6B35; padding: 20px; margin: 20px 0; border-radius: 8px;">
+                            <h4 style="color: #FBB03B; margin-bottom: 10px;">📧 Contact Information</h4>
+                            <p><strong>Official Community Channels:</strong></p>
+                            <ul class="advantage-list">
+                                <li>Website: <a href="https://havanaelephant.com" target="_blank" rel="noopener noreferrer" style="color: #FF6B35;">havanaelephant.com</a></li>
+                                <li>Creator Platform: <a href="https://contentlynk.com" target="_blank" rel="noopener noreferrer" style="color: #FF6B35;">contentlynk.com</a></li>
+                                <li>Fashion Store: <a href="https://havanaelephantbrand.com" target="_blank" rel="noopener noreferrer" style="color: #FF6B35;">havanaelephantbrand.com</a></li>
+                            </ul>
+                            <p style="margin-top: 15px; font-style: italic;">This white paper represents our commitment to transparency, community building, and sustainable value creation.</p>
+                        </div>
+                    </section>
+
+                    <!-- Footer -->
+                    <footer class="story-footer">
+                        <p class="story-location">Built in Dubrovnik. Deployed on Base. Powered by creators. Owned by community.</p>
+                        <p class="story-welcome"><strong>Welcome to the Havana Elephant Web3 Ecosystem—where creators become partners, not products.</strong></p>
+                    </footer>
+                </article>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <!-- Ethers.js for Web3 functionality - using unpkg CDN -->
+    <script src="https://unpkg.com/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+
+    <script src="config.js"></script>
+    <script src="main.js"></script>
+    <script src="web3.js"></script>
+    <script src="email-collection.js"></script>
+
+    <!-- Analytics (Replace with actual GA4 tag) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'GA_MEASUREMENT_ID');
+    </script>
+
+    <!-- Microsoft Clarity Analytics -->
+    <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "uzvogxflob");
+    </script>
+</body>
+</html>
