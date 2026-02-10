@@ -823,7 +823,75 @@
 
                 <div class="connected-wallet-info">
                     <div class="wallet-status">🟢 Connected: <span id="connected-address">0x0000...0000</span></div>
-                    <div class="wallet-balance">Balance: <span id="wallet-balance">0.00</span> ETH on Base</div>
+                    <div class="wallet-balance">Balance: <span id="wallet-balance">0.00</span> <span id="wallet-balance-symbol">ETH</span> on Base</div>
+                </div>
+
+                <!-- Bridge Helper -->
+                <div class="bridge-helper" id="bridge-helper">
+                    <div class="bridge-helper-icon">🌉</div>
+                    <div class="bridge-helper-content">
+                        <strong>Need tokens on Base?</strong>
+                        <p>Bridge ETH or stablecoins from other networks to Base.</p>
+                    </div>
+                    <a href="https://bridge.base.org" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-bridge">Bridge to Base</a>
+                </div>
+
+                <!-- Payment Token Selector -->
+                <div class="payment-token-selector">
+                    <h3 class="payment-selector-title">Payment Method</h3>
+                    <div class="token-cards">
+                        <button class="token-card selected" id="token-card-ETH" onclick="web3Helpers.selectPaymentToken('ETH')">
+                            <div class="token-card-left">
+                                <span class="token-card-icon">⟠</span>
+                                <div class="token-card-info">
+                                    <span class="token-card-name">Ether</span>
+                                    <span class="token-card-badge">ETH</span>
+                                    <span class="token-card-tag native">Native</span>
+                                </div>
+                            </div>
+                            <div class="token-card-right">
+                                <span class="token-card-balance" id="balance-ETH">0.0000 ETH</span>
+                                <span class="token-card-check">✓</span>
+                            </div>
+                        </button>
+                        <button class="token-card" id="token-card-USDT" onclick="web3Helpers.selectPaymentToken('USDT')">
+                            <div class="token-card-left">
+                                <span class="token-card-icon">💵</span>
+                                <div class="token-card-info">
+                                    <span class="token-card-name">Tether USD</span>
+                                    <span class="token-card-badge">USDT</span>
+                                </div>
+                            </div>
+                            <div class="token-card-right">
+                                <span class="token-card-balance" id="balance-USDT">0.00 USDT</span>
+                                <span class="token-card-check">✓</span>
+                            </div>
+                        </button>
+                        <button class="token-card" id="token-card-USDC" onclick="web3Helpers.selectPaymentToken('USDC')">
+                            <div class="token-card-left">
+                                <span class="token-card-icon">🔵</span>
+                                <div class="token-card-info">
+                                    <span class="token-card-name">USD Coin</span>
+                                    <span class="token-card-badge">USDC</span>
+                                </div>
+                            </div>
+                            <div class="token-card-right">
+                                <span class="token-card-balance" id="balance-USDC">0.00 USDC</span>
+                                <span class="token-card-check">✓</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stablecoin How-It-Works (hidden by default, shown for USDT/USDC) -->
+                <div class="stablecoin-explainer" id="stablecoin-explainer" style="display: none;">
+                    <strong>How stablecoin purchases work:</strong>
+                    <ol>
+                        <li>Approve <span class="selected-token-name">USDT</span> spending (one-time)</li>
+                        <li><span class="selected-token-name">USDT</span> is swapped to ETH automatically on-chain</li>
+                        <li>ETH is used to purchase $HVNA tokens</li>
+                        <li>Tokens allocated to your vesting schedule</li>
+                    </ol>
                 </div>
 
                 <div class="purchase-form">
@@ -859,8 +927,8 @@
                             <span>Token amount:</span>
                             <span id="detail-tokens">0 $HVNA</span>
                         </div>
-                        <div class="detail-row">
-                            <span>ETH equivalent:</span>
+                        <div class="detail-row" id="detail-eth-row">
+                            <span id="detail-cost-label">ETH equivalent:</span>
                             <span id="detail-eth">0.000 ETH (~€0.00)</span>
                         </div>
                         <div class="detail-row">
@@ -874,6 +942,11 @@
                     </div>
 
                     <p class="gas-note">Gas prices update in real-time based on Base network conditions</p>
+
+                    <!-- Approval button (hidden by default, shown for stablecoins) -->
+                    <button class="btn btn-primary btn-large btn-purchase btn-approve" id="approve-button" style="display: none;" onclick="web3Helpers.approveStablecoin()">
+                        Approve <span id="approve-token-name">USDT</span> Spending
+                    </button>
 
                     <button class="btn btn-primary btn-large btn-purchase" id="purchase-button" onclick="web3Helpers.executePurchase()">
                         Buy <span id="button-tokens">0</span> $HVNA for ~€<span id="button-amount">0</span>

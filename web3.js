@@ -16,7 +16,11 @@ const web3State = {
     chainId: null,
     balance: null,
     presaleContract: null,
-    tokenContract: null
+    tokenContract: null,
+    wrapperContract: null,
+    selectedToken: 'ETH',
+    stablecoinBalances: { USDT: '0', USDC: '0' },
+    stablecoinApproved: { USDT: false, USDC: false }
 };
 
 // EUR to ETH exchange rate (should be fetched from API)
@@ -178,6 +182,13 @@ async function onWalletConnected() {
             web3State.signer
         );
 
+        // Initialize wrapper contract
+        web3State.wrapperContract = new ethers.Contract(
+            WRAPPER_CONTRACT_CONFIG.address,
+            WRAPPER_CONTRACT_CONFIG.abi,
+            web3State.signer
+        );
+
         // Update UI
         updateWalletUI();
 
@@ -186,6 +197,11 @@ async function onWalletConnected() {
 
         // Fetch live exchange rate
         await updateExchangeRate();
+
+        // Fetch stablecoin balances and approvals in parallel
+        fetchStablecoinBalances();
+        checkStablecoinApproval('USDT');
+        checkStablecoinApproval('USDC');
 
     } catch (error) {
         console.error('Post-connection setup error:', error);
@@ -201,10 +217,264 @@ function updateWalletUI() {
         connectedAddress.textContent = appHelpers.formatAddress(web3State.address);
     }
 
-    // Update balance
+    // Update balance display based on selected token
+    updateBalanceDisplay();
+}
+
+function updateBalanceDisplay() {
     const walletBalance = document.getElementById('wallet-balance');
-    if (walletBalance) {
-        walletBalance.textContent = parseFloat(web3State.balance).toFixed(4);
+    const walletBalanceSymbol = document.getElementById('wallet-balance-symbol');
+    if (!walletBalance) return;
+
+    const token = web3State.selectedToken;
+    if (token === 'ETH') {
+        walletBalance.textContent = parseFloat(web3State.balance || 0).toFixed(4);
+        if (walletBalanceSymbol) walletBalanceSymbol.textContent = 'ETH';
+    } else {
+        const bal = web3State.stablecoinBalances[token] || '0';
+        walletBalance.textContent = parseFloat(bal).toFixed(2);
+        if (walletBalanceSymbol) walletBalanceSymbol.textContent = token;
+    }
+
+    // Update per-card balances
+    const ethBalEl = document.getElementById('balance-ETH');
+    if (ethBalEl) ethBalEl.textContent = parseFloat(web3State.balance || 0).toFixed(4) + ' ETH';
+    const usdtBalEl = document.getElementById('balance-USDT');
+    if (usdtBalEl) usdtBalEl.textContent = parseFloat(web3State.stablecoinBalances.USDT || 0).toFixed(2) + ' USDT';
+    const usdcBalEl = document.getElementById('balance-USDC');
+    if (usdcBalEl) usdcBalEl.textContent = parseFloat(web3State.stablecoinBalances.USDC || 0).toFixed(2) + ' USDC';
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// PAYMENT TOKEN SELECTION
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+function selectPaymentToken(token) {
+    web3State.selectedToken = token;
+
+    // Update card selection UI
+    document.querySelectorAll('.token-card').forEach(card => card.classList.remove('selected'));
+    const selectedCard = document.getElementById('token-card-' + token);
+    if (selectedCard) selectedCard.classList.add('selected');
+
+    // Show/hide stablecoin explainer
+    const explainer = document.getElementById('stablecoin-explainer');
+    if (explainer) {
+        explainer.style.display = (token === 'USDT' || token === 'USDC') ? 'block' : 'none';
+        // Update token name in explainer
+        explainer.querySelectorAll('.selected-token-name').forEach(el => el.textContent = token);
+    }
+
+    // Update cost label
+    const costLabel = document.getElementById('detail-cost-label');
+    if (costLabel) {
+        costLabel.textContent = token === 'ETH' ? 'ETH equivalent:' : token + ' equivalent:';
+    }
+
+    // Show/hide approve button
+    updateApprovalUI();
+
+    // Update balance display
+    updateBalanceDisplay();
+
+    // Recalculate purchase details
+    updatePurchaseDetails();
+
+    appHelpers.trackEvent('payment_token_selected', { token: token });
+}
+
+function updateApprovalUI() {
+    const token = web3State.selectedToken;
+    const approveBtn = document.getElementById('approve-button');
+    const purchaseBtn = document.getElementById('purchase-button');
+    const approveTokenName = document.getElementById('approve-token-name');
+
+    if (!approveBtn || !purchaseBtn) return;
+
+    if ((token === 'USDT' || token === 'USDC') && !web3State.stablecoinApproved[token]) {
+        approveBtn.style.display = 'block';
+        purchaseBtn.style.display = 'none';
+        if (approveTokenName) approveTokenName.textContent = token;
+    } else {
+        approveBtn.style.display = 'none';
+        purchaseBtn.style.display = 'block';
+    }
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// STABLECOIN BALANCE & APPROVAL
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+async function fetchStablecoinBalances() {
+    if (!web3State.signer || !web3State.address) return;
+
+    for (const symbol of ['USDT', 'USDC']) {
+        try {
+            const config = STABLECOIN_CONFIG[symbol];
+            const contract = new ethers.Contract(config.address, ERC20_ABI, web3State.signer);
+            const balance = await contract.balanceOf(web3State.address);
+            web3State.stablecoinBalances[symbol] = ethers.utils.formatUnits(balance, config.decimals);
+        } catch (error) {
+            console.warn('Failed to fetch ' + symbol + ' balance:', error);
+            web3State.stablecoinBalances[symbol] = '0';
+        }
+    }
+
+    updateBalanceDisplay();
+}
+
+async function checkStablecoinApproval(symbol) {
+    if (!web3State.signer || !web3State.address) return;
+
+    try {
+        const config = STABLECOIN_CONFIG[symbol];
+        const contract = new ethers.Contract(config.address, ERC20_ABI, web3State.signer);
+        const allowance = await contract.allowance(web3State.address, WRAPPER_CONTRACT_CONFIG.address);
+        // Consider approved if allowance > 1000 tokens (sufficient for most purchases)
+        const threshold = ethers.utils.parseUnits('1000', config.decimals);
+        web3State.stablecoinApproved[symbol] = allowance.gte(threshold);
+    } catch (error) {
+        console.warn('Failed to check ' + symbol + ' approval:', error);
+        web3State.stablecoinApproved[symbol] = false;
+    }
+
+    updateApprovalUI();
+}
+
+async function approveStablecoin() {
+    const symbol = web3State.selectedToken;
+    if (symbol !== 'USDT' && symbol !== 'USDC') return;
+
+    const config = STABLECOIN_CONFIG[symbol];
+    const approveBtn = document.getElementById('approve-button');
+    const originalText = approveBtn.textContent;
+
+    try {
+        approveBtn.disabled = true;
+        approveBtn.textContent = 'Waiting for wallet confirmation...';
+
+        const contract = new ethers.Contract(config.address, ERC20_ABI, web3State.signer);
+        // Approve max uint256
+        const maxApproval = ethers.constants.MaxUint256;
+        const tx = await contract.approve(WRAPPER_CONTRACT_CONFIG.address, maxApproval);
+
+        approveBtn.textContent = 'Approving on blockchain...';
+        await tx.wait();
+
+        web3State.stablecoinApproved[symbol] = true;
+        updateApprovalUI();
+
+        appHelpers.showNotification(symbol + ' approved successfully!', 'success');
+        appHelpers.trackEvent('stablecoin_approved', { token: symbol, tx_hash: tx.hash });
+
+    } catch (error) {
+        console.error('Approval error:', error);
+        if (error.code === 4001) {
+            appHelpers.showNotification('Approval cancelled by user.', 'error');
+        } else {
+            appHelpers.showNotification('Failed to approve ' + symbol + '. Please try again.', 'error');
+        }
+        appHelpers.trackEvent('stablecoin_approval_failed', { token: symbol, error: error.message });
+    } finally {
+        approveBtn.disabled = false;
+        approveBtn.textContent = originalText;
+    }
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// STABLECOIN PURCHASE VIA WRAPPER
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+async function purchaseWithStablecoin(eurAmount) {
+    const symbol = web3State.selectedToken;
+    const config = STABLECOIN_CONFIG[symbol];
+
+    // Convert EUR to stablecoin amount (1:1 for USD stablecoins, approximate)
+    // EUR to USD: use a rough 1.08 conversion (could be fetched live)
+    const eurToUsd = 1.08;
+    const usdAmount = eurAmount * eurToUsd;
+    const stablecoinAmount = ethers.utils.parseUnits(usdAmount.toFixed(config.decimals > 2 ? 2 : config.decimals), config.decimals);
+
+    const currentTokenPrice = 0.01;
+    const tokensReceived = Math.floor(eurAmount / currentTokenPrice);
+    const hvnaTokenAmount = ethers.utils.parseEther(tokensReceived.toString());
+
+    const button = document.getElementById('purchase-button');
+    const originalText = button.textContent;
+
+    try {
+        button.disabled = true;
+        button.textContent = 'Waiting for wallet confirmation...';
+
+        appHelpers.trackEvent('stablecoin_purchase_initiated', {
+            token: symbol,
+            amount_eur: eurAmount,
+            stablecoin_amount: usdAmount
+        });
+
+        // Call wrapper contract
+        const wrapperContract = new ethers.Contract(
+            WRAPPER_CONTRACT_CONFIG.address,
+            WRAPPER_CONTRACT_CONFIG.abi,
+            web3State.signer
+        );
+
+        const tx = await wrapperContract.purchaseWithStablecoin(
+            config.address,
+            stablecoinAmount,
+            hvnaTokenAmount,
+            0, // minEthOut = 0 (accept any slippage for now)
+            { gasLimit: 500000 }
+        );
+
+        button.textContent = 'Processing on blockchain...';
+        const receipt = await tx.wait();
+
+        console.log('Stablecoin purchase successful:', receipt);
+
+        // Update success screen
+        document.getElementById('success-tokens').textContent = tokensReceived.toLocaleString('en-US');
+        document.getElementById('success-wallet').textContent = appHelpers.formatAddress(web3State.address);
+        document.getElementById('success-amount').textContent = '€' + eurAmount.toFixed(2) + ' (' + usdAmount.toFixed(2) + ' ' + symbol + ')';
+        document.getElementById('success-token-amount').textContent = tokensReceived.toLocaleString('en-US') + ' $HVNA';
+
+        const txLink = document.getElementById('tx-link');
+        txLink.href = 'https://basescan.org/tx/' + tx.hash;
+        txLink.textContent = tx.hash.substring(0, 10) + '...' + tx.hash.substring(tx.hash.length - 8);
+
+        appHelpers.trackConversion(eurAmount, tokensReceived, web3State.address);
+        appHelpers.trackEvent('stablecoin_purchase_success', {
+            token: symbol,
+            tx_hash: tx.hash,
+            amount_eur: eurAmount,
+            tokens: tokensReceived
+        });
+
+        appHelpers.showModalScreen('modal-success');
+
+        setTimeout(() => {
+            showEmailCollectionModal(eurAmount, tokensReceived, tx.hash);
+        }, 2000);
+
+        // Refresh balances
+        await fetchStablecoinBalances();
+
+    } catch (error) {
+        console.error('Stablecoin purchase error:', error);
+
+        let errorMessage = 'Transaction failed. Please try again.';
+        if (error.code === 4001) {
+            errorMessage = 'Transaction cancelled by user.';
+        } else if (error.message && error.message.includes('insufficient')) {
+            errorMessage = 'Insufficient ' + symbol + ' balance.';
+        }
+
+        appHelpers.showNotification(errorMessage, 'error');
+        appHelpers.trackEvent('stablecoin_purchase_failed', { token: symbol, error: error.message });
+    } finally {
+        button.disabled = false;
+        button.textContent = originalText;
+        updatePurchaseDetails();
     }
 }
 
@@ -287,24 +557,55 @@ async function updatePurchaseDetails() {
     const detailTotal = document.getElementById('detail-total');
     const purchaseButton = document.getElementById('purchase-button');
 
-    if (detailEth) {
-        detailEth.textContent = `${ethAmount.toFixed(6)} ETH (~€${eurAmount.toFixed(2)})`;
-    }
-    if (detailGas) {
-        detailGas.textContent = `~${gasEstimate.toFixed(6)} ETH (~€${gasCostEur.toFixed(2)})`;
-    }
-    if (detailTotal) {
-        detailTotal.textContent = `~${totalEth.toFixed(6)} ETH (~€${totalEur.toFixed(2)})`;
-    }
+    const selectedToken = web3State.selectedToken;
 
-    // Check if user has enough balance
-    if (purchaseButton) {
-        if (web3State.balance && parseFloat(web3State.balance) < totalEth) {
-            purchaseButton.disabled = true;
-            purchaseButton.textContent = 'Insufficient ETH Balance';
-        } else {
-            purchaseButton.disabled = false;
-            purchaseButton.textContent = `Buy ${tokensReceived.toLocaleString('en-US')} $HVNA for ~€${eurAmount.toFixed(2)}`;
+    if (selectedToken === 'USDT' || selectedToken === 'USDC') {
+        // Stablecoin mode: show USD equivalent
+        const eurToUsd = 1.08;
+        const usdAmount = eurAmount * eurToUsd;
+
+        if (detailEth) {
+            detailEth.textContent = `${usdAmount.toFixed(2)} ${selectedToken} (~€${eurAmount.toFixed(2)})`;
+        }
+        if (detailGas) {
+            detailGas.textContent = `~${gasEstimate.toFixed(6)} ETH (~€${gasCostEur.toFixed(2)})`;
+        }
+        if (detailTotal) {
+            detailTotal.textContent = `~${usdAmount.toFixed(2)} ${selectedToken} + gas (~€${totalEur.toFixed(2)})`;
+        }
+
+        // Check stablecoin balance
+        if (purchaseButton) {
+            const stableBal = parseFloat(web3State.stablecoinBalances[selectedToken] || 0);
+            if (stableBal < usdAmount) {
+                purchaseButton.disabled = true;
+                purchaseButton.textContent = 'Insufficient ' + selectedToken + ' Balance';
+            } else {
+                purchaseButton.disabled = false;
+                purchaseButton.textContent = `Buy ${tokensReceived.toLocaleString('en-US')} $HVNA for ~${usdAmount.toFixed(2)} ${selectedToken}`;
+            }
+        }
+    } else {
+        // ETH mode
+        if (detailEth) {
+            detailEth.textContent = `${ethAmount.toFixed(6)} ETH (~€${eurAmount.toFixed(2)})`;
+        }
+        if (detailGas) {
+            detailGas.textContent = `~${gasEstimate.toFixed(6)} ETH (~€${gasCostEur.toFixed(2)})`;
+        }
+        if (detailTotal) {
+            detailTotal.textContent = `~${totalEth.toFixed(6)} ETH (~€${totalEur.toFixed(2)})`;
+        }
+
+        // Check ETH balance
+        if (purchaseButton) {
+            if (web3State.balance && parseFloat(web3State.balance) < totalEth) {
+                purchaseButton.disabled = true;
+                purchaseButton.textContent = 'Insufficient ETH Balance';
+            } else {
+                purchaseButton.disabled = false;
+                purchaseButton.textContent = `Buy ${tokensReceived.toLocaleString('en-US')} $HVNA for ~€${eurAmount.toFixed(2)}`;
+            }
         }
     }
 }
@@ -324,6 +625,11 @@ async function executePurchase() {
     if (eurAmount < 10) {
         appHelpers.showNotification('Minimum purchase is €10.', 'error');
         return;
+    }
+
+    // Route to stablecoin purchase if USDT or USDC selected
+    if (web3State.selectedToken === 'USDT' || web3State.selectedToken === 'USDC') {
+        return purchaseWithStablecoin(eurAmount);
     }
 
     try {
@@ -496,5 +802,7 @@ window.web3Helpers = {
     connectWallet,
     executePurchase,
     addTokenToWallet,
+    selectPaymentToken,
+    approveStablecoin,
     web3State
 };

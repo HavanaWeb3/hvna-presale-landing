@@ -111,6 +111,93 @@ const PRESALE_CONTRACT_CONFIG = {
     ]
 };
 
+// Wrapper Contract (swaps stablecoins → ETH → presale in one tx)
+const WRAPPER_CONTRACT_CONFIG = {
+    address: '0x1bE0684a0B5C4141E6b39e063FEAe231EB22D3c0',
+    abi: [
+        {
+            "inputs": [
+                { "internalType": "address", "name": "stablecoin", "type": "address" },
+                { "internalType": "uint256", "name": "stablecoinAmount", "type": "uint256" },
+                { "internalType": "uint256", "name": "hvnaTokenAmount", "type": "uint256" },
+                { "internalType": "uint256", "name": "minEthOut", "type": "uint256" }
+            ],
+            "name": "purchaseWithStablecoin",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                { "internalType": "address", "name": "stablecoin", "type": "address" },
+                { "internalType": "uint256", "name": "stablecoinAmount", "type": "uint256" }
+            ],
+            "name": "getEstimatedEthOutput",
+            "outputs": [
+                { "internalType": "uint256", "name": "", "type": "uint256" }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        }
+    ]
+};
+
+// Stablecoin Token Addresses on Base
+const STABLECOIN_CONFIG = {
+    USDT: {
+        address: '0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2',
+        symbol: 'USDT',
+        name: 'Tether USD',
+        decimals: 6,
+        icon: '/images/tokens/usdt.svg'
+    },
+    USDC: {
+        address: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
+        symbol: 'USDC',
+        name: 'USD Coin',
+        decimals: 6,
+        icon: '/images/tokens/usdc.svg'
+    }
+};
+
+// Minimal ERC20 ABI for balance, approve, allowance
+const ERC20_ABI = [
+    {
+        "inputs": [{ "name": "account", "type": "address" }],
+        "name": "balanceOf",
+        "outputs": [{ "name": "", "type": "uint256" }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            { "name": "spender", "type": "address" },
+            { "name": "amount", "type": "uint256" }
+        ],
+        "name": "approve",
+        "outputs": [{ "name": "", "type": "bool" }],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            { "name": "owner", "type": "address" },
+            { "name": "spender", "type": "address" }
+        ],
+        "name": "allowance",
+        "outputs": [{ "name": "", "type": "uint256" }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "decimals",
+        "outputs": [{ "name": "", "type": "uint8" }],
+        "stateMutability": "view",
+        "type": "function"
+    }
+];
+
 const TOKEN_CONTRACT_CONFIG = {
     address: '0xb5561d071b39221239a56f0379a6bb96c85fb94f', // Base mainnet HVNA token
     symbol: 'HVNA',
@@ -335,6 +422,9 @@ const EMAIL_CONFIG = {
 window.CONFIG = {
     BASE_NETWORK_CONFIG,
     PRESALE_CONTRACT_CONFIG,
+    WRAPPER_CONTRACT_CONFIG,
+    STABLECOIN_CONFIG,
+    ERC20_ABI,
     TOKEN_CONTRACT_CONFIG,
     PRESALE_PHASES,
     API_ENDPOINTS,
@@ -348,6 +438,9 @@ window.CONFIG = {
 // Export individual variables for backward compatibility with web3.js
 window.BASE_NETWORK_CONFIG = BASE_NETWORK_CONFIG;
 window.PRESALE_CONTRACT_CONFIG = PRESALE_CONTRACT_CONFIG;
+window.WRAPPER_CONTRACT_CONFIG = WRAPPER_CONTRACT_CONFIG;
+window.STABLECOIN_CONFIG = STABLECOIN_CONFIG;
+window.ERC20_ABI = ERC20_ABI;
 window.TOKEN_CONTRACT_CONFIG = TOKEN_CONTRACT_CONFIG;
 window.PRESALE_PHASES = PRESALE_PHASES;
 window.API_ENDPOINTS = API_ENDPOINTS;

@@ -1676,6 +1676,205 @@ h3 {
     font-weight: 600;
 }
 
+/* Bridge Helper */
+.bridge-helper {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    background: linear-gradient(135deg, #EEF2FF, #F0F9FF);
+    border: 1px solid #C7D2FE;
+    border-radius: 12px;
+    padding: var(--space-md);
+    margin-bottom: var(--space-lg);
+}
+
+.bridge-helper-icon {
+    font-size: 28px;
+    flex-shrink: 0;
+}
+
+.bridge-helper-content {
+    flex: 1;
+}
+
+.bridge-helper-content strong {
+    display: block;
+    font-size: 14px;
+    color: var(--color-black);
+    margin-bottom: 2px;
+}
+
+.bridge-helper-content p {
+    font-size: 12px;
+    color: #6B7280;
+    margin: 0;
+}
+
+.btn-bridge {
+    padding: 8px 16px;
+    font-size: 13px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+@media (max-width: 767px) {
+    .bridge-helper {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+/* Payment Token Selector */
+.payment-token-selector {
+    margin-bottom: var(--space-lg);
+}
+
+.payment-selector-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-black);
+    margin-bottom: var(--space-md);
+}
+
+.token-cards {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.token-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-md);
+    background: var(--color-gray-light);
+    border: 2px solid transparent;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    width: 100%;
+    text-align: left;
+}
+
+.token-card:hover {
+    border-color: var(--color-gray-medium);
+    background: var(--color-white);
+}
+
+.token-card.selected {
+    border-color: var(--color-success);
+    background: #F0FDF4;
+    box-shadow: 0 0 0 1px var(--color-success);
+}
+
+.token-card-left {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.token-card-icon {
+    font-size: 24px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.token-card-info {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.token-card-name {
+    font-weight: 600;
+    color: var(--color-black);
+    font-size: 15px;
+}
+
+.token-card-badge {
+    font-size: 11px;
+    font-weight: 600;
+    color: #6B7280;
+    background: #E5E7EB;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.token-card-tag.native {
+    font-size: 10px;
+    font-weight: 600;
+    color: #3B82F6;
+    background: #DBEAFE;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.token-card-right {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.token-card-balance {
+    font-size: 13px;
+    color: #6B7280;
+    font-weight: 500;
+    font-family: var(--font-mono);
+}
+
+.token-card-check {
+    display: none;
+    color: var(--color-success);
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.token-card.selected .token-card-check {
+    display: block;
+}
+
+/* Stablecoin Explainer */
+.stablecoin-explainer {
+    background: #FFFBEB;
+    border: 1px solid #FDE68A;
+    border-radius: 12px;
+    padding: var(--space-md);
+    margin-bottom: var(--space-lg);
+}
+
+.stablecoin-explainer strong {
+    display: block;
+    font-size: 14px;
+    color: #92400E;
+    margin-bottom: var(--space-sm);
+}
+
+.stablecoin-explainer ol {
+    list-style: decimal;
+    padding-left: 20px;
+    margin: 0;
+}
+
+.stablecoin-explainer li {
+    font-size: 13px;
+    color: #78350F;
+    padding: 2px 0;
+}
+
+/* Approve Button */
+.btn-approve {
+    background: linear-gradient(135deg, #F59E0B, #D97706);
+    margin-bottom: var(--space-sm);
+}
+
+.btn-approve:hover {
+    box-shadow: 0 12px 28px rgba(245, 158, 11, 0.4);
+}
+
 /* Purchase Form */
 .purchase-form {
     display: flex;
