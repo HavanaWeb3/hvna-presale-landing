@@ -27,6 +27,50 @@ const web3State = {
 let eurToEthRate = 0.00029; // Example: 1 EUR = 0.00029 ETH (update dynamically)
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// MOBILE WALLET DETECTION (RETRY LOGIC)
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+// Mobile wallets (MetaMask, Trust Wallet, Coinbase) inject window.ethereum
+// with a delay in their in-app browsers. This retries detection to handle that.
+function detectWalletWithRetry(maxAttempts, interval) {
+    if (maxAttempts === undefined) maxAttempts = 20;
+    if (interval === undefined) interval = 500;
+    return new Promise(function(resolve) {
+        var attempts = 0;
+
+        function check() {
+            if (window.ethereum) {
+                console.log('Wallet detected on attempt ' + (attempts + 1));
+                resolve(window.ethereum);
+            } else if (attempts < maxAttempts) {
+                attempts++;
+                setTimeout(check, interval);
+            } else {
+                console.log('No wallet detected after ' + maxAttempts + ' attempts');
+                resolve(null);
+            }
+        }
+
+        check();
+    });
+}
+
+function isMobileDevice() {
+    return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+}
+
+function showMobileWalletGuidance() {
+    var msg = 'No wallet detected.\n\n' +
+        'To connect your wallet on mobile:\n\n' +
+        '1. Open your wallet app (MetaMask, Trust Wallet, or Coinbase Wallet)\n' +
+        '2. Find the built-in Browser\n' +
+        '3. Navigate to: presale.havanaelephant.com\n' +
+        '4. Tap Connect Wallet\n\n' +
+        'This ensures the wallet can communicate with the site.';
+    alert(msg);
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // WALLET CONNECTION
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -38,36 +82,33 @@ async function connectWallet(walletType) {
 
         switch (walletType) {
             case 'metamask':
-                if (typeof window.ethereum === 'undefined') {
-                    throw new Error('MetaMask is not installed. Please install MetaMask to continue.');
-                }
-                provider = new ethers.providers.Web3Provider(window.ethereum);
-                await window.ethereum.request({ method: 'eth_requestAccounts' });
-                break;
-
             case 'rabby':
-                if (typeof window.ethereum === 'undefined') {
-                    throw new Error('Rabby is not installed. Please install Rabby wallet to continue.');
+            case 'coinbase': {
+                // Use retry logic: mobile wallets inject ethereum with a delay
+                var ethereum = await detectWalletWithRetry(10, 300);
+                if (!ethereum) {
+                    if (isMobileDevice()) {
+                        showMobileWalletGuidance();
+                        appHelpers.trackEvent('wallet_connection_failed', {
+                            wallet_type: walletType,
+                            error: 'no_wallet_mobile'
+                        });
+                        return;
+                    }
+                    var walletNames = { metamask: 'MetaMask', rabby: 'Rabby', coinbase: 'Coinbase Wallet' };
+                    throw new Error((walletNames[walletType] || 'Wallet') + ' is not installed. Please install it to continue.');
                 }
-                provider = new ethers.providers.Web3Provider(window.ethereum);
-                await window.ethereum.request({ method: 'eth_requestAccounts' });
+                provider = new ethers.providers.Web3Provider(ethereum);
+                await ethereum.request({ method: 'eth_requestAccounts' });
                 break;
-
-            case 'coinbase':
-                if (typeof window.ethereum === 'undefined') {
-                    throw new Error('Coinbase Wallet is not installed.');
-                }
-                provider = new ethers.providers.Web3Provider(window.ethereum);
-                await window.ethereum.request({ method: 'eth_requestAccounts' });
-                break;
+            }
 
             case 'walletconnect':
-                // WalletConnect integration would require additional library
-                // For now, show instructions
-                alert('Please use the WalletConnect option in your mobile wallet app to scan a QR code. This feature requires additional setup.');
+                // WalletConnect integration planned for future release
+                alert('WalletConnect support is coming soon.\n\nFor now, please open this page directly in your wallet app\'s built-in browser to connect.');
                 appHelpers.trackEvent('wallet_connection_failed', {
                     wallet_type: walletType,
-                    error: 'WalletConnect not implemented'
+                    error: 'WalletConnect not yet implemented'
                 });
                 return;
 
@@ -764,16 +805,19 @@ async function addTokenToWallet() {
 // WALLET EVENT LISTENERS
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-if (typeof window.ethereum !== 'undefined') {
-    // Account changed
-    window.ethereum.on('accountsChanged', function (accounts) {
+// Register wallet event listeners.
+// On mobile, ethereum may not exist yet at script load time,
+// so we set up listeners once it becomes available.
+function registerWalletEventListeners(ethereum) {
+    if (!ethereum || ethereum._hvnaListenersRegistered) return;
+    ethereum._hvnaListenersRegistered = true;
+
+    ethereum.on('accountsChanged', function (accounts) {
         if (accounts.length === 0) {
-            // User disconnected wallet
             web3State.address = null;
             web3State.signer = null;
             appHelpers.trackEvent('wallet_disconnected');
         } else {
-            // User switched account
             web3State.address = accounts[0];
             appHelpers.trackEvent('wallet_account_changed', {
                 new_address: web3State.address.substring(0, 10) + '...'
@@ -782,17 +826,24 @@ if (typeof window.ethereum !== 'undefined') {
         }
     });
 
-    // Chain changed
-    window.ethereum.on('chainChanged', function (chainId) {
+    ethereum.on('chainChanged', function (chainId) {
         web3State.chainId = parseInt(chainId, 16);
         appHelpers.trackEvent('wallet_chain_changed', {
             chain_id: web3State.chainId
         });
-
-        // Reload page on chain change (recommended by MetaMask)
         window.location.reload();
     });
 }
+
+// Register immediately if ethereum is already available
+if (typeof window.ethereum !== 'undefined') {
+    registerWalletEventListeners(window.ethereum);
+}
+
+// Also listen for the EIP-6963 / late-injection event (covers mobile wallets)
+window.addEventListener('ethereum#initialized', function () {
+    registerWalletEventListeners(window.ethereum);
+});
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // EXPORTS
