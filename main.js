@@ -357,6 +357,7 @@ function setQuickAmount(amount) {
 function updatePurchaseCalculation() {
     const eurAmount = parseFloat(document.getElementById('eur-amount').value) || 0;
     const currentPrice = 0.001; // €0.001 per token
+    var minEur = (typeof CONSTANTS !== 'undefined') ? CONSTANTS.MIN_PURCHASE_EUR : 10;
 
     const tokensReceived = Math.floor(eurAmount / currentPrice);
 
@@ -365,6 +366,22 @@ function updatePurchaseCalculation() {
     document.getElementById('detail-tokens').textContent = tokensReceived.toLocaleString('en-US') + ' $HVNA';
     document.getElementById('button-tokens').textContent = tokensReceived.toLocaleString('en-US');
     document.getElementById('button-amount').textContent = eurAmount.toFixed(2);
+
+    // Show minimum purchase warning
+    var minWarning = document.getElementById('min-purchase-warning');
+    if (eurAmount > 0 && eurAmount < minEur) {
+        if (!minWarning) {
+            minWarning = document.createElement('p');
+            minWarning.id = 'min-purchase-warning';
+            minWarning.style.cssText = 'color: #ff6b6b; font-size: 0.9em; margin: 8px 0 0; font-weight: 600;';
+            var inputWrapper = document.getElementById('eur-amount').parentElement;
+            inputWrapper.parentElement.appendChild(minWarning);
+        }
+        minWarning.textContent = 'Minimum purchase: 10,000 tokens (€' + minEur + ')';
+        minWarning.style.display = 'block';
+    } else if (minWarning) {
+        minWarning.style.display = 'none';
+    }
 
     trackEvent('amount_entered', { amount: eurAmount });
 }

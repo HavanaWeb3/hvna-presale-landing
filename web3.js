@@ -436,7 +436,7 @@ async function purchaseWithStablecoin(eurAmount) {
     const usdAmount = eurAmount * eurToUsd;
     const stablecoinAmount = ethers.utils.parseUnits(usdAmount.toFixed(config.decimals > 2 ? 2 : config.decimals), config.decimals);
 
-    const currentTokenPrice = 0.01;
+    const currentTokenPrice = 0.001; // €0.001 per token (Seed Round)
     const tokensReceived = Math.floor(eurAmount / currentTokenPrice);
     const hvnaTokenAmount = ethers.utils.parseEther(tokensReceived.toString());
 
@@ -559,12 +559,26 @@ async function updatePurchaseDetails() {
     if (!eurInput) return;
 
     const eurAmount = parseFloat(eurInput.value) || 0;
+    const purchaseButton = document.getElementById('purchase-button');
+    const minEur = CONSTANTS.MIN_PURCHASE_EUR; // €10
 
     if (eurAmount === 0) {
+        if (purchaseButton) {
+            purchaseButton.disabled = true;
+            purchaseButton.textContent = 'Enter an amount to purchase';
+        }
         return;
     }
 
-    const currentTokenPrice = 0.01; // €0.01 per token
+    if (eurAmount < minEur) {
+        if (purchaseButton) {
+            purchaseButton.disabled = true;
+            purchaseButton.textContent = 'Minimum purchase: ' + (minEur / 0.001).toLocaleString('en-US') + ' tokens (€' + minEur + ')';
+        }
+        return;
+    }
+
+    const currentTokenPrice = 0.001; // €0.001 per token (Seed Round)
     const tokensReceived = Math.floor(eurAmount / currentTokenPrice);
     const ethAmount = eurAmount * eurToEthRate;
 
@@ -596,7 +610,6 @@ async function updatePurchaseDetails() {
     const detailEth = document.getElementById('detail-eth');
     const detailGas = document.getElementById('detail-gas');
     const detailTotal = document.getElementById('detail-total');
-    const purchaseButton = document.getElementById('purchase-button');
 
     const selectedToken = web3State.selectedToken;
 
@@ -663,8 +676,8 @@ async function executePurchase() {
         return;
     }
 
-    if (eurAmount < 10) {
-        appHelpers.showNotification('Minimum purchase is €10.', 'error');
+    if (eurAmount < CONSTANTS.MIN_PURCHASE_EUR) {
+        appHelpers.showNotification('Minimum purchase: 10,000 tokens (€' + CONSTANTS.MIN_PURCHASE_EUR + ')', 'error');
         return;
     }
 
@@ -678,7 +691,7 @@ async function executePurchase() {
             amount_eur: eurAmount
         });
 
-        const currentTokenPrice = 0.01;
+        const currentTokenPrice = 0.001; // €0.001 per token (Seed Round)
         const tokensReceived = Math.floor(eurAmount / currentTokenPrice);
         const ethAmount = eurAmount * eurToEthRate;
         const ethValue = ethers.utils.parseEther(ethAmount.toFixed(18));
