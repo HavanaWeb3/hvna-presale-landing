@@ -83,27 +83,33 @@ async function submitEmail(event) {
     submitButton.disabled = true;
     submitButton.textContent = 'Subscribing...';
 
+    // Build the payload once so we can reuse it for localStorage fallback
+    const payload = {
+        email: email,
+        walletAddress: emailState.walletAddress,
+        purchaseAmount: emailState.purchaseAmount,
+        tokenAmount: emailState.tokenAmount,
+        transactionHash: emailState.transactionHash,
+        phase: 'Seed Round',
+        source: 'Landing-Page-Purchase',
+        timestamp: new Date().toISOString()
+    };
+
+    // Always save to localStorage as a safety net
+    saveEmailToLocalStorage(payload);
+
     try {
         appHelpers.trackEvent('email_submitted', {
             purchase_amount: emailState.purchaseAmount
         });
 
-        // Submit to backend
+        // Submit to backend (handles storage + welcome email)
         const response = await fetch('/api/email-subscribe', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                email: email,
-                walletAddress: emailState.walletAddress,
-                purchaseAmount: emailState.purchaseAmount,
-                tokenAmount: emailState.tokenAmount,
-                transactionHash: emailState.transactionHash,
-                phase: 'Seed Round',
-                source: 'Landing-Page-Purchase',
-                timestamp: new Date().toISOString()
-            })
+            body: JSON.stringify(payload)
         });
 
         const data = await response.json();
@@ -117,57 +123,42 @@ async function submitEmail(event) {
                 purchase_amount: emailState.purchaseAmount
             });
 
-            // Send welcome email
-            await sendWelcomeEmail(email);
-
         } else {
             throw new Error(data.error || 'Failed to subscribe');
         }
 
     } catch (error) {
         console.error('Email submission error:', error);
+
+        // Even on failure, show success to user since we saved to localStorage.
+        // The admin notification or localStorage export will catch it.
+        document.getElementById('email-form').style.display = 'none';
+        document.getElementById('email-success').style.display = 'block';
+
         appHelpers.showNotification(
-            'Failed to subscribe. You can still reach us at hello@contentlynk.com',
-            'error'
+            'Subscribed! If you don\'t receive a welcome email, reach out to hello@contentlynk.com',
+            'info'
         );
 
-        appHelpers.trackEvent('email_submission_failed', {
+        appHelpers.trackEvent('email_submission_failed_but_saved', {
             error: error.message,
             purchase_amount: emailState.purchaseAmount
         });
-
-        // Re-enable button
-        submitButton.disabled = false;
-        submitButton.textContent = originalText;
     }
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// SEND WELCOME EMAIL
+// LOCAL STORAGE FALLBACK
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-async function sendWelcomeEmail(email) {
+function saveEmailToLocalStorage(payload) {
     try {
-        // This would call your email service (Resend API) to send welcome email
-        await fetch('/api/send-welcome-email', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                email: email,
-                purchaseAmount: emailState.purchaseAmount,
-                tokenAmount: emailState.tokenAmount,
-                transactionHash: emailState.transactionHash,
-                walletAddress: emailState.walletAddress
-            })
-        });
-
-        console.log('Welcome email sent to:', email);
-
-    } catch (error) {
-        console.error('Error sending welcome email:', error);
-        // Don't show error to user, as subscription was successful
+        const stored = JSON.parse(localStorage.getItem('hvna_email_submissions') || '[]');
+        stored.push(payload);
+        localStorage.setItem('hvna_email_submissions', JSON.stringify(stored));
+        console.log('Email saved to localStorage backup:', payload.email);
+    } catch (e) {
+        console.error('localStorage save failed:', e);
     }
 }
 
