@@ -11,8 +11,8 @@ const appState = {
     exitIntentShown: false,
     scrollPosition: 0,
     currentPhase: {
-        name: 'Seed Round',
-        price: 0.001,
+        name: 'Genesis Founders',
+        price: 0.0015,
         tokensRemaining: null, // Will show "Ground Floor Opportunity" instead of fake numbers
         progress: null // Removed fake progress - showing real deadline instead
     }
@@ -116,19 +116,19 @@ function initializeInvestmentCalculator() {
 }
 
 function updateCalculator() {
-    const eurAmount = parseFloat(document.getElementById('investment-amount').value) || 0;
-    const currentPrice = 0.001; // €0.001 per token
-    const launchPrice = 0.07; // €0.07 target
+    const usdAmount = parseFloat(document.getElementById('investment-amount').value) || 0;
+    const currentPrice = 0.0015; // $0.0015 per token
+    const launchPrice = 0.07; // $0.07 target
 
-    const tokensReceived = Math.floor(eurAmount / currentPrice);
+    const tokensReceived = Math.floor(usdAmount / currentPrice);
     const futureValue = tokensReceived * launchPrice;
-    const percentGain = eurAmount > 0 ? ((futureValue - eurAmount) / eurAmount * 100).toFixed(0) : 0;
+    const percentGain = usdAmount > 0 ? ((futureValue - usdAmount) / usdAmount * 100).toFixed(0) : 0;
 
     // Update display
     document.getElementById('tokens-received').textContent =
         tokensReceived.toLocaleString('en-US');
     document.getElementById('future-value').textContent =
-        '€' + futureValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        '$' + futureValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     document.getElementById('potential-gain').textContent =
         '+' + percentGain + '%';
 }
@@ -242,7 +242,7 @@ function initializeActivityFeed() {
     activities.forEach(activity => {
         const item = document.createElement('div');
         item.className = 'activity-item';
-        item.textContent = `• ${activity.address} bought €${activity.amount} of $HVNA (${activity.time} mins ago)`;
+        item.textContent = `• ${activity.address} bought $${activity.amount} of $HVNA (${activity.time} mins ago)`;
         activityList.appendChild(item);
     });
 }
@@ -345,7 +345,7 @@ function showModalScreen(screenId) {
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 function setQuickAmount(amount) {
-    const input = document.getElementById('eur-amount');
+    const input = document.getElementById('usd-amount');
     if (input) {
         input.value = amount;
         updatePurchaseCalculation();
@@ -355,42 +355,42 @@ function setQuickAmount(amount) {
 }
 
 function updatePurchaseCalculation() {
-    const eurAmount = parseFloat(document.getElementById('eur-amount').value) || 0;
-    const currentPrice = 0.001; // €0.001 per token
-    var minEur = (typeof CONSTANTS !== 'undefined') ? CONSTANTS.MIN_PURCHASE_EUR : 10;
+    const usdAmount = parseFloat(document.getElementById('usd-amount').value) || 0;
+    const currentPrice = 0.0015; // $0.0015 per token
+    var minUsd = (typeof CONSTANTS !== 'undefined') ? CONSTANTS.MIN_PURCHASE_USD : 10;
 
-    const tokensReceived = Math.floor(eurAmount / currentPrice);
+    const tokensReceived = Math.floor(usdAmount / currentPrice);
 
     // Update token displays
     document.getElementById('purchase-tokens').textContent = tokensReceived.toLocaleString('en-US');
     document.getElementById('detail-tokens').textContent = tokensReceived.toLocaleString('en-US') + ' $HVNA';
     document.getElementById('button-tokens').textContent = tokensReceived.toLocaleString('en-US');
-    document.getElementById('button-amount').textContent = eurAmount.toFixed(2);
+    document.getElementById('button-amount').textContent = usdAmount.toFixed(2);
 
     // Show minimum purchase warning
     var minWarning = document.getElementById('min-purchase-warning');
-    if (eurAmount > 0 && eurAmount < minEur) {
+    if (usdAmount > 0 && usdAmount < minUsd) {
         if (!minWarning) {
             minWarning = document.createElement('p');
             minWarning.id = 'min-purchase-warning';
             minWarning.style.cssText = 'color: #ff6b6b; font-size: 0.9em; margin: 8px 0 0; font-weight: 600;';
-            var inputWrapper = document.getElementById('eur-amount').parentElement;
+            var inputWrapper = document.getElementById('usd-amount').parentElement;
             inputWrapper.parentElement.appendChild(minWarning);
         }
-        minWarning.textContent = 'Minimum purchase: 10,000 tokens (€' + minEur + ')';
+        minWarning.textContent = 'Minimum purchase: 10,000 tokens ($' + minUsd + ')';
         minWarning.style.display = 'block';
     } else if (minWarning) {
         minWarning.style.display = 'none';
     }
 
-    trackEvent('amount_entered', { amount: eurAmount });
+    trackEvent('amount_entered', { amount: usdAmount });
 }
 
 // Initialize purchase form when it becomes visible
 document.addEventListener('DOMContentLoaded', function() {
-    const eurInput = document.getElementById('eur-amount');
-    if (eurInput) {
-        eurInput.addEventListener('input', updatePurchaseCalculation);
+    const usdInput = document.getElementById('usd-amount');
+    if (usdInput) {
+        usdInput.addEventListener('input', updatePurchaseCalculation);
     }
 });
 
@@ -447,7 +447,7 @@ function trackEvent(eventName, params = {}) {
 
 function trackConversion(amount, tokens, walletAddress) {
     trackEvent('purchase_success', {
-        currency: 'EUR',
+        currency: 'USD',
         value: amount,
         token_amount: tokens,
         wallet: walletAddress.substring(0, 10) + '...'

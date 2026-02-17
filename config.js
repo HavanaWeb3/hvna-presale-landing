@@ -255,60 +255,68 @@ const TOKEN_CONTRACT_CONFIG = {
 
 const PRESALE_PHASES = [
     {
-        name: 'Seed Round',
-        priceEur: 0.001,
+        name: 'Genesis Founders',
+        priceUsd: 0.0015,
         priceIncrease: '—',
         status: 'active',
-        tokensAllocated: 250000000,
-        endDate: '2026-02-15' // Example date
+        tokensAllocated: 30000000,
+        endDate: '2026-03-16'
     },
     {
-        name: 'Private Round',
-        priceEur: 0.002,
+        name: 'Early Believers',
+        priceUsd: 0.003,
         priceIncrease: '+100%',
         status: 'upcoming',
-        tokensAllocated: 200000000,
-        endDate: '2026-03-01'
+        tokensAllocated: 30000000,
+        endDate: '2026-05-16'
     },
     {
-        name: 'Early Access',
-        priceEur: 0.004,
+        name: 'Community Builders',
+        priceUsd: 0.006,
         priceIncrease: '+300%',
         status: 'upcoming',
-        tokensAllocated: 200000000,
-        endDate: '2026-03-15'
+        tokensAllocated: 40000000,
+        endDate: '2026-08-16'
     },
     {
-        name: 'Community',
-        priceEur: 0.008,
+        name: 'Growth Partners',
+        priceUsd: 0.012,
         priceIncrease: '+700%',
         status: 'upcoming',
-        tokensAllocated: 150000000,
-        endDate: '2026-04-01'
+        tokensAllocated: 35000000,
+        endDate: '2026-11-16'
     },
     {
-        name: 'Growth Round',
-        priceEur: 0.015,
-        priceIncrease: '+1,400%',
+        name: 'Momentum Members',
+        priceUsd: 0.022,
+        priceIncrease: '+1,367%',
         status: 'upcoming',
-        tokensAllocated: 100000000,
-        endDate: '2026-04-15'
+        tokensAllocated: 35000000,
+        endDate: '2027-02-16'
     },
     {
-        name: 'Final Round',
-        priceEur: 0.025,
-        priceIncrease: '+2,400%',
+        name: 'Community Champions',
+        priceUsd: 0.038,
+        priceIncrease: '+2,433%',
         status: 'upcoming',
-        tokensAllocated: 100000000,
-        endDate: '2026-05-01'
+        tokensAllocated: 50000000,
+        endDate: '2027-05-16'
+    },
+    {
+        name: 'Final Access',
+        priceUsd: 0.052,
+        priceIncrease: '+3,367%',
+        status: 'upcoming',
+        tokensAllocated: 80000000,
+        endDate: '2027-08-16'
     },
     {
         name: 'Launch Target',
-        priceEur: 0.07,
-        priceIncrease: '+6,900%',
+        priceUsd: 0.07,
+        priceIncrease: '+4,567%',
         status: 'launch',
         tokensAllocated: null,
-        endDate: '2026-10-01' // Q4 2026
+        endDate: '2027-10-01'
     }
 ];
 
@@ -320,7 +328,7 @@ const API_ENDPOINTS = {
     emailSubscribe: '/api/email-subscribe',
     sendWelcomeEmail: '/api/send-welcome-email',
     getPhaseInfo: '/api/phase-info',
-    getExchangeRate: 'https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=eur'
+    getExchangeRate: 'https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd'
 };
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -363,10 +371,11 @@ const ANALYTICS_CONFIG = {
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 const CONSTANTS = {
-    MIN_PURCHASE_EUR: 10,
-    MAX_PURCHASE_EUR: 100000,
+    MIN_PURCHASE_USD: 10,
+    MAX_PURCHASE_USD: 100000,
     CURRENT_PHASE: 0, // Index in PRESALE_PHASES array
     LAUNCH_TARGET_PRICE: 0.07,
+    FUNDING_TARGET: 4900000,
     CONTENTLYNK_BETA_SPOTS: 1000,
     CONTENTLYNK_BETA_REGISTERED: 470
 };
@@ -383,9 +392,9 @@ const EMAIL_CONFIG = {
     listTags: {
         allBuyers: 'Token-Buyer',
         seedRound: 'Seed-Round-Buyer',
-        whale: 'Whale-Buyer', // €1000+
-        regular: 'Regular-Buyer', // €100-999
-        small: 'Small-Buyer', // <€100
+        whale: 'Whale-Buyer', // $1000+
+        regular: 'Regular-Buyer', // $100-999
+        small: 'Small-Buyer', // <$100
         emailProvided: 'Email-Provided',
         optedIn: 'Opted-In-Post-Purchase'
     }

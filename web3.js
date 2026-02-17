@@ -23,8 +23,8 @@ const web3State = {
     stablecoinApproved: { USDT: false, USDC: false }
 };
 
-// EUR to ETH exchange rate (should be fetched from API)
-let eurToEthRate = 0.00029; // Example: 1 EUR = 0.00029 ETH (update dynamically)
+// USD to ETH exchange rate (should be fetched from API)
+let usdToEthRate = 0.00027; // Example: 1 USD = 0.00027 ETH (update dynamically)
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // MOBILE WALLET DETECTION (RETRY LOGIC)
@@ -426,18 +426,15 @@ async function approveStablecoin() {
 // STABLECOIN PURCHASE VIA WRAPPER
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-async function purchaseWithStablecoin(eurAmount) {
+async function purchaseWithStablecoin(usdAmount) {
     const symbol = web3State.selectedToken;
     const config = STABLECOIN_CONFIG[symbol];
 
-    // Convert EUR to stablecoin amount (1:1 for USD stablecoins, approximate)
-    // EUR to USD: use a rough 1.08 conversion (could be fetched live)
-    const eurToUsd = 1.08;
-    const usdAmount = eurAmount * eurToUsd;
+    // USD amount maps directly to stablecoin amount (1:1)
     const stablecoinAmount = ethers.utils.parseUnits(usdAmount.toFixed(config.decimals > 2 ? 2 : config.decimals), config.decimals);
 
-    const currentTokenPrice = 0.001; // €0.001 per token (Seed Round)
-    const tokensReceived = Math.floor(eurAmount / currentTokenPrice);
+    const currentTokenPrice = 0.0015; // $0.0015 per token (Genesis Founders)
+    const tokensReceived = Math.floor(usdAmount / currentTokenPrice);
     const hvnaTokenAmount = ethers.utils.parseEther(tokensReceived.toString());
 
     const button = document.getElementById('purchase-button');
@@ -449,7 +446,7 @@ async function purchaseWithStablecoin(eurAmount) {
 
         appHelpers.trackEvent('stablecoin_purchase_initiated', {
             token: symbol,
-            amount_eur: eurAmount,
+            amount_usd: usdAmount,
             stablecoin_amount: usdAmount
         });
 
@@ -476,25 +473,25 @@ async function purchaseWithStablecoin(eurAmount) {
         // Update success screen
         document.getElementById('success-tokens').textContent = tokensReceived.toLocaleString('en-US');
         document.getElementById('success-wallet').textContent = appHelpers.formatAddress(web3State.address);
-        document.getElementById('success-amount').textContent = '€' + eurAmount.toFixed(2) + ' (' + usdAmount.toFixed(2) + ' ' + symbol + ')';
+        document.getElementById('success-amount').textContent = '$' + usdAmount.toFixed(2) + ' (' + usdAmount.toFixed(2) + ' ' + symbol + ')';
         document.getElementById('success-token-amount').textContent = tokensReceived.toLocaleString('en-US') + ' $HVNA';
 
         const txLink = document.getElementById('tx-link');
         txLink.href = 'https://basescan.org/tx/' + tx.hash;
         txLink.textContent = tx.hash.substring(0, 10) + '...' + tx.hash.substring(tx.hash.length - 8);
 
-        appHelpers.trackConversion(eurAmount, tokensReceived, web3State.address);
+        appHelpers.trackConversion(usdAmount, tokensReceived, web3State.address);
         appHelpers.trackEvent('stablecoin_purchase_success', {
             token: symbol,
             tx_hash: tx.hash,
-            amount_eur: eurAmount,
+            amount_usd: usdAmount,
             tokens: tokensReceived
         });
 
         appHelpers.showModalScreen('modal-success');
 
         setTimeout(() => {
-            showEmailCollectionModal(eurAmount, tokensReceived, tx.hash);
+            showEmailCollectionModal(usdAmount, tokensReceived, tx.hash);
         }, 2000);
 
         // Refresh balances
@@ -527,14 +524,14 @@ async function updateExchangeRate() {
     try {
         // Fetch from CoinGecko API
         const response = await fetch(
-            'https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=eur'
+            'https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd'
         );
         const data = await response.json();
 
-        if (data.ethereum && data.ethereum.eur) {
-            const ethPriceInEur = data.ethereum.eur;
-            eurToEthRate = 1 / ethPriceInEur;
-            console.log('Exchange rate updated:', eurToEthRate, 'ETH per EUR');
+        if (data.ethereum && data.ethereum.usd) {
+            const ethPriceInUsd = data.ethereum.usd;
+            usdToEthRate = 1 / ethPriceInUsd;
+            console.log('Exchange rate updated:', usdToEthRate, 'ETH per USD');
         }
     } catch (error) {
         console.warn('Failed to fetch exchange rate, using default:', error);
@@ -546,23 +543,23 @@ async function updateExchangeRate() {
 // PURCHASE CALCULATIONS
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-// Listen for EUR amount changes
+// Listen for USD amount changes
 document.addEventListener('DOMContentLoaded', function() {
-    const eurInput = document.getElementById('eur-amount');
-    if (eurInput) {
-        eurInput.addEventListener('input', updatePurchaseDetails);
+    const usdInput = document.getElementById('usd-amount');
+    if (usdInput) {
+        usdInput.addEventListener('input', updatePurchaseDetails);
     }
 });
 
 async function updatePurchaseDetails() {
-    const eurInput = document.getElementById('eur-amount');
-    if (!eurInput) return;
+    const usdInput = document.getElementById('usd-amount');
+    if (!usdInput) return;
 
-    const eurAmount = parseFloat(eurInput.value) || 0;
+    const usdAmount = parseFloat(usdInput.value) || 0;
     const purchaseButton = document.getElementById('purchase-button');
-    const minEur = CONSTANTS.MIN_PURCHASE_EUR; // €10
+    const minUsd = CONSTANTS.MIN_PURCHASE_USD; // $10
 
-    if (eurAmount === 0) {
+    if (usdAmount === 0) {
         if (purchaseButton) {
             purchaseButton.disabled = true;
             purchaseButton.textContent = 'Enter an amount to purchase';
@@ -570,17 +567,17 @@ async function updatePurchaseDetails() {
         return;
     }
 
-    if (eurAmount < minEur) {
+    if (usdAmount < minUsd) {
         if (purchaseButton) {
             purchaseButton.disabled = true;
-            purchaseButton.textContent = 'Minimum purchase: ' + (minEur / 0.001).toLocaleString('en-US') + ' tokens (€' + minEur + ')';
+            purchaseButton.textContent = 'Minimum purchase: ' + (minUsd / 0.0015).toLocaleString('en-US') + ' tokens ($' + minUsd + ')';
         }
         return;
     }
 
-    const currentTokenPrice = 0.001; // €0.001 per token (Seed Round)
-    const tokensReceived = Math.floor(eurAmount / currentTokenPrice);
-    const ethAmount = eurAmount * eurToEthRate;
+    const currentTokenPrice = 0.0015; // $0.0015 per token (Genesis Founders)
+    const tokensReceived = Math.floor(usdAmount / currentTokenPrice);
+    const ethAmount = usdAmount * usdToEthRate;
 
     // Estimate gas
     let gasEstimate = 0.0001; // Default estimate
@@ -602,9 +599,9 @@ async function updatePurchaseDetails() {
         console.warn('Gas estimation failed, using default:', error);
     }
 
-    const gasCostEur = gasEstimate / eurToEthRate;
+    const gasCostUsd = gasEstimate / usdToEthRate;
     const totalEth = ethAmount + gasEstimate;
-    const totalEur = eurAmount + gasCostEur;
+    const totalUsd = usdAmount + gasCostUsd;
 
     // Update UI - with safety checks
     const detailEth = document.getElementById('detail-eth');
@@ -614,18 +611,15 @@ async function updatePurchaseDetails() {
     const selectedToken = web3State.selectedToken;
 
     if (selectedToken === 'USDT' || selectedToken === 'USDC') {
-        // Stablecoin mode: show USD equivalent
-        const eurToUsd = 1.08;
-        const usdAmount = eurAmount * eurToUsd;
-
+        // Stablecoin mode: USD amount maps directly to stablecoins
         if (detailEth) {
-            detailEth.textContent = `${usdAmount.toFixed(2)} ${selectedToken} (~€${eurAmount.toFixed(2)})`;
+            detailEth.textContent = `${usdAmount.toFixed(2)} ${selectedToken} (~$${usdAmount.toFixed(2)})`;
         }
         if (detailGas) {
-            detailGas.textContent = `~${gasEstimate.toFixed(6)} ETH (~€${gasCostEur.toFixed(2)})`;
+            detailGas.textContent = `~${gasEstimate.toFixed(6)} ETH (~$${gasCostUsd.toFixed(2)})`;
         }
         if (detailTotal) {
-            detailTotal.textContent = `~${usdAmount.toFixed(2)} ${selectedToken} + gas (~€${totalEur.toFixed(2)})`;
+            detailTotal.textContent = `~${usdAmount.toFixed(2)} ${selectedToken} + gas (~$${totalUsd.toFixed(2)})`;
         }
 
         // Check stablecoin balance
@@ -642,13 +636,13 @@ async function updatePurchaseDetails() {
     } else {
         // ETH mode
         if (detailEth) {
-            detailEth.textContent = `${ethAmount.toFixed(6)} ETH (~€${eurAmount.toFixed(2)})`;
+            detailEth.textContent = `${ethAmount.toFixed(6)} ETH (~$${usdAmount.toFixed(2)})`;
         }
         if (detailGas) {
-            detailGas.textContent = `~${gasEstimate.toFixed(6)} ETH (~€${gasCostEur.toFixed(2)})`;
+            detailGas.textContent = `~${gasEstimate.toFixed(6)} ETH (~$${gasCostUsd.toFixed(2)})`;
         }
         if (detailTotal) {
-            detailTotal.textContent = `~${totalEth.toFixed(6)} ETH (~€${totalEur.toFixed(2)})`;
+            detailTotal.textContent = `~${totalEth.toFixed(6)} ETH (~$${totalUsd.toFixed(2)})`;
         }
 
         // Check ETH balance
@@ -658,7 +652,7 @@ async function updatePurchaseDetails() {
                 purchaseButton.textContent = 'Insufficient ETH Balance';
             } else {
                 purchaseButton.disabled = false;
-                purchaseButton.textContent = `Buy ${tokensReceived.toLocaleString('en-US')} $HVNA for ~€${eurAmount.toFixed(2)}`;
+                purchaseButton.textContent = `Buy ${tokensReceived.toLocaleString('en-US')} $HVNA for ~$${usdAmount.toFixed(2)}`;
             }
         }
     }
@@ -669,31 +663,31 @@ async function updatePurchaseDetails() {
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 async function executePurchase() {
-    const eurAmount = parseFloat(document.getElementById('eur-amount').value) || 0;
+    const usdAmount = parseFloat(document.getElementById('usd-amount').value) || 0;
 
-    if (eurAmount === 0) {
+    if (usdAmount === 0) {
         appHelpers.showNotification('Please enter an amount.', 'error');
         return;
     }
 
-    if (eurAmount < CONSTANTS.MIN_PURCHASE_EUR) {
-        appHelpers.showNotification('Minimum purchase: 10,000 tokens (€' + CONSTANTS.MIN_PURCHASE_EUR + ')', 'error');
+    if (usdAmount < CONSTANTS.MIN_PURCHASE_USD) {
+        appHelpers.showNotification('Minimum purchase: 10,000 tokens ($' + CONSTANTS.MIN_PURCHASE_USD + ')', 'error');
         return;
     }
 
     // Route to stablecoin purchase if USDT or USDC selected
     if (web3State.selectedToken === 'USDT' || web3State.selectedToken === 'USDC') {
-        return purchaseWithStablecoin(eurAmount);
+        return purchaseWithStablecoin(usdAmount);
     }
 
     try {
         appHelpers.trackEvent('purchase_initiated', {
-            amount_eur: eurAmount
+            amount_usd: usdAmount
         });
 
-        const currentTokenPrice = 0.001; // €0.001 per token (Seed Round)
-        const tokensReceived = Math.floor(eurAmount / currentTokenPrice);
-        const ethAmount = eurAmount * eurToEthRate;
+        const currentTokenPrice = 0.0015; // $0.0015 per token (Genesis Founders)
+        const tokensReceived = Math.floor(usdAmount / currentTokenPrice);
+        const ethAmount = usdAmount * usdToEthRate;
         const ethValue = ethers.utils.parseEther(ethAmount.toFixed(18));
 
         // Disable button and show loading
@@ -714,7 +708,7 @@ async function executePurchase() {
 
         appHelpers.trackEvent('transaction_confirmed', {
             tx_hash: tx.hash,
-            amount_eur: eurAmount,
+            amount_usd: usdAmount,
             tokens: tokensReceived
         });
 
@@ -729,7 +723,7 @@ async function executePurchase() {
         document.getElementById('success-wallet').textContent =
             appHelpers.formatAddress(web3State.address);
         document.getElementById('success-amount').textContent =
-            '€' + eurAmount.toFixed(2);
+            '$' + usdAmount.toFixed(2);
         document.getElementById('success-token-amount').textContent =
             tokensReceived.toLocaleString('en-US') + ' $HVNA';
 
@@ -739,11 +733,11 @@ async function executePurchase() {
         txLink.textContent = tx.hash.substring(0, 10) + '...' + tx.hash.substring(tx.hash.length - 8);
 
         // Track conversion
-        appHelpers.trackConversion(eurAmount, tokensReceived, web3State.address);
+        appHelpers.trackConversion(usdAmount, tokensReceived, web3State.address);
 
         appHelpers.trackEvent('purchase_success', {
             tx_hash: tx.hash,
-            amount_eur: eurAmount,
+            amount_usd: usdAmount,
             tokens: tokensReceived,
             wallet: web3State.address
         });
@@ -753,7 +747,7 @@ async function executePurchase() {
 
         // Show email collection modal after 2 seconds
         setTimeout(() => {
-            showEmailCollectionModal(eurAmount, tokensReceived, tx.hash);
+            showEmailCollectionModal(usdAmount, tokensReceived, tx.hash);
         }, 2000);
 
         // Re-enable button
