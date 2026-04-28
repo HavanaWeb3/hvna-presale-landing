@@ -25,9 +25,8 @@ const appState = {
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🐘 Havana Elephant Presale - Initialized');
 
-    // Initialize countdown timer - Seed Round ends March 16, 2026 at 1:00 AM CET
-    // CET is UTC+1, so we set to March 16, 2026 00:00 UTC (1:00 AM CET)
-    appState.phaseEndDate = new Date('2026-03-16T00:00:00Z');
+    // Initialize countdown timer - Phase ends May 9, 2026
+    appState.phaseEndDate = new Date('2026-05-09T23:59:59');
 
     initializeCountdown();
     initializeInvestmentCalculator();
