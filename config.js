@@ -256,11 +256,11 @@ const TOKEN_CONTRACT_CONFIG = {
 const PRESALE_PHASES = [
     {
         name: 'Genesis Founders',
-        priceUsd: 0.0015,
+        priceUsd: 0.001,
         priceIncrease: '—',
         status: 'active',
         tokensAllocated: 30000000,
-        endDate: '2026-03-16'
+        endDate: '2026-07-09'
     },
     {
         name: 'Early Believers',
@@ -268,7 +268,7 @@ const PRESALE_PHASES = [
         priceIncrease: '+100%',
         status: 'upcoming',
         tokensAllocated: 30000000,
-        endDate: '2026-05-16'
+        endDate: '2026-07-09'
     },
     {
         name: 'Community Builders',

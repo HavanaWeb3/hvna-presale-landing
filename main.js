@@ -12,7 +12,7 @@ const appState = {
     scrollPosition: 0,
     currentPhase: {
         name: 'Genesis Founders',
-        price: 0.0015,
+        price: 0.001,
         tokensRemaining: null, // Will show "Ground Floor Opportunity" instead of fake numbers
         progress: null // Removed fake progress - showing real deadline instead
     }
@@ -25,8 +25,8 @@ const appState = {
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🐘 Havana Elephant Presale - Initialized');
 
-    // Initialize countdown timer - Phase ends May 9, 2026
-    appState.phaseEndDate = new Date('2026-05-09T23:59:59');
+    // Initialize countdown timer - Phase ends July 9, 2026
+    appState.phaseEndDate = new Date('2026-07-09T23:59:59');
 
     initializeCountdown();
     initializeInvestmentCalculator();
@@ -116,7 +116,7 @@ function initializeInvestmentCalculator() {
 
 function updateCalculator() {
     const usdAmount = parseFloat(document.getElementById('investment-amount').value) || 0;
-    const currentPrice = 0.0015; // $0.0015 per token
+    const currentPrice = 0.001; // $0.001 per token
     const launchPrice = 0.07; // $0.07 target
 
     const tokensReceived = Math.floor(usdAmount / currentPrice);
@@ -355,7 +355,7 @@ function setQuickAmount(amount) {
 
 function updatePurchaseCalculation() {
     const usdAmount = parseFloat(document.getElementById('usd-amount').value) || 0;
-    const currentPrice = 0.0015; // $0.0015 per token
+    const currentPrice = 0.001; // $0.001 per token
     var minUsd = (typeof CONSTANTS !== 'undefined') ? CONSTANTS.MIN_PURCHASE_USD : 10;
 
     const tokensReceived = Math.floor(usdAmount / currentPrice);

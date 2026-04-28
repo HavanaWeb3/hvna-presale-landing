@@ -433,7 +433,7 @@ async function purchaseWithStablecoin(usdAmount) {
     // USD amount maps directly to stablecoin amount (1:1)
     const stablecoinAmount = ethers.utils.parseUnits(usdAmount.toFixed(config.decimals > 2 ? 2 : config.decimals), config.decimals);
 
-    const currentTokenPrice = 0.0015; // $0.0015 per token (Genesis Founders)
+    const currentTokenPrice = 0.001; // $0.001 per token (Genesis Founders)
     const tokensReceived = Math.floor(usdAmount / currentTokenPrice);
     const hvnaTokenAmount = ethers.utils.parseEther(tokensReceived.toString());
 
@@ -570,12 +570,12 @@ async function updatePurchaseDetails() {
     if (usdAmount < minUsd) {
         if (purchaseButton) {
             purchaseButton.disabled = true;
-            purchaseButton.textContent = 'Minimum purchase: ' + (minUsd / 0.0015).toLocaleString('en-US') + ' tokens ($' + minUsd + ')';
+            purchaseButton.textContent = 'Minimum purchase: ' + (minUsd / 0.001).toLocaleString('en-US') + ' tokens ($' + minUsd + ')';
         }
         return;
     }
 
-    const currentTokenPrice = 0.0015; // $0.0015 per token (Genesis Founders)
+    const currentTokenPrice = 0.001; // $0.001 per token (Genesis Founders)
     const tokensReceived = Math.floor(usdAmount / currentTokenPrice);
     const ethAmount = usdAmount * usdToEthRate;
 
@@ -685,7 +685,7 @@ async function executePurchase() {
             amount_usd: usdAmount
         });
 
-        const currentTokenPrice = 0.0015; // $0.0015 per token (Genesis Founders)
+        const currentTokenPrice = 0.001; // $0.001 per token (Genesis Founders)
         const tokensReceived = Math.floor(usdAmount / currentTokenPrice);
         const ethAmount = usdAmount * usdToEthRate;
         const ethValue = ethers.utils.parseEther(ethAmount.toFixed(18));
