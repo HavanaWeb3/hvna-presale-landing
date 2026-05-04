@@ -18,7 +18,7 @@ const web3State = {
     presaleContract: null,
     tokenContract: null,
     wrapperContract: null,
-    selectedToken: 'ETH',
+    selectedToken: 'USDT',
     stablecoinBalances: { USDT: '0', USDC: '0' },
     stablecoinApproved: { USDT: false, USDC: false }
 };
