@@ -1,0 +1,1565 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Bergabunglah dengan pra-penjualan $HVNA seharga $0.001 sebelum diluncurkan di $0.07+. Target pendanaan $4,9 juta. Token tata kelola untuk platform ekonomi kreator Havana Elephant. 1.000 tempat Anggota Pendiri — terbatas berdasarkan desain. Pendiri terverifikasi dengan 35+ tahun pengalaman.">
+    <meta name="keywords" content="HVNA, token presale, cryptocurrency, blockchain Base, ekonomi kreator, Contentlynk, David Sime">
+    <meta name="author" content="Havana Elephant Global S.A.">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://presale.havanaelephant.com/id.html">
+    <meta property="og:title" content="Pra-penjualan $HVNA - Masuk di $0.001 Sebelum Peluncuran">
+    <meta property="og:description" content="1.000 tempat Anggota Pendiri — terbatas berdasarkan desain. Ronde Genesis Founders di $0.001, diluncurkan di $0.07+. Target pendanaan $4,9 juta.">
+    <meta property="og:image" content="/images/og-image.jpg">
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://presale.havanaelephant.com/id.html">
+    <meta property="twitter:title" content="Pra-penjualan $HVNA - Masuk di $0.001 Sebelum Peluncuran">
+    <meta property="twitter:description" content="1.000 tempat Anggota Pendiri — terbatas berdasarkan desain. Ronde Genesis Founders di $0.001, diluncurkan di $0.07+. Target pendanaan $4,9 juta.">
+    <meta property="twitter:image" content="/images/og-image.jpg">
+
+    <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+    <link rel="alternate icon" href="/images/favicon.ico">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="styles.css">
+
+    <title>Pra-penjualan $HVNA - Masuk di $0.001 Sebelum Peluncuran di $0.07+</title>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Havana Elephant Global S.A.",
+      "url": "https://presale.havanaelephant.com",
+      "logo": "https://presale.havanaelephant.com/images/logo.svg",
+      "founder": {
+        "@type": "Person",
+        "name": "David Sime",
+        "jobTitle": "Pendiri & CEO",
+        "description": "Perencana Keuangan Berlisensi dengan 35+ tahun pengalaman bisnis"
+      }
+    }
+    </script>
+</head>
+<body>
+    <!-- Sticky Header -->
+    <header id="sticky-header" class="sticky-header hidden">
+        <div class="container">
+            <div class="header-content">
+                <div class="header-logo">
+                    <img src="/images/logo.jpg" alt="Logo HVNA" class="logo-icon">
+                    <span class="header-token-name">Pra-penjualan $HVNA</span>
+                </div>
+                <div class="header-info">
+                    <div class="header-price">Saat Ini: <strong>$0.001</strong></div>
+                    <div id="header-countdown" class="header-countdown"></div>
+                    <button class="btn btn-primary btn-header" onclick="trackIndonesianBuyClick(); openPurchaseModal()">Beli Sekarang</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero-section">
+        <div class="hero-background"></div>
+        <div class="container">
+            <div class="hero-content">
+                <img src="/images/logo.jpg" alt="Logo Havana Elephant" class="hero-logo">
+
+                <h1 class="hero-headline">Dapatkan $HVNA di $0.001 Sebelum Peluncuran di $0.07+</h1>
+                <p class="hero-subheadline">1.000 Tempat Anggota Pendiri — Terbatas Berdasarkan Desain</p>
+
+                <div class="phase-indicator">
+                    <div class="phase-status">🔥 GENESIS FOUNDERS AKTIF</div>
+                    <div class="phase-details">
+                        <div class="phase-item">
+                            <span class="phase-label">Harga Saat Ini:</span>
+                            <span class="phase-value">$0.001</span>
+                        </div>
+                        <div class="phase-item">
+                            <span class="phase-label">Fase Berikutnya:</span>
+                            <span class="phase-value">$0.003 <span class="phase-increase">(+100%)</span></span>
+                        </div>
+                        <div class="phase-item">
+                            <span class="phase-label">Blockchain:</span>
+                            <span class="phase-value" id="tokens-remaining">Memuat...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="countdown-timer">
+                    <div class="countdown-label">Fase Berakhir Dalam:</div>
+                    <div id="main-countdown" class="countdown-display">
+                        <div class="countdown-unit">
+                            <span class="countdown-number" id="days">00</span>
+                            <span class="countdown-text">Hari</span>
+                        </div>
+                        <div class="countdown-separator">:</div>
+                        <div class="countdown-unit">
+                            <span class="countdown-number" id="hours">00</span>
+                            <span class="countdown-text">Jam</span>
+                        </div>
+                        <div class="countdown-separator">:</div>
+                        <div class="countdown-unit">
+                            <span class="countdown-number" id="minutes">00</span>
+                            <span class="countdown-text">Menit</span>
+                        </div>
+                        <div class="countdown-separator">:</div>
+                        <div class="countdown-unit">
+                            <span class="countdown-number" id="seconds">00</span>
+                            <span class="countdown-text">Detik</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="trust-badges">
+                    <div class="trust-badge">✓ Pendiri Terverifikasi (CFP)</div>
+                    <div class="trust-badge-separator">|</div>
+                    <div class="trust-badge">✓ Model Bisnis Terbukti</div>
+                    <div class="trust-badge-separator">|</div>
+                    <div class="trust-badge">✓ Blockchain Base</div>
+                    <div class="trust-badge-separator">|</div>
+                    <div class="trust-badge">✓ Program Anggota Pendiri — 1.000 Tempat</div>
+                </div>
+
+                <button class="btn btn-primary btn-large btn-cta" onclick="trackIndonesianBuyClick(); openPurchaseModal()">
+                    Beli $HVNA Sekarang →
+                </button>
+
+                <a href="#white-paper" onclick="event.preventDefault(); openWhitePaperModal();" class="secondary-link">Lihat White Paper Lengkap</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Progress Dashboard -->
+    <section id="progress-dashboard" class="presale-progress-section">
+        <div class="container">
+            <h2>Progres Fase Pra-penjualan 1</h2>
+            <p class="subtitle">Lacak progres secara real-time dalam perjalanan pra-penjualan kami</p>
+
+            <div class="progress-grid">
+                <div class="progress-card">
+                    <div class="progress-label">
+                        <span class="icon">📅</span>
+                        <span>Fase Pra-penjualan</span>
+                    </div>
+                    <div class="progress-visual">
+                        <div class="phase-indicator">
+                            <div class="phase active">1</div>
+                            <div class="phase">2</div>
+                            <div class="phase">3</div>
+                            <div class="phase">4</div>
+                            <div class="phase">5</div>
+                            <div class="phase">6</div>
+                        </div>
+                        <p class="progress-text">Fase 1 dari 7 Aktif</p>
+                    </div>
+                    <div class="progress-detail">
+                        <span class="current-price">$0.001/token</span>
+                        <span class="next-price">Berikutnya: $0.003</span>
+                    </div>
+                </div>
+
+                <div class="progress-card">
+                    <div class="progress-label">
+                        <span class="icon">⏰</span>
+                        <span>Fase 1 Berakhir Dalam</span>
+                    </div>
+                    <div class="progress-visual">
+                        <div class="countdown">
+                            <div class="countdown-unit">
+                                <span class="countdown-number" id="dashboard-days">00</span>
+                                <span class="countdown-label">Hari</span>
+                            </div>
+                            <div class="countdown-unit">
+                                <span class="countdown-number" id="dashboard-hours">00</span>
+                                <span class="countdown-label">Jam</span>
+                            </div>
+                            <div class="countdown-unit">
+                                <span class="countdown-number" id="dashboard-minutes">00</span>
+                                <span class="countdown-label">Menit</span>
+                            </div>
+                        </div>
+                        <p class="progress-text">9 Juli 2026</p>
+                    </div>
+                    <div class="progress-detail">
+                        <span class="warning">⚡ Harga berlipat ganda setelah batas waktu</span>
+                    </div>
+                </div>
+            </div>
+            <!-- BaseScan link temporarily removed during Genesis phase - restore when contract value >$5K -->
+            <!-- Contract address preserved: 0x390Bdc27F8488915AC5De3fCd43c695b41f452FA -->
+        </div>
+    </section>
+
+    <!-- Credibility Section -->
+    <section id="credibility" class="credibility-section">
+        <div class="container">
+            <div class="credibility-grid">
+                <div class="credibility-image">
+                    <img src="/images/david-sime.jpg" alt="David Sime - Pendiri & CEO" class="founder-photo">
+                    <div class="founder-title">Pendiri & CEO</div>
+                </div>
+                <div class="credibility-content">
+                    <h2>Kenali David: Bukan Proyek Kripto Anonim Biasa</h2>
+                    <p class="credibility-intro">Tidak seperti 99% proyek kripto, Anda tahu persis siapa yang membangun ini.</p>
+
+                    <ul class="credibility-list">
+                        <li><strong>Perencana Keuangan Berlisensi</strong> (35+ tahun pengalaman)</li>
+                        <li><strong>Penulis 3 buku cryptocurrency:</strong> "Crypto Made Simple," "Digital Ownership Revolution," "100 NFTs for $1"</li>
+                        <li><strong>Membangun beberapa bisnis sukses:</strong>
+                            <ul>
+                                <li>Elmswood Private Finance (pendapatan £1,2 juta tahun ke-2)</li>
+                                <li>Brand Havana Elephant (e-commerce mapan)</li>
+                                <li>Platform Contentlynk (1.000 tempat Anggota Pendiri — terbatas berdasarkan desain)</li>
+                            </ul>
+                        </li>
+                        <li><strong>Sepenuhnya terverifikasi:</strong> LinkedIn, riwayat bisnis publik, kredensial penulis</li>
+                    </ul>
+
+                    <blockquote class="founder-quote">
+                        "Saya menempatkan nama dan reputasi saya di balik proyek ini. Itu jarang terjadi di kripto — dan seharusnya penting bagi Anda."
+                        <cite>— David Sime</cite>
+                    </blockquote>
+
+                    <a href="https://www.linkedin.com/in/davidjsime" target="_blank" rel="noopener" class="btn btn-secondary">Lihat Profil LinkedIn David →</a>
+                </div>
+            </div>
+
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <span class="stat-number">1.000</span>
+                    <span class="stat-label">Tempat Anggota Pendiri</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Opportunity Section -->
+    <section id="opportunity" class="opportunity-section">
+        <div class="container">
+            <h2 class="section-heading">Jendela $0.001 Tidak Akan Bertahan</h2>
+
+            <div class="price-table-wrapper">
+                <table class="price-table">
+                    <thead>
+                        <tr>
+                            <th>Fase</th>
+                            <th>Harga</th>
+                            <th>vs Sekarang</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="phase-active">
+                            <td>Genesis Founders</td>
+                            <td>$0.001</td>
+                            <td>—</td>
+                            <td><span class="status-badge status-active">⚡ AKTIF SEKARANG</span></td>
+                        </tr>
+                        <tr>
+                            <td>Early Believers</td>
+                            <td>$0.003</td>
+                            <td>+100%</td>
+                            <td><span class="status-badge status-locked">🔒 Fase Berikutnya</span></td>
+                        </tr>
+                        <tr>
+                            <td>Community Builders</td>
+                            <td>$0.006</td>
+                            <td>+300%</td>
+                            <td><span class="status-badge status-locked">🔒 Akan Datang</span></td>
+                        </tr>
+                        <tr>
+                            <td>Growth Partners</td>
+                            <td>$0.012</td>
+                            <td>+700%</td>
+                            <td><span class="status-badge status-locked">🔒 Akan Datang</span></td>
+                        </tr>
+                        <tr>
+                            <td>Momentum Members</td>
+                            <td>$0.022</td>
+                            <td>+1,367%</td>
+                            <td><span class="status-badge status-locked">🔒 Akan Datang</span></td>
+                        </tr>
+                        <tr>
+                            <td>Community Champions</td>
+                            <td>$0.038</td>
+                            <td>+2,433%</td>
+                            <td><span class="status-badge status-locked">🔒 Akan Datang</span></td>
+                        </tr>
+                        <tr>
+                            <td>Final Access</td>
+                            <td>$0.052</td>
+                            <td>+3,367%</td>
+                            <td><span class="status-badge status-locked">🔒 Akan Datang</span></td>
+                        </tr>
+                        <tr class="phase-launch">
+                            <td>Target Peluncuran</td>
+                            <td>$0.07+</td>
+                            <td>+4,567%</td>
+                            <td><span class="status-badge status-launch">📈 K4 2027</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="calculator-card">
+                <h3>Kalkulator Investasi</h3>
+                <div class="calculator-input-group">
+                    <label for="investment-amount">Saya ingin berinvestasi:</label>
+                    <div class="input-wrapper">
+                        <span class="input-prefix">$</span>
+                        <input type="number" id="investment-amount" placeholder="1000" min="10" step="10">
+                    </div>
+                </div>
+                <div class="calculator-results">
+                    <div class="calculator-result-item">
+                        <span class="result-label">Anda menerima:</span>
+                        <span class="result-value" id="tokens-received">0</span>
+                        <span class="result-unit">token $HVNA</span>
+                    </div>
+                    <div class="calculator-result-item">
+                        <span class="result-label">Jika harga peluncuran mencapai $0.07:</span>
+                        <span class="result-value result-highlight" id="future-value">$0</span>
+                        <span class="result-icon">💰</span>
+                    </div>
+                    <div class="calculator-result-item">
+                        <span class="result-label">Potensi keuntungan:</span>
+                        <span class="result-value result-success" id="potential-gain">+0%</span>
+                        <span class="result-icon">🚀</span>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="subsection-heading">Mengapa $HVNA Bernilai</h3>
+            <div class="value-grid">
+                <div class="value-card">
+                    <div class="value-icon">🎯</div>
+                    <h4>Tata Kelola</h4>
+                    <p>Voting untuk keputusan & fitur platform</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">💰</div>
+                    <h4>Bagi Hasil</h4>
+                    <p>Kreator mendapatkan 55-75% melalui $HVNA</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🛍️</div>
+                    <h4>Akses Platform</h4>
+                    <p>Diskon, fitur premium, akses awal</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🔥</div>
+                    <h4>Deflasioner</h4>
+                    <p>Pembakaran token mengurangi pasokan dari waktu ke waktu</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How to Buy -->
+    <section id="how-to-buy" class="how-to-buy-section">
+        <div class="container">
+            <h2 class="section-heading">Beli dalam 60 Detik</h2>
+
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">
+                        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                            <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                        </svg>
+                    </div>
+                    <h3>Hubungkan Dompet</h3>
+                    <p>MetaMask, Rabby, atau WalletConnect</p>
+                </div>
+                <div class="step-arrow">→</div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">
+                        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="1" x2="12" y2="23"></line>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                        </svg>
+                    </div>
+                    <h3>Masukkan Jumlah</h3>
+                    <p>Pilih berapa yang ingin diinvestasikan</p>
+                </div>
+                <div class="step-arrow">→</div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">
+                        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                    </div>
+                    <h3>Terima Token</h3>
+                    <p>$HVNA dikirim langsung ke dompet Anda</p>
+                </div>
+            </div>
+
+            <div class="supported-wallets">
+                <h4>Dompet yang Didukung:</h4>
+                <div class="wallet-icons">
+                    <img src="/images/wallets/metamask.svg" alt="MetaMask" title="MetaMask">
+                    <img src="/images/wallets/rabby.svg" alt="Rabby" title="Rabby">
+                    <img src="/images/wallets/walletconnect.svg" alt="WalletConnect" title="WalletConnect">
+                    <img src="/images/wallets/coinbase.svg" alt="Coinbase Wallet" title="Coinbase Wallet">
+                </div>
+            </div>
+
+            <div class="network-info">
+                <p>Menggunakan <strong>Jaringan Base</strong> (Biaya rendah, Transaksi cepat)</p>
+                <div class="network-links">
+                    <a href="#" class="info-link" onclick="showBaseInfo(event)">Apa itu Base?</a>
+                    <span>|</span>
+                    <a href="#" class="info-link" onclick="showAddBaseInfo(event)">Cara menambahkan Base ke dompet</a>
+                </div>
+            </div>
+
+            <button class="btn btn-primary btn-large" onclick="trackIndonesianBuyClick(); openPurchaseModal()">Mulai Beli Sekarang →</button>
+        </div>
+    </section>
+
+    <!-- ATAU (OR) DIVIDER -->
+    <div style="
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 20px 24px 0;
+    ">
+      <div style="flex: 1; height: 1px; background: rgba(245,158,11,0.25);"></div>
+      <div style="
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.15em;
+        color: rgba(245,158,11,0.7);
+        white-space: nowrap;
+        font-family: inherit;
+      ">ATAU</div>
+      <div style="flex: 1; height: 1px; background: rgba(245,158,11,0.25);"></div>
+    </div>
+
+    <!-- CONTENTLYNK CREATOR SECTION -->
+    <section style="
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 48px 24px;
+      font-family: inherit;
+    ">
+
+      <div style="text-align: center; margin-bottom: 36px;">
+        <div style="
+          display: inline-block;
+          background: rgba(245,158,11,0.12);
+          border: 1px solid rgba(245,158,11,0.3);
+          border-radius: 999px;
+          padding: 6px 18px;
+          font-size: 12px;
+          font-weight: 700;
+          letter-spacing: 0.12em;
+          color: #f59e0b;
+          text-transform: uppercase;
+          margin-bottom: 20px;
+        ">UNTUK KREATOR KONTEN</div>
+
+        <h2 style="
+          font-size: clamp(24px, 5vw, 34px);
+          font-weight: 800;
+          color: #ffffff;
+          margin: 0 0 16px;
+          line-height: 1.2;
+        ">Buat Konten. Dapatkan <span style="color: #f59e0b;">75%</span> Pendapatan.</h2>
+
+        <p style="
+          font-size: 16px;
+          color: rgba(255,255,255,0.7);
+          line-height: 1.6;
+          max-width: 520px;
+          margin: 0 auto;
+        ">
+          ContentLynk membayar kreator hingga 75% dari pendapatan platform —
+          bukan 0-5% seperti Instagram atau TikTok.
+          Tidak ada persyaratan jumlah pengikut. Mulai menghasilkan sejak hari pertama.
+        </p>
+      </div>
+
+      <div style="
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(245,158,11,0.2);
+        border-radius: 16px;
+        padding: 28px 32px;
+        margin-bottom: 28px;
+      ">
+        <div style="
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 16px 24px;
+        ">
+
+          <div style="display: flex; gap: 12px; align-items: flex-start;">
+            <span style="color: #f59e0b; font-size: 18px; line-height: 1; flex-shrink: 0; margin-top: 2px;">✓</span>
+            <div>
+              <div style="color: #ffffff; font-weight: 700; font-size: 14px; margin-bottom: 3px;">75% Bagi Hasil</div>
+              <div style="color: rgba(255,255,255,0.55); font-size: 13px; line-height: 1.4;">Anggota Pendiri terkunci seumur hidup</div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 12px; align-items: flex-start;">
+            <span style="color: #f59e0b; font-size: 18px; line-height: 1; flex-shrink: 0; margin-top: 2px;">✓</span>
+            <div>
+              <div style="color: #ffffff; font-weight: 700; font-size: 14px; margin-bottom: 3px;">Nol Persyaratan Pengikut</div>
+              <div style="color: rgba(255,255,255,0.55); font-size: 13px; line-height: 1.4;">Siapa pun bisa mendapatkan penghasilan</div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 12px; align-items: flex-start;">
+            <span style="color: #f59e0b; font-size: 18px; line-height: 1; flex-shrink: 0; margin-top: 2px;">✓</span>
+            <div>
+              <div style="color: #ffffff; font-weight: 700; font-size: 14px; margin-bottom: 3px;">Status Anggota Pendiri</div>
+              <div style="color: rgba(255,255,255,0.55); font-size: 13px; line-height: 1.4;">Hanya 1.000 tempat — terbatas permanen</div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 12px; align-items: flex-start;">
+            <span style="color: #f59e0b; font-size: 18px; line-height: 1; flex-shrink: 0; margin-top: 2px;">✓</span>
+            <div>
+              <div style="color: #ffffff; font-weight: 700; font-size: 14px; margin-bottom: 3px;">Diberdayakan oleh $HVNA</div>
+              <div style="color: rgba(255,255,255,0.55); font-size: 13px; line-height: 1.4;">Konten menghasilkan token, token menghasilkan nilai</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div style="
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.07);
+        border-radius: 12px;
+        padding: 20px 24px;
+        margin-bottom: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        gap: 12px;
+        flex-wrap: wrap;
+        text-align: center;
+      ">
+        <div>
+          <div style="color: rgba(255,255,255,0.4); font-size: 12px; margin-bottom: 4px;">Instagram / TikTok</div>
+          <div style="color: #ef4444; font-size: 22px; font-weight: 800;">0–5%</div>
+          <div style="color: rgba(255,255,255,0.35); font-size: 11px;">untuk kreator</div>
+        </div>
+        <div style="color: rgba(255,255,255,0.2); font-size: 24px;">→</div>
+        <div>
+          <div style="color: rgba(255,255,255,0.4); font-size: 12px; margin-bottom: 4px;">ContentLynk</div>
+          <div style="color: #f59e0b; font-size: 22px; font-weight: 800;">55–75%</div>
+          <div style="color: rgba(255,255,255,0.35); font-size: 11px;">untuk kreator</div>
+        </div>
+        <div style="color: rgba(255,255,255,0.2); font-size: 24px;">→</div>
+        <div>
+          <div style="color: rgba(255,255,255,0.4); font-size: 12px; margin-bottom: 4px;">Perbedaan</div>
+          <div style="color: #22c55e; font-size: 22px; font-weight: 800;">15–20×</div>
+          <div style="color: rgba(255,255,255,0.35); font-size: 11px;">lebih banyak untuk Anda</div>
+        </div>
+      </div>
+
+      <div style="text-align: center;">
+        <a
+          href="https://contentlynk.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          style="
+            display: inline-block;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #0a0f1e;
+            font-size: 16px;
+            font-weight: 800;
+            padding: 16px 40px;
+            border-radius: 999px;
+            text-decoration: none;
+            letter-spacing: 0.02em;
+            box-shadow: 0 4px 24px rgba(245,158,11,0.35);
+          "
+          onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 32px rgba(245,158,11,0.5)';"
+          onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 24px rgba(245,158,11,0.35)';"
+        >
+          🐘 Daftar di ContentLynk Sekarang →
+        </a>
+
+        <p style="
+          color: rgba(255,255,255,0.4);
+          font-size: 12px;
+          margin: 14px 0 0;
+          line-height: 1.5;
+        ">
+          Gratis untuk bergabung · Hanya 1.000 tempat Anggota Pendiri tersedia<br>
+          Pendaftaran membutuhkan waktu kurang dari satu menit
+        </p>
+      </div>
+
+    </section>
+
+    <div style="
+      max-width: 700px;
+      margin: 0 auto 8px;
+      padding: 0 24px;
+      height: 1px;
+      background: rgba(255,255,255,0.06);
+    "></div>
+
+    <!-- Social Proof -->
+    <section id="social-proof" class="social-proof-section">
+        <div class="container">
+            <h2 class="section-heading">Bergabung dengan Komunitas yang Berkembang</h2>
+
+            <div class="community-stats">
+                <div class="community-stat">
+                    <span class="community-number" id="token-holders">122</span>
+                    <span class="community-label">Pemegang Token</span>
+                </div>
+                <div class="stat-separator">|</div>
+                <div class="community-stat">
+                    <span class="community-number">336</span>
+                    <span class="community-label">Anggota Discord</span>
+                </div>
+                <div class="stat-separator">|</div>
+                <div class="community-stat">
+                    <span class="community-number">512</span>
+                    <span class="community-label">Pengguna Telegram</span>
+                </div>
+                <div class="stat-separator">|</div>
+                <div class="community-stat">
+                    <span class="community-number">820</span>
+                    <span class="community-label">Pengikut X</span>
+                </div>
+                <div class="stat-separator">|</div>
+                <div class="community-stat">
+                    <span class="community-number">1.000</span>
+                    <span class="community-label">Tempat Anggota Pendiri</span>
+                </div>
+            </div>
+
+            <h3 class="subsection-heading">Apa yang Membuat Ini Berbeda</h3>
+            <div class="comparison-wrapper">
+                <div class="comparison-grid">
+                    <div class="comparison-column comparison-other">
+                        <h4>❌ Proyek Kripto Lainnya</h4>
+                        <ul>
+                            <li>Pendiri anonim</li>
+                            <li>Tidak ada bisnis terbukti</li>
+                            <li>Peta jalan yang samar</li>
+                            <li>Hanya nilai spekulatif</li>
+                            <li>White paper copas</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-column comparison-hvna">
+                        <h4>✅ Havana Elephant</h4>
+                        <ul>
+                            <li>Pendiri CFP terverifikasi penuh</li>
+                            <li>E-commerce mapan</li>
+                            <li>Platform berfungsi (beta)</li>
+                            <li>Utilitas nyata + pendapatan</li>
+                            <li>Ekonomi kreator orisinal</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="community-links">
+                <a href="https://discord.gg/hzfTpjgy4" target="_blank" rel="noopener noreferrer" class="btn btn-community discord">Bergabung di Discord</a>
+                <a href="https://t.me/havanaelephantbrand" target="_blank" rel="noopener noreferrer" class="btn btn-community telegram">Bergabung di Telegram</a>
+                <a href="https://twitter.com/havanaWeb3" target="_blank" rel="noopener noreferrer" class="btn btn-community twitter">Ikuti di X</a>
+                <a href="https://www.linkedin.com/in/davidjsime" target="_blank" rel="noopener noreferrer" class="btn btn-community linkedin">LinkedIn</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="faq-section">
+        <div class="container">
+            <h2 class="section-heading">Pertanyaan Umum</h2>
+            <div class="faq-list">
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>❓ Apa itu $HVNA?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>$HVNA adalah token tata kelola dan utilitas untuk ekosistem Havana Elephant, termasuk Contentlynk — platform kreator revolusioner di mana kreator konten mendapatkan 55-75% pendapatan (vs 0-5% di platform tradisional).</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>❓ Mengapa harganya sangat rendah sekarang?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Anda mendapatkan harga masuk paling awal sebelum peluncuran publik. Setiap fase pra-penjualan meningkatkan harga. Ronde Genesis Founders saat ini: $0.001. Target peluncuran: $0.07+.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>❓ Kapan harga naik menjadi $0.003?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Ketika ronde Genesis Founders terjual habis atau timer hitung mundur berakhir. Fase ini memiliki 30 juta token yang tersedia.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>❓ Bagaimana cara membeli di jaringan Base?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Hubungkan dompet Anda (MetaMask, Rabby, dll.), pastikan Anda berada di jaringan Base (kami akan membantu Anda beralih), masukkan jumlah pembelian, dan konfirmasi. Token tiba dalam hitungan detik.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>❓ Apakah ini kontrak keamanan/investasi?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>$HVNA adalah token utilitas dengan hak tata kelola dan manfaat platform. Ini bukan saran keuangan. Harap tinjau syarat dan ketentuan lengkap. Kami mematuhi peraturan yang berlaku.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>❓ Siapa David Sime?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>David adalah Perencana Keuangan Berlisensi dengan 35+ tahun pengalaman bisnis, penulis 3 buku kripto, dan pendiri beberapa usaha sukses. Sepenuhnya terverifikasi dengan riwayat bisnis publik. <a href="https://www.linkedin.com/in/davidjsime" target="_blank" rel="noopener">Lihat LinkedIn →</a></p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>❓ Apa yang memberikan nilai pada $HVNA?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Utilitas nyata: voting tata kelola, bagi hasil pendapatan kreator, diskon platform (10-30%), manfaat NFT, dan tokenomics deflasioner dengan pembakaran dari pendapatan platform.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>❓ Kapan Contentlynk diluncurkan?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Beta diluncurkan K2 2026. 1.000 tempat Anggota Pendiri — terbatas berdasarkan desain. Platform akan mendukung jutaan kreator yang mendapatkan kompensasi yang adil.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>❓ Bisakah saya menjual token saya nanti?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Token akan dapat diperdagangkan di DEX setelah peluncuran. Pembeli awal memiliki keunggulan holding terlama untuk potensi keuntungan maksimal.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>❓ Bagaimana jika saya butuh bantuan?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Bergabunglah dengan Discord atau Telegram kami untuk dukungan komunitas, atau email hello@contentlynk.com untuk bantuan langsung.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>❓ Bagaimana tokenomics yang direvisi menguntungkan investor awal?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Struktur yang diperbarui memberikan: alokasi likuiditas khusus (10%) memastikan perdagangan yang sehat dari peluncuran, pengurangan alokasi tim (12% menjadi 10%) menunjukkan insentif yang selaras, pembuatan pasar profesional untuk stabilitas harga, dan pra-penjualan 18 bulan yang lebih panjang untuk pertumbuhan komunitas organik.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>❓ Apa yang terjadi pada alokasi Pendiri?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Alokasi Pendiri & Tim dikurangi dari 12% menjadi 10% (sekarang "Tim & Penasihat"), menunjukkan komitmen kepada komunitas. Kepentingan tim selaras dengan pemegang token melalui jadwal vesting 24 bulan yang sama.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Urgency -->
+    <section id="urgency" class="urgency-section">
+        <div class="container">
+            <h2 class="section-heading">Jendela $0.001 Sedang Menutup</h2>
+            <div class="urgency-content">
+                <div class="transparency-box" style="background: rgba(255,107,53,0.1); border: 2px solid #FF6B35; border-radius: 12px; padding: 24px; margin-bottom: 24px;">
+                    <h3 style="color: #FF6B35; margin-top: 0;">🔍 Transparansi Penuh</h3>
+                    <p style="margin-bottom: 16px;">Semua transaksi dapat diverifikasi di blockchain Base. Tidak ada dompet tersembunyi, tidak ada angka palsu.</p>
+                </div>
+
+                <p class="urgency-text">Peluang lantai dasar di $0.001 — Fase berikutnya naik menjadi $0.003</p>
+
+                <div class="urgency-countdown">
+                    <div class="urgency-countdown-label">⏰ Kenaikan Harga Berikutnya Dalam:</div>
+                    <div id="urgency-countdown-display" class="urgency-countdown-numbers"></div>
+                </div>
+
+                <div class="price-change-reminder">
+                    <div class="reminder-row">
+                        <span class="reminder-label">Harga Saat Ini:</span>
+                        <span class="reminder-value">$0.001</span>
+                    </div>
+                    <div class="reminder-row">
+                        <span class="reminder-label">Fase Berikutnya:</span>
+                        <span class="reminder-value">$0.003 <span class="reminder-increase">(+100%)</span></span>
+                    </div>
+                    <p class="reminder-warning">Menunggu berarti Anda kehilangan setengah token Anda</p>
+                </div>
+
+                <button class="btn btn-primary btn-large btn-urgency" onclick="trackIndonesianBuyClick(); openPurchaseModal()">
+                    Kunci Harga $0.001 Sekarang →
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section id="final-cta" class="final-cta-section">
+        <div class="cta-background"></div>
+        <div class="container">
+            <h2 class="cta-headline">Jangan Lewatkan Titik Masuk $0.001</h2>
+            <p class="cta-subheadline">1.000 tempat Anggota Pendiri — terbatas berdasarkan desain</p>
+
+            <button class="btn btn-primary btn-extra-large btn-glow" onclick="trackIndonesianBuyClick(); openPurchaseModal()">
+                Beli $HVNA Sekarang →
+            </button>
+
+            <div class="cta-benefits">
+                <span>✓ Pengiriman instan</span>
+                <span>✓ Blockchain aman</span>
+                <span>✓ Biaya gas rendah</span>
+                <span>✓ Dukungan komunitas 24/7</span>
+            </div>
+
+            <div class="security-badges">
+                <div class="security-badge">🔒 Diamankan SSL</div>
+                <div class="security-badge">✓ Terverifikasi Base</div>
+                <div class="security-badge">✓ Diaudit</div>
+                <div class="security-badge">✓ Pendiri Terverifikasi</div>
+            </div>
+
+            <p class="social-proof-line">✓ Semua transaksi diverifikasi di blockchain Base</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4>Tentang</h4>
+                    <ul>
+                        <li><a href="https://havanaelephant.com" target="_blank" rel="noopener noreferrer">Havana Elephant Global S.A.</a></li>
+                        <li><a href="/about-david.html">Tentang David</a></li>
+                        <li><a href="#white-paper" onclick="event.preventDefault(); openWhitePaperModal();">White Paper</a></li>
+                        <li><a href="#brand-story" onclick="event.preventDefault(); openBrandStoryModal();">Kisah Brand</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Produk</h4>
+                    <ul>
+                        <li><a href="/contentlynk.html">Contentlynk</a></li>
+                        <li><a href="/tokenomics.html">Tokenomics</a></li>
+                        <li><a href="https://havanaelephant.com#roadmap" target="_blank" rel="noopener noreferrer">Peta Jalan</a></li>
+                        <li><a href="https://havanaelephant.com" target="_blank" rel="noopener noreferrer">Koleksi NFT</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Komunitas</h4>
+                    <ul>
+                        <li><a href="https://discord.gg/hzfTpjgy4" target="_blank" rel="noopener noreferrer">Discord</a></li>
+                        <li><a href="https://t.me/havanaelephantbrand" target="_blank" rel="noopener noreferrer">Telegram</a></li>
+                        <li><a href="https://twitter.com/havanaWeb3" target="_blank" rel="noopener noreferrer">X/Twitter</a></li>
+                        <li><a href="https://www.linkedin.com/in/davidjsime" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Hukum</h4>
+                    <ul>
+                        <li><a href="/terms.html">Syarat & Ketentuan</a></li>
+                        <li><a href="/privacy.html">Kebijakan Privasi</a></li>
+                        <li><a href="/risk-disclosure.html">Pengungkapan Risiko</a></li>
+                        <li><a href="/cookies.html">Kebijakan Cookie</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">© 2026 Havana Elephant Global S.A. | Panama</p>
+                <p class="footer-disclaimer">"Bukan saran keuangan. Investasi cryptocurrency mengandung risiko."</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Purchase Modal -->
+    <div id="purchase-modal" class="modal">
+        <div class="modal-overlay" onclick="closePurchaseModal()"></div>
+        <div class="modal-content">
+            <button class="modal-close" onclick="closePurchaseModal()">✖️</button>
+
+            <div id="modal-wallet-selection" class="modal-screen active">
+                <h2>Pilih Dompet Anda</h2>
+                <div style="background:linear-gradient(to right,rgba(30,58,138,0.4),rgba(6,78,59,0.3));
+                            border:1px solid rgba(34,197,94,0.4);border-radius:12px;
+                            padding:16px 18px;margin-bottom:16px;display:flex;gap:12px;align-items:flex-start;">
+                    <div style="background:rgba(34,197,94,0.15);border-radius:50%;padding:8px;flex-shrink:0;font-size:18px;line-height:1;">💡</div>
+                    <div>
+                        <strong style="color:#1a1a2e;display:block;margin-bottom:8px;">Membeli dari Bursa?</strong>
+                        <p style="color:#1a1a2e;margin:0 0 10px;line-height:1.5;font-size:14px;">
+                            Membeli dengan kripto dari bursa? Tarik
+                            <strong style="color:#15803d;">ETH, USDT</strong> atau
+                            <strong style="color:#15803d;">USDC</strong> ke dompet pribadi Anda terlebih dahulu,
+                            kemudian hubungkan di sini.
+                        </p>
+                        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;">
+                            <span style="color:#374151;font-size:13px;">Perlu memindahkan ETH ke jaringan Base?</span>
+                            <a href="https://superbridge.app/base" target="_blank" rel="noopener noreferrer"
+                               style="display:inline-flex;align-items:center;gap:4px;padding:6px 12px;
+                                      background:#2563eb;border-radius:8px;color:#fff;font-weight:600;
+                                      font-size:13px;text-decoration:none;">
+                                Jembatani ETH ke Base ↗
+                            </a>
+                            <span style="color:#374151;font-size:13px;">(Butuh 2-3 menit)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="wallet-options">
+                    <button class="wallet-option" onclick="web3Helpers.connectWallet('metamask')">
+                        <img src="/images/wallets/metamask.svg" alt="MetaMask"><span>MetaMask</span>
+                    </button>
+                    <button class="wallet-option" onclick="web3Helpers.connectWallet('rabby')">
+                        <img src="/images/wallets/rabby.svg" alt="Rabby"><span>Rabby</span>
+                    </button>
+                    <button class="wallet-option" onclick="web3Helpers.connectWallet('walletconnect')">
+                        <img src="/images/wallets/walletconnect.svg" alt="WalletConnect"><span>WalletConnect</span>
+                    </button>
+                    <button class="wallet-option" onclick="web3Helpers.connectWallet('coinbase')">
+                        <img src="/images/wallets/coinbase.svg" alt="Coinbase Wallet"><span>Coinbase Wallet</span>
+                    </button>
+                </div>
+            </div>
+
+            <div id="modal-purchase-form" class="modal-screen">
+                <h2>Beli $HVNA di $0.001</h2>
+
+                <div class="connected-wallet-info">
+                    <div class="wallet-status">🟢 Terhubung: <span id="connected-address">0x0000...0000</span></div>
+                    <div class="wallet-balance">Saldo: <span id="wallet-balance">0.00</span> <span id="wallet-balance-symbol">ETH</span> di Base</div>
+                </div>
+
+                <div class="bridge-helper" id="bridge-helper">
+                    <div class="bridge-helper-icon">🌉</div>
+                    <div class="bridge-helper-content">
+                        <strong>Butuh token di Base?</strong>
+                        <p>Jembatani ETH atau stablecoin dari jaringan lain ke Base.</p>
+                    </div>
+                    <a href="https://bridge.base.org" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-bridge">Jembatani ke Base</a>
+                </div>
+
+                <div class="payment-token-selector">
+                    <h3 class="payment-selector-title">Metode Pembayaran</h3>
+                    <div class="token-cards">
+                        <button class="token-card selected" id="token-card-USDT" onclick="web3Helpers.selectPaymentToken('USDT')">
+                            <div class="token-card-left">
+                                <span class="token-card-icon">💵</span>
+                                <div class="token-card-info">
+                                    <span class="token-card-name">Tether USD</span>
+                                    <span class="token-card-badge">USDT</span>
+                                    <span class="token-card-tag" style="background:rgba(34,197,94,0.15);color:#4ade80;border:1px solid rgba(34,197,94,0.3);">Populer</span>
+                                </div>
+                            </div>
+                            <div class="token-card-right">
+                                <span class="token-card-balance" id="balance-USDT">0.00 USDT</span>
+                                <span class="token-card-check">✓</span>
+                            </div>
+                        </button>
+                        <button class="token-card" id="token-card-ETH" onclick="web3Helpers.selectPaymentToken('ETH')">
+                            <div class="token-card-left">
+                                <span class="token-card-icon">⟠</span>
+                                <div class="token-card-info">
+                                    <span class="token-card-name">Ether</span>
+                                    <span class="token-card-badge">ETH</span>
+                                    <span class="token-card-tag native">Asli</span>
+                                </div>
+                            </div>
+                            <div class="token-card-right">
+                                <span class="token-card-balance" id="balance-ETH">0.0000 ETH</span>
+                                <span class="token-card-check">✓</span>
+                            </div>
+                        </button>
+                        <button class="token-card" id="token-card-USDC" onclick="web3Helpers.selectPaymentToken('USDC')">
+                            <div class="token-card-left">
+                                <span class="token-card-icon">🔵</span>
+                                <div class="token-card-info">
+                                    <span class="token-card-name">USD Coin</span>
+                                    <span class="token-card-badge">USDC</span>
+                                </div>
+                            </div>
+                            <div class="token-card-right">
+                                <span class="token-card-balance" id="balance-USDC">0.00 USDC</span>
+                                <span class="token-card-check">✓</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="stablecoin-explainer" id="stablecoin-explainer" style="display: none;">
+                    <strong>Cara pembelian stablecoin bekerja:</strong>
+                    <ol>
+                        <li>Setujui pengeluaran <span class="selected-token-name">USDT</span> (sekali saja)</li>
+                        <li><span class="selected-token-name">USDT</span> dikonversi ke ETH secara otomatis on-chain</li>
+                        <li>ETH digunakan untuk membeli token $HVNA</li>
+                        <li>Token dialokasikan ke jadwal vesting Anda</li>
+                    </ol>
+                </div>
+
+                <div class="purchase-form">
+                    <div class="form-group">
+                        <label for="usd-amount">Jumlah dalam USD:</label>
+                        <div class="input-wrapper">
+                            <span class="input-prefix">$</span>
+                            <input type="number" id="usd-amount" placeholder="1000" min="10" step="10">
+                        </div>
+                    </div>
+
+                    <div class="quick-amounts">
+                        <button class="quick-amount" onclick="setQuickAmount(100)">$100</button>
+                        <button class="quick-amount" onclick="setQuickAmount(250)">$250</button>
+                        <button class="quick-amount" onclick="setQuickAmount(500)">$500</button>
+                        <button class="quick-amount" onclick="setQuickAmount(1000)">$1,000</button>
+                        <button class="quick-amount" onclick="setQuickAmount(5000)">$5,000</button>
+                    </div>
+
+                    <div class="purchase-summary">
+                        <div class="summary-row">
+                            <span>Anda menerima:</span>
+                            <span><strong id="purchase-tokens">0</strong> $HVNA</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Kurs saat ini:</span>
+                            <span>1 $HVNA = $0.001</span>
+                        </div>
+                    </div>
+
+                    <div class="transaction-details">
+                        <div class="detail-row">
+                            <span>Jumlah token:</span>
+                            <span id="detail-tokens">0 $HVNA</span>
+                        </div>
+                        <div class="detail-row" id="detail-eth-row">
+                            <span id="detail-cost-label">Setara ETH:</span>
+                            <span id="detail-eth">0.000 ETH (~$0.00)</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>Perkiraan gas:</span>
+                            <span id="detail-gas">~0.0001 ETH (~$0.XX)</span>
+                        </div>
+                        <div class="detail-row total">
+                            <span>Total biaya:</span>
+                            <span id="detail-total">~0.000 ETH (~$0.00)</span>
+                        </div>
+                    </div>
+
+                    <p class="gas-note">Harga gas diperbarui secara real-time berdasarkan kondisi jaringan Base</p>
+
+                    <button class="btn btn-primary btn-large btn-purchase btn-approve" id="approve-button" style="display: none;" onclick="web3Helpers.approveStablecoin()">
+                        Setujui Pengeluaran <span id="approve-token-name">USDT</span>
+                    </button>
+
+                    <button class="btn btn-primary btn-large btn-purchase" id="purchase-button" onclick="trackIndonesianBuyClick(); web3Helpers.executePurchase()">
+                        Beli <span id="button-tokens">0</span> $HVNA seharga ~$<span id="button-amount">0</span>
+                    </button>
+
+                    <div class="purchase-terms">
+                        <p>Dengan melanjutkan, Anda menyetujui <a href="/terms.html">Syarat</a> dan <a href="/privacy.html">Kebijakan Privasi</a> kami</p>
+                        <p>Bukan saran keuangan. Lihat <a href="/risk-disclosure.html">Pengungkapan Risiko</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="modal-success" class="modal-screen">
+                <div class="success-animation">
+                    <div class="checkmark-circle"><div class="checkmark">✓</div></div>
+                </div>
+                <h2>✅ Pembelian Berhasil!</h2>
+                <div class="success-details">
+                    <p class="success-message"><strong id="success-tokens">XXX,XXX</strong> token $HVNA dikirim ke dompet Anda</p>
+                    <div class="transaction-info">
+                        <div class="info-row"><span>Transaksi:</span><a href="#" id="tx-link" target="_blank" rel="noopener">Lihat di Basescan →</a></div>
+                        <div class="info-row"><span>Dompet:</span><span id="success-wallet">0x0000...0000</span></div>
+                        <div class="info-row"><span>Jumlah:</span><span id="success-amount">$0.00</span></div>
+                        <div class="info-row"><span>Token:</span><span id="success-token-amount">0 $HVNA</span></div>
+                    </div>
+                    <button class="btn btn-secondary" onclick="web3Helpers.addTokenToWallet()">Tambahkan $HVNA ke Dompet</button>
+                    <div class="next-steps">
+                        <h3>Apa Selanjutnya:</h3>
+                        <ul>
+                            <li>✓ Token sekarang ada di dompet Anda</li>
+                            <li>✓ Bergabung di Discord untuk komunitas</li>
+                            <li>✓ Beta Contentlynk diluncurkan K2 2026</li>
+                        </ul>
+                    </div>
+                    <div class="success-actions">
+                        <a href="https://discord.gg/hzfTpjgy4" target="_blank" rel="noopener noreferrer" class="btn btn-community discord">Bergabung di Discord</a>
+                        <a href="https://t.me/havanaelephantbrand" target="_blank" rel="noopener noreferrer" class="btn btn-community telegram">Bergabung di Telegram</a>
+                        <button class="btn btn-secondary" onclick="closePurchaseModal()">Tutup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Email Modal -->
+    <div id="email-modal" class="modal email-modal">
+        <div class="modal-overlay" onclick="closeEmailModal()"></div>
+        <div class="modal-content modal-slide-up">
+            <button class="modal-close" onclick="closeEmailModal()">✖️</button>
+            <h2>📬 Dapatkan Pembaruan Pra-penjualan VIP?</h2>
+            <div class="email-benefits">
+                <p>Bergabunglah dengan orang dalam yang mendapatkan:</p>
+                <ul>
+                    <li>✓ Peringatan pra-penjualan eksklusif sebelum kenaikan harga</li>
+                    <li>✓ Akses beta Contentlynk terjamin</li>
+                    <li>✓ Wawasan pendiri dari David secara langsung</li>
+                    <li>✓ Akses awal ke fitur baru</li>
+                </ul>
+            </div>
+            <form id="email-form" onsubmit="submitEmail(event)">
+                <div class="form-group">
+                    <label for="subscriber-email">Email:</label>
+                    <input type="email" id="subscriber-email" placeholder="email@anda.com" required>
+                </div>
+                <div class="email-actions">
+                    <button type="submit" class="btn btn-primary btn-large">Ya, Perbarui Saya →</button>
+                    <button type="button" class="btn-skip" onclick="skipEmail()">Lewati untuk Sekarang</button>
+                </div>
+                <div class="email-privacy">
+                    <p>🔒 Tanpa spam, selamanya. Berhenti berlangganan kapan saja.<br>Hanya digunakan untuk pembaruan $HVNA & Contentlynk.</p>
+                    <p class="privacy-warning">⚠️ Catatan Privasi: Alamat dompet Anda TIDAK terhubung ke email Anda kecuali Anda memilih untuk menghubungkannya.</p>
+                </div>
+            </form>
+            <div id="email-success" class="email-success-message" style="display: none;">
+                <h3>✅ Anda Masuk!</h3>
+                <p>Periksa email Anda untuk:</p>
+                <ul>
+                    <li>• Pesan konfirmasi dari David</li>
+                    <li>• Tanda terima pembelian Anda</li>
+                    <li>• Tautan undangan Discord/Telegram</li>
+                    <li>• Garis waktu apa yang terjadi selanjutnya</li>
+                </ul>
+                <p class="email-help">Tidak menerimanya? Periksa spam atau email hello@contentlynk.com</p>
+                <button class="btn btn-primary" onclick="closeEmailModal()">Mengerti!</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Exit Intent Modal -->
+    <div id="exit-intent-modal" class="modal exit-modal">
+        <div class="modal-overlay" onclick="closeExitModal()"></div>
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeExitModal()">✖️</button>
+            <h2>⚠️ Tunggu! Penawaran Khusus</h2>
+            <div class="exit-content">
+                <p class="exit-headline">Jangan lewatkan harga $0.001!</p>
+                <p>Ronde Genesis Founders sedang terisi cepat. Setelah habis, harga berikutnya adalah <strong>$0.003 (+100%)</strong>.</p>
+                <div class="exit-bonus">
+                    <h3>🎁 BONUS: Beli $100+ sekarang dan kami akan memberikan:</h3>
+                    <ul>
+                        <li>• Akses beta Contentlynk prioritas</li>
+                        <li>• Pembaruan pendiri eksklusif</li>
+                        <li>• Pemberitahuan awal fase berikutnya</li>
+                    </ul>
+                </div>
+                <div class="exit-actions">
+                    <button class="btn btn-primary btn-large" onclick="closeExitModal(); trackIndonesianBuyClick(); openPurchaseModal();">
+                        Ya, Bawa Saya ke Pembelian
+                    </button>
+                    <button class="btn-skip" onclick="closeExitModal()">Tidak Terima Kasih, Saya Lewati</button>
+                </div>
+                <p class="exit-social-proof">✓ Ronde Genesis Founders terisi cepat — Harga berlipat ganda di fase berikutnya ⚡</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Brand Story Modal -->
+    <div id="brand-story-modal" class="modal brand-story-modal">
+        <div class="modal-overlay" onclick="closeBrandStoryModal()"></div>
+        <div class="modal-content brand-story-content">
+            <button class="modal-close" onclick="closeBrandStoryModal()">✖️</button>
+            <div class="brand-story-container">
+                <header class="story-header">
+                    <h1 class="story-title gradient-text">Kisah Brand</h1>
+                    <p class="story-tagline">Dari Wall Street ke Web3: Revolusi Kreator yang Lahir di Adriatik</p>
+                </header>
+                <article class="story-content">
+                    <section class="story-section">
+                        <p class="story-lead">Bayangkan ini: Seorang penasihat keuangan Inggris dengan 35 tahun pengalaman bisnis, penulis tiga buku cryptocurrency, duduk di sebuah kafe dengan pemandangan tembok kuno Dubrovnik, Kroasia. Di situlah David Sime mendapat epifaninya.</p>
+                        <blockquote class="story-quote">"Mengapa para kreator membangun platform bernilai miliaran dolar dan dibayar dengan receh?"</blockquote>
+                    </section>
+                    <section class="story-section">
+                        <h2>🐘 Kelahiran Seekor Gajah</h2>
+                        <p>Havana Elephant tidak lahir dari sebuah papan tulis di Silicon Valley. Ia muncul dari puluhan tahun menyaksikan ekstraksi nilai, melihat kreator berbakat bekerja gratis, dan memahami bahwa blockchain akhirnya bisa memperbaiki apa yang media sosial tradisional rusak.</p>
+                        <p>David telah membangun bisnis sukses di tiga negara — dari mengelola £1,2 juta komisi di Elmswood Private Finance hingga menciptakan brand fashion berkelanjutan. Tapi ada sesuatu yang kurang. Ekonomi kreator sedang berkembang pesat, namun 95% kreator tidak menghasilkan apa-apa.</p>
+                        <p class="story-emphasis">Itulah saat gajah di dalam ruangan menjadi tidak mungkin diabaikan.</p>
+                    </section>
+                    <section class="story-section">
+                        <h2>🎯 Mengapa Havana Elephant?</h2>
+                        <p>Gajah melambangkan ingatan, kebijaksanaan, dan komunitas — hewan yang tidak pernah lupa dan selalu melindungi kawanannya. Cerutu Havana? Itu adalah perayaan. Gaya. Keberanian untuk hidup sesuai keinginan Anda sendiri.</p>
+                        <p class="story-mission">"Live Life Big in Style Celebrate" bukan sekadar tagline — ini adalah pemberontakan terhadap penguasa algoritma yang telah meyakinkan kreator bahwa eksposur membayar sewa.</p>
+                    </section>
+                    <section class="story-section">
+                        <h2>⚡ Revolusi Web3</h2>
+                        <p>Berbekal keahlian blockchain dan pemahaman Perencana Keuangan Berlisensi tentang distribusi nilai, David membangun apa yang platform tradisional tidak mau: <strong>ekosistem media sosial di mana kreator benar-benar memiliki platform yang mereka bangun.</strong></p>
+                        <div class="numbers-showcase">
+                            <h3>Angka-Angka yang Mengubah Segalanya</h3>
+                            <div class="numbers-grid">
+                                <div class="number-card">
+                                    <div class="number-label">Platform tradisional</div>
+                                    <div class="number-value bad">0-5%</div>
+                                    <div class="number-desc">bagi hasil ke kreator</div>
+                                </div>
+                                <div class="number-card">
+                                    <div class="number-label">Contentlynk</div>
+                                    <div class="number-value good">55-75%</div>
+                                    <div class="number-desc">bagi hasil ke kreator</div>
+                                </div>
+                                <div class="number-card">
+                                    <div class="number-label">Instagram/TikTok</div>
+                                    <div class="number-value bad">10K+</div>
+                                    <div class="number-desc">pengikut untuk menghasilkan dollar pertama</div>
+                                </div>
+                                <div class="number-card">
+                                    <div class="number-label">Contentlynk</div>
+                                    <div class="number-value good">Nol</div>
+                                    <div class="number-desc">persyaratan pengikut. Menghasilkan sejak hari pertama.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="story-section">
+                        <h2>🏛️ Tiga Pilar, Satu Ekosistem</h2>
+                        <div class="pillars-grid">
+                            <div class="pillar-card">
+                                <div class="pillar-number">1</div>
+                                <h3>Fondasi Fashion</h3>
+                                <p>Kemewahan berkelanjutan melalui havanaelephantbrand.com — membuktikan bahwa Anda bisa merayakan gaya sambil menghormati planet ini. Produk fisik dengan jiwa digital.</p>
+                            </div>
+                            <div class="pillar-card">
+                                <div class="pillar-number">2</div>
+                                <h3>Platform Kreator</h3>
+                                <p>Contentlynk.com — di mana konten viral Anda akhirnya dibayar sesuai nilainya. Bukan dalam eksposur. Dalam uang nyata. Dalam hak tata kelola. Dalam kepemilikan.</p>
+                            </div>
+                            <div class="pillar-card">
+                                <div class="pillar-number">3</div>
+                                <h3>Tulang Punggung Komunitas</h3>
+                                <p>100 Genesis NFT untuk anggota pendiri yang percaya. 9.900 NFT komunitas untuk revolusi. Token $HVNA memberikan hak voting atas platform yang Anda bangun.</p>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="story-section">
+                        <h2>🔍 Perbedaan Terverifikasi</h2>
+                        <p>Di dunia kripto yang penuh pendiri anonim dan rug pull, David berdiri di cahaya. Nama lengkap. Sejarah lengkap. Akuntabilitas penuh.</p>
+                        <blockquote class="story-quote">"Jika saya meminta kreator untuk mempercayai saya dengan konten mereka dan komunitas untuk mempercayai saya dengan investasi mereka, mereka berhak mengetahui persis siapa saya."</blockquote>
+                        <p>Tiga buku yang diterbitkan. Puluhan tahun perencanaan keuangan. Jejak bisnis sukses. Ini bukan flip cepat — ini adalah warisan yang dibangun.</p>
+                    </section>
+                    <section class="story-section highlight-section">
+                        <h2>🚀 Momen K2 2026</h2>
+                        <p>1.000 tempat Anggota Pendiri tersedia — terbatas berdasarkan desain. Pra-penjualan sedang berlangsung. Smart contract telah di-deploy di blockchain Base. Revolusi telah dimulai.</p>
+                        <p>Ini bukan tentang keuntungan cepat atau siklus hype. Ini tentang merestrukturisasi secara fundamental bagaimana nilai mengalir dalam ekonomi kreator. Membangun platform yang tidak bisa dibeli, tidak bisa mengubah ketentuannya sesuka hati, dan tidak akan pernah melupakan siapa yang sebenarnya menciptakan nilai.</p>
+                    </section>
+                    <section class="story-section cta-section">
+                        <h2>🐘 Bergabunglah dengan Kawanan</h2>
+                        <ul class="join-list">
+                            <li><strong>Seorang kreator</strong> yang lelah bekerja gratis</li>
+                            <li><strong>Seorang investor</strong> yang mencari utilitas nyata di Web3</li>
+                            <li><strong>Seorang percaya</strong> bahwa kreator layak mendapat lebih</li>
+                            <li><strong>Seorang pemberontak</strong> melawan tirani algoritma</li>
+                        </ul>
+                        <div class="mission-box">
+                            <h3>Misinya jelas:</h3>
+                            <p class="mission-statement">Pada 2030, bayar <strong>$350 juta</strong> langsung ke kreator. Bukan ke jaringan iklan. Bukan ke pemegang saham platform. Kepada orang-orang yang benar-benar menciptakan konten yang membuat internet layak dikunjungi.</p>
+                            <p class="story-emphasis">Itu bukan moon shot. Itu adalah revolusi.</p>
+                        </div>
+                    </section>
+                    <section class="story-section final-cta">
+                        <h1 class="final-headline gradient-text">Live Life Big in Style Celebrate</h1>
+                        <p class="final-message">Champagne sudah siap. Blockchain sudah live. Komunitas sedang berkumpul.</p>
+                        <p class="final-question">Satu-satunya pertanyaan adalah: <strong>Akankah Anda bergabung dengan kawanan pendiri, atau menonton revolusi dari pinggir lapangan?</strong></p>
+                        <div class="cta-buttons">
+                            <button class="btn btn-primary btn-extra-large btn-glow" onclick="closeBrandStoryModal(); trackIndonesianBuyClick(); openPurchaseModal();">
+                                Bergabunglah dengan Revolusi — Beli $HVNA Sekarang
+                            </button>
+                            <button class="btn btn-secondary btn-large" onclick="closeBrandStoryModal();">Lanjutkan Membaca Situs</button>
+                        </div>
+                    </section>
+                    <footer class="story-footer">
+                        <p class="story-location">Dibangun di Dubrovnik. Di-deploy di Base. Didukung oleh kreator. Dimiliki oleh komunitas.</p>
+                        <p class="story-welcome"><strong>Selamat datang di Ekosistem Web3 Havana Elephant — di mana kreator menjadi mitra, bukan produk.</strong></p>
+                    </footer>
+                </article>
+            </div>
+        </div>
+    </div>
+
+    <!-- White Paper Modal -->
+    <div id="white-paper-modal" class="modal brand-story-modal">
+        <div class="modal-overlay" onclick="closeWhitePaperModal()"></div>
+        <div class="modal-content brand-story-content">
+            <button class="modal-close" onclick="closeWhitePaperModal()">✖️</button>
+            <div class="brand-story-container">
+                <header class="story-header">
+                    <div class="logo" style="font-size: 3em; margin-bottom: 10px;">🐘</div>
+                    <h1 class="story-title gradient-text">Ekosistem Web3 Havana Elephant Brand</h1>
+                    <p class="story-tagline">White Paper v4.1</p>
+                    <p class="version" style="color: #999; font-size: 0.9em; margin-top: 10px;">
+                        Simbol Token: $HVNA | Blockchain: Base (Layer 2) | Agustus 2025
+                    </p>
+                </header>
+                <article class="story-content">
+                    <section class="story-section highlight-section">
+                        <h1 class="final-headline gradient-text" style="font-size: 1.8em; margin-bottom: 20px;">"Live Life Big in Style Celebrate"</h1>
+                    </section>
+                    <section class="story-section">
+                        <h2>🚀 Ringkasan Eksekutif</h2>
+                        <p>Havana Elephant Brand meluncurkan ekosistem Web3 komprehensif yang mengubah cara penggemar fashion dan kreator konten berinteraksi dengan brand melalui keanggotaan komunitas berbasis blockchain dan kompensasi kreator yang revolusioner.</p>
+                        <div class="numbers-showcase" style="background: linear-gradient(135deg, rgba(255,107,53,0.1) 0%, rgba(251,176,59,0.1) 100%); border-left: 4px solid #FF6B35; padding: 20px; margin: 20px 0; border-radius: 8px;">
+                            <h4 style="color: #FBB03B; margin-bottom: 10px;">Masalah yang Kami Selesaikan:</h4>
+                            <p>Ekonomi kreator senilai $104 miliar hampir tidak membayar kreator sama sekali. Platform tradisional seperti Instagram, TikTok, dan Facebook mengekstrak nilai maksimal sambil memberikan bagi hasil 0-5%. Sementara itu, 95% kreator tidak menghasilkan apa pun meskipun menghasilkan miliaran nilai platform.</p>
+                        </div>
+                    </section>
+                    <section class="story-section">
+                        <h2>📊 Metrik Komunitas Utama</h2>
+                        <div class="stats-bar" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0;">
+                            <div class="stat-item" style="background: rgba(255,107,53,0.1); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid rgba(255,107,53,0.3);">
+                                <span class="stat-number" style="font-size: 2em; font-weight: bold; color: #FF6B35; display: block; margin-bottom: 8px;">$4,9 Juta</span>
+                                <span class="stat-label" style="color: #FBB03B; font-size: 0.9em;">Target Pendanaan</span>
+                            </div>
+                            <div class="stat-item" style="background: rgba(255,107,53,0.1); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid rgba(255,107,53,0.3);">
+                                <span class="stat-number" style="font-size: 2em; font-weight: bold; color: #FF6B35; display: block; margin-bottom: 8px;">1 Miliar</span>
+                                <span class="stat-label" style="color: #FBB03B; font-size: 0.9em;">Pasokan Token Awal</span>
+                            </div>
+                            <div class="stat-item" style="background: rgba(255,107,53,0.1); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid rgba(255,107,53,0.3);">
+                                <span class="stat-number" style="font-size: 2em; font-weight: bold; color: #FF6B35; display: block; margin-bottom: 8px;">55-75%</span>
+                                <span class="stat-label" style="color: #FBB03B; font-size: 0.9em;">Bagi Hasil Kreator</span>
+                            </div>
+                            <div class="stat-item" style="background: rgba(255,107,53,0.1); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid rgba(255,107,53,0.3);">
+                                <span class="stat-number" style="font-size: 2em; font-weight: bold; color: #FF6B35; display: block; margin-bottom: 8px;">10.000+</span>
+                                <span class="stat-label" style="color: #FBB03B; font-size: 0.9em;">Target Komunitas (18 bulan)</span>
+                            </div>
+                            <div class="stat-item" style="background: rgba(255,107,53,0.1); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid rgba(255,107,53,0.3);">
+                                <span class="stat-number" style="font-size: 2em; font-weight: bold; color: #FF6B35; display: block; margin-bottom: 8px;">100</span>
+                                <span class="stat-label" style="color: #FBB03B; font-size: 0.9em;">Genesis NFT</span>
+                            </div>
+                            <div class="stat-item" style="background: rgba(255,107,53,0.1); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid rgba(255,107,53,0.3);">
+                                <span class="stat-number" style="font-size: 2em; font-weight: bold; color: #FF6B35; display: block; margin-bottom: 8px;">9.900</span>
+                                <span class="stat-label" style="color: #FBB03B; font-size: 0.9em;">NFT Koleksi Utama</span>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="story-section">
+                        <h2>🪙 Distribusi Token $HVNA</h2>
+                        <div class="price-table-wrapper">
+                            <table class="price-table">
+                                <thead><tr><th>Alokasi</th><th>Persentase</th><th>Token</th><th>Tujuan</th></tr></thead>
+                                <tbody>
+                                    <tr><td>Pra-penjualan Publik</td><td>30%</td><td>300.000.000</td><td>Pendanaan komunitas (progresif 18 bulan)</td></tr>
+                                    <tr><td>Kas Komunitas</td><td>22%</td><td>220.000.000</td><td>Pengembangan platform & pertumbuhan ekosistem</td></tr>
+                                    <tr><td>Pengembangan Contentlynk</td><td>20%</td><td>200.000.000</td><td>Pengembangan platform kreator</td></tr>
+                                    <tr><td>Tim & Penasihat</td><td>10%</td><td>100.000.000</td><td>Komitmen jangka panjang (vest 24 bulan)</td></tr>
+                                    <tr><td>Likuiditas & Operasi Pasar</td><td>10%</td><td>100.000.000</td><td>Likuiditas DEX/CEX & pembuatan pasar</td></tr>
+                                    <tr><td>Pemasaran Komunitas</td><td>5%</td><td>50.000.000</td><td>Pertumbuhan dan keterlibatan</td></tr>
+                                    <tr><td>Cadangan Strategis</td><td>3%</td><td>30.000.000</td><td>Dana darurat dan inisiatif masa depan</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                    <section class="story-section">
+                        <h2>💸 Struktur Pra-penjualan Token</h2>
+                        <div class="price-table-wrapper">
+                            <table class="price-table">
+                                <thead><tr><th>Fase</th><th>Jadwal</th><th>Harga</th><th>Token</th><th>Target Pendapatan</th></tr></thead>
+                                <tbody>
+                                    <tr><td>Genesis Founders</td><td>Bulan 1-2</td><td>$0.001</td><td>30.000.000</td><td>$45.000</td></tr>
+                                    <tr><td>Early Believers</td><td>Bulan 3-4</td><td>$0.003</td><td>30.000.000</td><td>$90.000</td></tr>
+                                    <tr><td>Community Builders</td><td>Bulan 5-7</td><td>$0.006</td><td>40.000.000</td><td>$240.000</td></tr>
+                                    <tr><td>Growth Partners</td><td>Bulan 8-10</td><td>$0.012</td><td>35.000.000</td><td>$420.000</td></tr>
+                                    <tr><td>Momentum Members</td><td>Bulan 11-13</td><td>$0.022</td><td>35.000.000</td><td>$770.000</td></tr>
+                                    <tr><td>Community Champions</td><td>Bulan 14-16</td><td>$0.038</td><td>50.000.000</td><td>$1.900.000</td></tr>
+                                    <tr><td>Final Access</td><td>Bulan 17-18</td><td>$0.052</td><td>80.000.000</td><td>$4.160.000</td></tr>
+                                    <tr style="background: rgba(255,107,53,0.1); font-weight: bold;">
+                                        <td><strong>Total</strong></td><td><strong>18 bulan</strong></td><td><strong>$0.001–0.052</strong></td><td><strong>300.000.000</strong></td><td><strong>~$4.900.000</strong></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                    <section class="story-section highlight-section">
+                        <h2>💡 Mengapa $4,9 Juta?</h2>
+                        <p>Target pendanaan kami yang direvisi mencerminkan pendekatan yang matang dan berdasarkan pasar untuk membangun ekosistem Web3 yang berkelanjutan.</p>
+                        <div class="numbers-showcase" style="background: linear-gradient(135deg, rgba(255,107,53,0.1) 0%, rgba(251,176,59,0.1) 100%); border-left: 4px solid #FF6B35; padding: 20px; margin: 20px 0; border-radius: 8px;">
+                            <h4 style="color: #FBB03B; margin-bottom: 10px;">$4,9 juta memastikan:</h4>
+                            <ul style="margin-left: 20px;">
+                                <li><strong>$2,45 juta Operasi & Pertumbuhan (50%)</strong> — landasan pacu 18-24 bulan untuk pengembangan ContentLynk, tim, pemasaran, dan infrastruktur</li>
+                                <li><strong>$2,2 juta Likuiditas & Operasi Pasar (45%)</strong> — pool DEX ($800K), listing CEX ($600K), pembuatan pasar ($400K), dan cadangan ($400K)</li>
+                                <li><strong>$250K Cadangan Kontinjensi (5%)</strong> — dana darurat untuk perubahan regulasi, kondisi pasar, atau peluang tak terduga</li>
+                            </ul>
+                        </div>
+                    </section>
+                    <section class="story-section">
+                        <h2>📅 Peta Jalan Pengembangan</h2>
+                        <h3 style="color: #F7931E; margin: 25px 0 15px 0;">K4 2025: Fondasi & Peluncuran Genesis</h3>
+                        <ul class="advantage-list">
+                            <li>Pengembangan smart contract dan audit keamanan</li>
+                            <li>Penyelesaian koleksi Genesis NFT (35 karya tambahan)</li>
+                            <li>Pertumbuhan komunitas Discord ke 2.000 anggota</li>
+                            <li>Spesifikasi teknis Contentlynk diselesaikan</li>
+                        </ul>
+                        <h3 style="color: #F7931E; margin: 25px 0 15px 0;">K1 2026: Pembangunan Komunitas Genesis</h3>
+                        <ul class="advantage-list">
+                            <li>Peluncuran publik Genesis NFT</li>
+                            <li>Pra-penjualan token $HVNA dimulai (ronde Seed & Privat)</li>
+                            <li>Integrasi Web3 Shopify go-live</li>
+                            <li>Pengembangan alpha Contentlynk dimulai</li>
+                        </ul>
+                        <h3 style="color: #F7931E; margin: 25px 0 15px 0;">K2 2026: Peluncuran Beta Platform</h3>
+                        <ul class="advantage-list">
+                            <li>Pengujian beta Contentlynk dengan 1.000 kreator</li>
+                            <li>Penyelesaian pengembangan koleksi NFT utama</li>
+                            <li>Implementasi tata kelola komunitas</li>
+                            <li>Perencanaan ekspansi internasional</li>
+                        </ul>
+                        <h3 style="color: #F7931E; margin: 25px 0 15px 0;">K3 2026: Koleksi Utama & Penskalaan</h3>
+                        <ul class="advantage-list">
+                            <li>Peluncuran publik koleksi NFT utama 9.900</li>
+                            <li>Peluncuran beta publik Contentlynk</li>
+                            <li>Program onboarding kreator (target 1.000)</li>
+                            <li>Persiapan listing bursa komunitas</li>
+                        </ul>
+                        <h3 style="color: #F7931E; margin: 25px 0 15px 0;">K4 2026+: Ekspansi Global</h3>
+                        <ul class="advantage-list">
+                            <li>Ekspansi fitur platform dan pengembangan aplikasi mobile</li>
+                            <li>Kemitraan brand besar (target 3)</li>
+                            <li>Ekspansi pasar internasional</li>
+                            <li>$250K+ pembayaran kreator bulanan melalui platform</li>
+                        </ul>
+                    </section>
+                    <section class="story-section">
+                        <h2>👨‍💼 Tim Kepemimpinan</h2>
+                        <h3 style="color: #F7931E; margin: 25px 0 15px 0;">Pendiri & CEO: David Sime</h3>
+                        <ul class="advantage-list">
+                            <li><strong>Pengalaman:</strong> 35+ tahun kepemimpinan bisnis yang beragam</li>
+                            <li><strong>Keahlian Web3:</strong> 65+ NFT dibuat dan dicetak</li>
+                            <li><strong>Publikasi:</strong> Penulis 3 buku: "Crypto Made Simple," "Digital Ownership Revolution," "100 NFTs for $1"</li>
+                            <li><strong>Kualifikasi:</strong> Perencana Keuangan Berlisensi</li>
+                            <li><strong>Rekam Jejak:</strong> Mendirikan Elmswood Private Finance (komisi £1,2 juta tahun ke-2), Vintage Entrepreneur Ltd</li>
+                            <li><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/davidjsime" target="_blank" rel="noopener noreferrer" style="color: #FF6B35;">linkedin.com/in/davidjsime</a></li>
+                        </ul>
+                        <h3 style="color: #F7931E; margin: 25px 0 15px 0;">Tim yang Diperluas</h3>
+                        <p>Pendekatan hybrid yang menggabungkan posisi penuh waktu inti (CTO, CMO/Manajer Komunitas, Hukum/Kepatuhan) dengan kontraktor spesialis untuk pengembangan frontend, desain kreatif, pembuatan konten, dan pengujian QA.</p>
+                    </section>
+                    <section class="story-section highlight-section">
+                        <h2 style="text-align: center;">🐘 Bergabunglah dengan Komunitas</h2>
+                        <p style="text-align: center;">Jadilah bagian dari revolusi yang mengutamakan kreator, merayakan gaya, dan membangun nilai berkelanjutan.</p>
+                        <div class="cta-buttons" style="margin-top: 30px;">
+                            <button class="btn btn-primary btn-extra-large btn-glow" onclick="closeWhitePaperModal(); trackIndonesianBuyClick(); openPurchaseModal();">
+                                Beli $HVNA Sekarang
+                            </button>
+                            <a href="https://havanaelephant.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-large">
+                                Kunjungi Situs Ekosistem Utama
+                            </a>
+                        </div>
+                    </section>
+                    <section class="story-section">
+                        <div class="numbers-showcase" style="background: linear-gradient(135deg, rgba(255,107,53,0.1) 0%, rgba(251,176,59,0.1) 100%); border-left: 4px solid #FF6B35; padding: 20px; margin: 20px 0; border-radius: 8px;">
+                            <h4 style="color: #FBB03B; margin-bottom: 10px;">📧 Informasi Kontak</h4>
+                            <p><strong>Saluran Komunitas Resmi:</strong></p>
+                            <ul class="advantage-list">
+                                <li>Situs Web: <a href="https://havanaelephant.com" target="_blank" rel="noopener noreferrer" style="color: #FF6B35;">havanaelephant.com</a></li>
+                                <li>Platform Kreator: <a href="https://contentlynk.com" target="_blank" rel="noopener noreferrer" style="color: #FF6B35;">contentlynk.com</a></li>
+                                <li>Toko Fashion: <a href="https://havanaelephantbrand.com" target="_blank" rel="noopener noreferrer" style="color: #FF6B35;">havanaelephantbrand.com</a></li>
+                            </ul>
+                            <p style="margin-top: 15px; font-style: italic;">White paper ini mewakili komitmen kami terhadap transparansi, pembangunan komunitas, dan penciptaan nilai yang berkelanjutan.</p>
+                        </div>
+                    </section>
+                    <footer class="story-footer">
+                        <p class="story-location">Dibangun di Dubrovnik. Di-deploy di Base. Didukung oleh kreator. Dimiliki oleh komunitas.</p>
+                        <p class="story-welcome"><strong>Selamat datang di Ekosistem Web3 Havana Elephant — di mana kreator menjadi mitra, bukan produk.</strong></p>
+                    </footer>
+                </article>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    <script src="config.js"></script>
+    <script src="main.js"></script>
+    <script src="web3.js"></script>
+    <script src="email-collection.js"></script>
+
+    <!-- Supabase Click Tracking -->
+    <script>
+        async function trackIndonesianBuyClick() {
+            try {
+                await fetch('https://iditgflccavxeyifrszu.supabase.co/rest/v1/button_clicks', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'apikey': 'sb_publishable_oHtvCiH83p_6KpYL8De7Tg_6K3HzlFj',
+                        'Authorization': 'Bearer sb_publishable_oHtvCiH83p_6KpYL8De7Tg_6K3HzlFj',
+                        'Prefer': 'return=minimal'
+                    },
+                    body: JSON.stringify({ button_name: 'indonesian_buy_tokens' })
+                });
+            } catch (e) {
+                // Silent fail — never block user journey
+            }
+        }
+    </script>
+
+    <!-- Microsoft Clarity Analytics -->
+    <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "wlrw0xb7jt");
+    </script>
+</body>
+</html>
