@@ -866,6 +866,7 @@ window.addEventListener('ethereum#initialized', function () {
 
 window.web3Helpers = {
     connectWallet,
+    onWalletConnected,
     executePurchase,
     addTokenToWallet,
     selectPaymentToken,

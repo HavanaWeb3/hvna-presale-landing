@@ -962,31 +962,9 @@
                     </div>
                 </div>
                 <div class="wallet-options">
-                    <button class="wallet-option" onclick="web3Helpers.connectWallet('metamask')">
-                        <img src="/images/wallets/metamask.svg" alt="MetaMask"><span>MetaMask</span>
+                    <button id="appkit-connect-btn" class="wallet-connect-primary">
+                        Hubungkan Dompet
                     </button>
-                    <button class="wallet-option" onclick="web3Helpers.connectWallet('rabby')">
-                        <img src="/images/wallets/rabby.svg" alt="Rabby"><span>Rabby</span>
-                    </button>
-                    <button class="wallet-option" onclick="web3Helpers.connectWallet('walletconnect')">
-                        <img src="/images/wallets/walletconnect.svg" alt="WalletConnect"><span>WalletConnect</span>
-                    </button>
-                    <button class="wallet-option" onclick="web3Helpers.connectWallet('coinbase')">
-                        <img src="/images/wallets/coinbase.svg" alt="Coinbase Wallet"><span>Coinbase Wallet</span>
-                    </button>
-                </div>
-                <!-- Trust Wallet mobile deep link (mobile only) -->
-                <div class="trust-wallet-mobile-cta">
-                    <p class="trust-wallet-hint">Pengguna mobile? Buka di Trust Wallet</p>
-                    <a href="https://link.trustwallet.com/open_url?coin_id=60&url=https://presale.havanaelephant.com/id.html"
-                       class="trust-wallet-btn" target="_blank" rel="noopener noreferrer">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 100 100" style="flex-shrink:0">
-                            <path d="M50 5L10 20L10 50C10 75 28 92 50 98C72 92 90 75 90 50L90 20Z" fill="white" opacity="0.9"/>
-                            <rect x="28" y="30" width="44" height="9" rx="2" fill="#1e3a8a"/>
-                            <rect x="45" y="39" width="10" height="32" rx="2" fill="#1e3a8a"/>
-                        </svg>
-                        Buka di Trust Wallet
-                    </a>
                 </div>
             </div>
 
@@ -1566,6 +1544,62 @@
                 // Silent fail — never block user journey
             }
         }
+    </script>
+
+    <!-- Reown AppKit — wallet connection -->
+    <script type="module">
+    import { createAppKit } from 'https://esm.sh/@reown/appkit@1.8.19';
+    import { Ethers5Adapter } from 'https://esm.sh/@reown/appkit-adapter-ethers5@1.8.19';
+    import { base } from 'https://esm.sh/@reown/appkit@1.8.19/networks';
+
+    const modal = createAppKit({
+        adapters: [new Ethers5Adapter()],
+        networks: [base],
+        projectId: '8edf9b51b0827917ef30644761d419d7',
+        metadata: {
+            name: 'Havana Elephant',
+            description: 'Beli token $HVNA — presale eksklusif untuk komunitas Indonesia',
+            url: 'https://presale.havanaelephant.com',
+            icons: ['https://presale.havanaelephant.com/images/logo.jpg']
+        },
+        featuredWalletIds: [
+            'c57ca95b47569778a828d19178114f4db188b89b763c899ba0be274e97267d96',
+            '4622a2b2d6af1c9844944291e5e7351a6aa24cd7b23099efac1b2fd875da31a0',
+            '8a0ee50d1f22f6651afcae7eb4253e52a3310b90af5daef78a8c4929a9bb99d4',
+            'fd20dc426fb37566d803205b19bbc1d4096b248ac04548e3cfb6b3a38bd033aa',
+        ],
+        themeMode: 'dark',
+    });
+
+    const connectBtn = document.getElementById('appkit-connect-btn');
+    connectBtn.addEventListener('click', () => modal.open());
+
+    modal.subscribeAccount(async (account) => {
+        if (account.isConnected && account.address) {
+            const rawProvider = modal.getWalletProvider();
+            if (!rawProvider) return;
+
+            const provider = new window.ethers.providers.Web3Provider(rawProvider);
+            const network = await provider.getNetwork();
+            const ws = window.web3Helpers.web3State;
+            ws.provider = provider;
+            ws.signer = provider.getSigner();
+            ws.address = account.address;
+            ws.chainId = network.chainId;
+
+            connectBtn.textContent = account.address.slice(0, 6) + '...' + account.address.slice(-4);
+            connectBtn.classList.add('connected');
+
+            await window.web3Helpers.onWalletConnected();
+        } else if (!account.isConnected) {
+            const ws = window.web3Helpers.web3State;
+            ws.provider = null;
+            ws.signer = null;
+            ws.address = null;
+            connectBtn.textContent = 'Hubungkan Dompet';
+            connectBtn.classList.remove('connected');
+        }
+    });
     </script>
 
     <!-- Microsoft Clarity Analytics -->

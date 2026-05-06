@@ -2931,3 +2931,32 @@ h3 {
 .trust-wallet-btn:hover {
     opacity: 0.88;
 }
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   APPKIT CONNECT BUTTON
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.wallet-connect-primary {
+    display: block;
+    width: 100%;
+    padding: 16px 20px;
+    background: linear-gradient(135deg, #d4a017 0%, #f5d060 50%, #d4a017 100%);
+    border: none;
+    border-radius: 12px;
+    color: #1a1a2e;
+    font-weight: 700;
+    font-size: 17px;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.1s;
+    margin-top: 8px;
+}
+.wallet-connect-primary:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+.wallet-connect-primary.connected {
+    background: linear-gradient(135deg, #15803d 0%, #22c55e 100%);
+    color: #fff;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+}
