@@ -39,10 +39,18 @@ function detectWalletWithRetry(maxAttempts, interval) {
         var attempts = 0;
 
         function check() {
-            if (window.ethereum) {
-                console.log('Wallet detected on attempt ' + (attempts + 1));
-                resolve(window.ethereum);
-            } else if (attempts < maxAttempts) {
+            try {
+                if (window.ethereum) {
+                    console.log('Wallet detected on attempt ' + (attempts + 1));
+                    resolve(window.ethereum);
+                    return;
+                }
+            } catch (e) {
+                console.warn('window.ethereum access error (extension conflict):', e.message);
+                resolve(null);
+                return;
+            }
+            if (attempts < maxAttempts) {
                 attempts++;
                 setTimeout(check, interval);
             } else {

@@ -2891,3 +2891,43 @@ h3 {
         font-size: 0.9rem;
     }
 }
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   TRUST WALLET MOBILE CTA
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.trust-wallet-mobile-cta {
+    display: none;
+    margin-top: 16px;
+    text-align: center;
+}
+@media (max-width: 768px) {
+    .trust-wallet-mobile-cta {
+        display: block;
+    }
+}
+.trust-wallet-hint {
+    font-size: 13px;
+    color: #94a3b8;
+    margin: 0 0 8px;
+}
+.trust-wallet-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 14px 20px;
+    background: linear-gradient(135deg, #1e3a8a 0%, #1a56db 100%);
+    border: 1px solid rgba(212, 160, 23, 0.6);
+    border-radius: 12px;
+    color: #f5d060;
+    font-weight: 700;
+    font-size: 16px;
+    text-decoration: none;
+    box-sizing: border-box;
+    transition: opacity 0.2s;
+}
+.trust-wallet-btn:hover {
+    opacity: 0.88;
+}
