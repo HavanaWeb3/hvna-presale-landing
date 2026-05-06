@@ -27,7 +27,11 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500;600&display=swap" onload="this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet"></noscript>
+    <link rel="preconnect" href="https://unpkg.com">
+    <link rel="preconnect" href="https://esm.sh">
+    <link rel="preload" as="image" href="/images/logo.jpg" fetchpriority="high">
 
     <!-- Styles -->
     <link rel="stylesheet" href="styles.css">
@@ -57,7 +61,7 @@
         <div class="container">
             <div class="header-content">
                 <div class="header-logo">
-                    <img src="/images/logo.jpg" alt="HVNA Logo" class="logo-icon">
+                    <img src="/images/logo.jpg" alt="HVNA Logo" class="logo-icon" width="40" height="40">
                     <span class="header-token-name">$HVNA Presale</span>
                 </div>
                 <div class="header-info">
@@ -74,7 +78,7 @@
         <div class="hero-background"></div>
         <div class="container">
             <div class="hero-content">
-                <img src="/images/logo.jpg" alt="Havana Elephant Logo" class="hero-logo">
+                <img src="/images/logo.jpg" alt="Havana Elephant Logo" class="hero-logo" width="200" height="200" fetchpriority="high">
 
                 <h1 class="hero-headline">Get $HVNA at $0.001 Before Launch at $0.07+</h1>
                 <p class="hero-subheadline">1,000 Founding Member Spots — Limited by Design</p>
@@ -224,7 +228,7 @@
         <div class="container">
             <div class="credibility-grid">
                 <div class="credibility-image">
-                    <img src="/images/david-sime.jpg" alt="David Sime - Founder & CEO" class="founder-photo">
+                    <img src="/images/david-sime.jpg" alt="David Sime - Founder & CEO" class="founder-photo" width="300" height="300" loading="lazy">
                     <div class="founder-title">Founder & CEO</div>
                 </div>
                 <div class="credibility-content">
@@ -442,10 +446,10 @@
             <div class="supported-wallets">
                 <h4>Supported Wallets:</h4>
                 <div class="wallet-icons">
-                    <img src="/images/wallets/metamask.svg" alt="MetaMask" title="MetaMask">
-                    <img src="/images/wallets/rabby.svg" alt="Rabby" title="Rabby">
-                    <img src="/images/wallets/walletconnect.svg" alt="WalletConnect" title="WalletConnect">
-                    <img src="/images/wallets/coinbase.svg" alt="Coinbase Wallet" title="Coinbase Wallet">
+                    <img src="/images/wallets/metamask.svg" alt="MetaMask" title="MetaMask" width="60" height="60">
+                    <img src="/images/wallets/rabby.svg" alt="Rabby" title="Rabby" width="60" height="60">
+                    <img src="/images/wallets/walletconnect.svg" alt="WalletConnect" title="WalletConnect" width="60" height="60">
+                    <img src="/images/wallets/coinbase.svg" alt="Coinbase Wallet" title="Coinbase Wallet" width="60" height="60">
                 </div>
             </div>
 
