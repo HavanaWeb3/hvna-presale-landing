@@ -1896,59 +1896,80 @@
         gtag('config', 'GA_MEASUREMENT_ID');
     </script>
 
-    <!-- Reown AppKit — wallet connection -->
+    <!-- Reown AppKit — lazy-loaded on first connect click to avoid INP -->
     <script type="module">
-    import { createAppKit } from 'https://esm.sh/@reown/appkit@1.8.19';
-    import { Ethers5Adapter } from 'https://esm.sh/@reown/appkit-adapter-ethers5@1.8.19';
-    import { base } from 'https://esm.sh/@reown/appkit@1.8.19/networks';
-
-    const modal = createAppKit({
-        adapters: [new Ethers5Adapter()],
-        networks: [base],
-        projectId: '8edf9b51b0827917ef30644761d419d7',
-        metadata: {
-            name: 'Havana Elephant',
-            description: 'Buy $HVNA tokens — exclusive presale',
-            url: 'https://presale.havanaelephant.com',
-            icons: ['https://presale.havanaelephant.com/images/logo.jpg']
-        },
-        featuredWalletIds: [
-            'c57ca95b47569778a828d19178114f4db188b89b763c899ba0be274e97267d96',
-            '4622a2b2d6af1c9844944291e5e7351a6aa24cd7b23099efac1b2fd875da31a0',
-            '8a0ee50d1f22f6651afcae7eb4253e52a3310b90af5daef78a8c4929a9bb99d4',
-            'fd20dc426fb37566d803205b19bbc1d4096b248ac04548e3cfb6b3a38bd033aa',
-        ],
-        themeMode: 'dark',
-    });
-
+    let modal = null;
+    let initPromise = null;
     const connectBtn = document.getElementById('appkit-connect-btn');
-    connectBtn.addEventListener('click', () => modal.open());
 
-    modal.subscribeAccount(async (account) => {
-        if (account.isConnected && account.address) {
-            const rawProvider = modal.getWalletProvider();
-            if (!rawProvider) return;
+    async function getModal() {
+        if (modal) return modal;
+        if (!initPromise) {
+            initPromise = (async () => {
+                const [{ createAppKit }, { Ethers5Adapter }, { base }] = await Promise.all([
+                    import('https://esm.sh/@reown/appkit@1.8.19'),
+                    import('https://esm.sh/@reown/appkit-adapter-ethers5@1.8.19'),
+                    import('https://esm.sh/@reown/appkit@1.8.19/networks'),
+                ]);
 
-            const provider = new window.ethers.providers.Web3Provider(rawProvider);
-            const network = await provider.getNetwork();
-            const ws = window.web3Helpers.web3State;
-            ws.provider = provider;
-            ws.signer = provider.getSigner();
-            ws.address = account.address;
-            ws.chainId = network.chainId;
+                const m = createAppKit({
+                    adapters: [new Ethers5Adapter()],
+                    networks: [base],
+                    projectId: '8edf9b51b0827917ef30644761d419d7',
+                    metadata: {
+                        name: 'Havana Elephant',
+                        description: 'Buy $HVNA tokens — exclusive presale',
+                        url: 'https://presale.havanaelephant.com',
+                        icons: ['https://presale.havanaelephant.com/images/logo.jpg']
+                    },
+                    featuredWalletIds: [
+                        'c57ca95b47569778a828d19178114f4db188b89b763c899ba0be274e97267d96',
+                        '4622a2b2d6af1c9844944291e5e7351a6aa24cd7b23099efac1b2fd875da31a0',
+                        '8a0ee50d1f22f6651afcae7eb4253e52a3310b90af5daef78a8c4929a9bb99d4',
+                        'fd20dc426fb37566d803205b19bbc1d4096b248ac04548e3cfb6b3a38bd033aa',
+                    ],
+                    themeMode: 'dark',
+                });
 
-            connectBtn.textContent = account.address.slice(0, 6) + '...' + account.address.slice(-4);
-            connectBtn.classList.add('connected');
+                m.subscribeAccount(async (account) => {
+                    if (account.isConnected && account.address) {
+                        const rawProvider = m.getWalletProvider();
+                        if (!rawProvider) return;
 
-            await window.web3Helpers.onWalletConnected();
-        } else if (!account.isConnected) {
-            const ws = window.web3Helpers.web3State;
-            ws.provider = null;
-            ws.signer = null;
-            ws.address = null;
-            connectBtn.textContent = 'Connect Wallet';
-            connectBtn.classList.remove('connected');
+                        const provider = new window.ethers.providers.Web3Provider(rawProvider);
+                        const network = await provider.getNetwork();
+                        const ws = window.web3Helpers.web3State;
+                        ws.provider = provider;
+                        ws.signer = provider.getSigner();
+                        ws.address = account.address;
+                        ws.chainId = network.chainId;
+
+                        connectBtn.textContent = account.address.slice(0, 6) + '...' + account.address.slice(-4);
+                        connectBtn.classList.add('connected');
+
+                        await window.web3Helpers.onWalletConnected();
+                    } else if (!account.isConnected) {
+                        const ws = window.web3Helpers.web3State;
+                        ws.provider = null;
+                        ws.signer = null;
+                        ws.address = null;
+                        connectBtn.textContent = 'Connect Wallet';
+                        connectBtn.classList.remove('connected');
+                    }
+                });
+
+                modal = m;
+                return m;
+            })();
         }
+        return initPromise;
+    }
+
+    connectBtn.addEventListener('click', async () => {
+        connectBtn.disabled = true;
+        const m = await getModal();
+        connectBtn.disabled = false;
+        m.open();
     });
     </script>
 
