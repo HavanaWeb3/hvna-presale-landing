@@ -444,6 +444,14 @@ function trackEvent(eventName, params = {}) {
         gtag('event', eventName, params);
     }
 
+    // Microsoft Clarity
+    if (typeof clarity !== 'undefined') {
+        clarity('event', eventName);
+        if (eventName.endsWith('_failed')) {
+            clarity('set', 'last_failure', eventName);
+        }
+    }
+
     // Console logging for development
     console.log('📊 Event:', eventName, params);
 }
