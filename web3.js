@@ -343,7 +343,14 @@ function updateApprovalUI() {
     if ((token === 'USDT' || token === 'USDC') && !web3State.stablecoinApproved[token]) {
         approveBtn.style.display = 'block';
         purchaseBtn.style.display = 'none';
-        if (approveTokenName) approveTokenName.textContent = token;
+        var balance = parseFloat(web3State.stablecoinBalances[token] || '0');
+        if (balance <= 0) {
+            approveBtn.disabled = true;
+            approveBtn.textContent = 'No ' + token + ' balance';
+        } else {
+            approveBtn.disabled = false;
+            approveBtn.innerHTML = 'Approve <span id="approve-token-name">' + token + '</span> Spending';
+        }
     } else {
         approveBtn.style.display = 'none';
         purchaseBtn.style.display = 'block';
@@ -370,6 +377,7 @@ async function fetchStablecoinBalances() {
     }
 
     updateBalanceDisplay();
+    updateApprovalUI();
 }
 
 async function checkStablecoinApproval(symbol) {
@@ -379,8 +387,7 @@ async function checkStablecoinApproval(symbol) {
         const config = STABLECOIN_CONFIG[symbol];
         const contract = new ethers.Contract(config.address, ERC20_ABI, web3State.signer);
         const allowance = await contract.allowance(web3State.address, WRAPPER_CONTRACT_CONFIG.address);
-        // Consider approved if allowance > 1000 tokens (sufficient for most purchases)
-        const threshold = ethers.utils.parseUnits('1000', config.decimals);
+        const threshold = ethers.utils.parseUnits(CONSTANTS.MIN_PURCHASE_USD.toFixed(2), config.decimals);
         web3State.stablecoinApproved[symbol] = allowance.gte(threshold);
     } catch (error) {
         console.warn('Failed to check ' + symbol + ' approval:', error);
@@ -394,6 +401,12 @@ async function approveStablecoin() {
     const symbol = web3State.selectedToken;
     if (symbol !== 'USDT' && symbol !== 'USDC') return;
 
+    const usdInput = parseFloat(document.getElementById('usd-amount').value) || 0;
+    if (usdInput < CONSTANTS.MIN_PURCHASE_USD) {
+        appHelpers.showNotification('Please enter your purchase amount before approving.', 'error');
+        return;
+    }
+
     const config = STABLECOIN_CONFIG[symbol];
     const approveBtn = document.getElementById('approve-button');
     const originalText = approveBtn.textContent;
@@ -403,9 +416,8 @@ async function approveStablecoin() {
         approveBtn.textContent = 'Waiting for wallet confirmation...';
 
         const contract = new ethers.Contract(config.address, ERC20_ABI, web3State.signer);
-        // Approve max uint256
-        const maxApproval = ethers.constants.MaxUint256;
-        const tx = await contract.approve(WRAPPER_CONTRACT_CONFIG.address, maxApproval);
+        const exactApproval = ethers.utils.parseUnits(usdInput.toFixed(2), config.decimals);
+        const tx = await contract.approve(WRAPPER_CONTRACT_CONFIG.address, exactApproval, { value: 0 });
 
         approveBtn.textContent = 'Approving on blockchain...';
         await tx.wait();

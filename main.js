@@ -361,10 +361,14 @@ function updatePurchaseCalculation() {
     const tokensReceived = Math.floor(usdAmount / currentPrice);
 
     // Update token displays
-    document.getElementById('purchase-tokens').textContent = tokensReceived.toLocaleString('en-US');
-    document.getElementById('detail-tokens').textContent = tokensReceived.toLocaleString('en-US') + ' $HVNA';
-    document.getElementById('button-tokens').textContent = tokensReceived.toLocaleString('en-US');
-    document.getElementById('button-amount').textContent = usdAmount.toFixed(2);
+    var purchaseTokensEl = document.getElementById('purchase-tokens');
+    var detailTokensEl = document.getElementById('detail-tokens');
+    var buttonTokensEl = document.getElementById('button-tokens');
+    var buttonAmountEl = document.getElementById('button-amount');
+    if (purchaseTokensEl) purchaseTokensEl.textContent = tokensReceived.toLocaleString('en-US');
+    if (detailTokensEl) detailTokensEl.textContent = tokensReceived.toLocaleString('en-US') + ' $HVNA';
+    if (buttonTokensEl) buttonTokensEl.textContent = tokensReceived.toLocaleString('en-US');
+    if (buttonAmountEl) buttonAmountEl.textContent = usdAmount.toFixed(2);
 
     // Show minimum purchase warning
     var minWarning = document.getElementById('min-purchase-warning');
