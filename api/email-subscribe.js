@@ -312,8 +312,7 @@ async function sendWelcomeEmail(email, subscriberData) {
 
         <div style="text-align: center; margin: 20px 0;">
             <a href="https://www.linkedin.com/in/davidjsime" style="margin: 0 10px;">LinkedIn</a> |
-            <a href="https://havanaelephant.com" style="margin: 0 10px;">Website</a> |
-            <a href="https://havanaelephant.com/whitepaper.pdf" style="margin: 0 10px;">White Paper</a>
+            <a href="https://havanaelephant.com" style="margin: 0 10px;">Website</a>
         </div>
     </div>
 

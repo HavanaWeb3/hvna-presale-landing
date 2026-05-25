@@ -543,41 +543,6 @@ function closeBrandStoryModal() {
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-//  White Paper Modal Functions
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-function openWhitePaperModal() {
-    const modal = document.getElementById('white-paper-modal');
-    if (modal) {
-        modal.classList.add('active');
-        // Scroll to top of modal content
-        const modalContent = modal.querySelector('.modal-content');
-        if (modalContent) {
-            modalContent.scrollTop = 0;
-        }
-
-        // Track that user opened white paper
-        trackEvent('white_paper_opened', { source: 'footer_link' });
-
-        // Prevent body scroll when modal is open
-        document.body.style.overflow = 'hidden';
-    }
-}
-
-function closeWhitePaperModal() {
-    const modal = document.getElementById('white-paper-modal');
-    if (modal) {
-        modal.classList.remove('active');
-
-        // Restore body scroll
-        document.body.style.overflow = '';
-
-        // Track modal close
-        trackEvent('white_paper_closed');
-    }
-}
-
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 window.appHelpers = {
     showModalScreen,
@@ -598,5 +563,3 @@ window.showAddBaseInfo = showAddBaseInfo;
 window.closeExitModal = closeExitModal;
 window.openBrandStoryModal = openBrandStoryModal;
 window.closeBrandStoryModal = closeBrandStoryModal;
-window.openWhitePaperModal = openWhitePaperModal;
-window.closeWhitePaperModal = closeWhitePaperModal;

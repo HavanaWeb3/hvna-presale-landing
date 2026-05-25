@@ -292,7 +292,7 @@ const SOCIAL_LINKS = {
     telegram: 'https://t.me/havanaelephantbrand',
     twitter: 'https://twitter.com/havanaWeb3',
     linkedin: 'https://www.linkedin.com/in/davidjsime',
-    whitepaper: 'https://havanaelephant.com/whitepaper.pdf', // Update when ready
+    whitepaper: '',
     website: 'https://havanaelephant.com'
 };
 
