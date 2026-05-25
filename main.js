@@ -11,10 +11,10 @@ const appState = {
     exitIntentShown: false,
     scrollPosition: 0,
     currentPhase: {
-        name: 'Genesis Founders',
-        price: 0.001,
-        tokensRemaining: null, // Will show "Ground Floor Opportunity" instead of fake numbers
-        progress: null // Removed fake progress - showing real deadline instead
+        name: 'Founder',
+        price: 0.051,
+        tokensRemaining: null,
+        progress: null
     }
 };
 
@@ -116,20 +116,10 @@ function initializeInvestmentCalculator() {
 
 function updateCalculator() {
     const usdAmount = parseFloat(document.getElementById('investment-amount').value) || 0;
-    const currentPrice = 0.001; // $0.001 per token
-    const launchPrice = 0.07; // $0.07 target
-
+    const currentPrice = window.livePricePerTokenUSD || 0.051;
     const tokensReceived = Math.floor(usdAmount / currentPrice);
-    const futureValue = tokensReceived * launchPrice;
-    const percentGain = usdAmount > 0 ? ((futureValue - usdAmount) / usdAmount * 100).toFixed(0) : 0;
-
-    // Update display
-    document.getElementById('tokens-received').textContent =
-        tokensReceived.toLocaleString('en-US');
-    document.getElementById('future-value').textContent =
-        '$' + futureValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    document.getElementById('potential-gain').textContent =
-        '+' + percentGain + '%';
+    const tokensEl = document.getElementById('tokens-received');
+    if (tokensEl) tokensEl.textContent = tokensReceived.toLocaleString('en-US');
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -355,7 +345,7 @@ function setQuickAmount(amount) {
 
 function updatePurchaseCalculation() {
     const usdAmount = parseFloat(document.getElementById('usd-amount').value) || 0;
-    const currentPrice = 0.001; // $0.001 per token
+    const currentPrice = window.livePricePerTokenUSD || 0.051;
     var minUsd = (typeof CONSTANTS !== 'undefined') ? CONSTANTS.MIN_PURCHASE_USD : 10;
 
     const tokensReceived = Math.floor(usdAmount / currentPrice);
@@ -380,7 +370,7 @@ function updatePurchaseCalculation() {
             var inputWrapper = document.getElementById('usd-amount').parentElement;
             inputWrapper.parentElement.appendChild(minWarning);
         }
-        minWarning.textContent = 'Minimum purchase: 10,000 tokens ($' + minUsd + ')';
+        minWarning.textContent = 'Minimum purchase: ' + Math.floor(minUsd / currentPrice).toLocaleString('en-US') + ' tokens ($' + minUsd + ')';
         minWarning.style.display = 'block';
     } else if (minWarning) {
         minWarning.style.display = 'none';

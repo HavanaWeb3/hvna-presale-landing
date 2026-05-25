@@ -26,6 +26,10 @@ const web3State = {
 // USD to ETH exchange rate (should be fetched from API)
 let usdToEthRate = 0.00027; // Example: 1 USD = 0.00027 ETH (update dynamically)
 
+// Live token price fetched from contract — exposed on window so main.js can read it
+window.livePricePerTokenUSD = null;
+let priceLoadError = false;
+
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // MOBILE WALLET DETECTION (RETRY LOGIC)
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -453,9 +457,11 @@ async function purchaseWithStablecoin(usdAmount) {
     // USD amount maps directly to stablecoin amount (1:1)
     const stablecoinAmount = ethers.utils.parseUnits(usdAmount.toFixed(config.decimals > 2 ? 2 : config.decimals), config.decimals);
 
-    const currentTokenPrice = 0.001; // $0.001 per token (Genesis Founders)
+    const currentTokenPrice = window.livePricePerTokenUSD || 0.051;
     const tokensReceived = Math.floor(usdAmount / currentTokenPrice);
-    const hvnaTokenAmount = ethers.utils.parseEther(tokensReceived.toString());
+    // Reduce by 5% to cover stablecoin→ETH swap fees; contract refunds unused ETH
+    const tokensWithBuffer = Math.floor(tokensReceived * 0.95);
+    const hvnaTokenAmount = ethers.utils.parseEther(tokensWithBuffer.toString());
 
     const button = document.getElementById('purchase-button');
     const originalText = button.textContent;
@@ -563,8 +569,42 @@ async function updateExchangeRate() {
 // PURCHASE CALCULATIONS
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+// Fetch live token price from contract via direct Base RPC (wallet-independent)
+async function fetchLivePrice() {
+    try {
+        const res = await fetch('https://mainnet.base.org', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                jsonrpc: '2.0', id: 1, method: 'eth_call',
+                params: [{ to: '0x390Bdc27F8488915AC5De3fCd43c695b41f452FA', data: '0xf1f71199' }, 'latest']
+            })
+        });
+        const json = await res.json();
+        const mills = parseInt(json.result, 16);
+        window.livePricePerTokenUSD = mills / 1000;
+        priceLoadError = false;
+    } catch (e) {
+        priceLoadError = true;
+    }
+    updatePriceUI();
+}
+
+function updatePriceUI() {
+    const price = window.livePricePerTokenUSD;
+    const text = price !== null ? '$' + price.toFixed(3) : 'Loading…';
+    document.querySelectorAll('[id^="live-price-display"]').forEach(function(el) {
+        el.textContent = text;
+    });
+    const errorBanner = document.getElementById('price-load-error');
+    if (errorBanner) {
+        errorBanner.style.display = priceLoadError ? 'flex' : 'none';
+    }
+}
+
 // Listen for USD amount changes
 document.addEventListener('DOMContentLoaded', function() {
+    fetchLivePrice();
     const usdInput = document.getElementById('usd-amount');
     if (usdInput) {
         usdInput.addEventListener('input', updatePurchaseDetails);
@@ -589,13 +629,14 @@ async function updatePurchaseDetails() {
 
     if (usdAmount < minUsd) {
         if (purchaseButton) {
+            const minPrice = window.livePricePerTokenUSD || 0.051;
             purchaseButton.disabled = true;
-            purchaseButton.textContent = 'Minimum purchase: ' + (minUsd / 0.001).toLocaleString('en-US') + ' tokens ($' + minUsd + ')';
+            purchaseButton.textContent = 'Minimum purchase: ' + Math.floor(minUsd / minPrice).toLocaleString('en-US') + ' tokens ($' + minUsd + ')';
         }
         return;
     }
 
-    const currentTokenPrice = 0.001; // $0.001 per token (Genesis Founders)
+    const currentTokenPrice = window.livePricePerTokenUSD || 0.051;
     const tokensReceived = Math.floor(usdAmount / currentTokenPrice);
     const ethAmount = usdAmount * usdToEthRate;
 
@@ -705,19 +746,31 @@ async function executePurchase() {
             amount_usd: usdAmount
         });
 
-        const currentTokenPrice = 0.001; // $0.001 per token (Genesis Founders)
+        const currentTokenPrice = window.livePricePerTokenUSD || 0.051;
         const tokensReceived = Math.floor(usdAmount / currentTokenPrice);
-        const ethAmount = usdAmount * usdToEthRate;
-        const ethValue = ethers.utils.parseEther(ethAmount.toFixed(18));
+        const tokenAmountWithDecimals = ethers.utils.parseEther(tokensReceived.toString());
+
+        // Get exact ETH cost from contract (Chainlink-priced), then add 5% buffer
+        const tokenHex = BigInt(tokensReceived).toString(16).padStart(64, '0');
+        const calldata = '0x1d3fdfbb' + tokenHex + '0'.repeat(64);
+        const costRes = await fetch('https://mainnet.base.org', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                jsonrpc: '2.0', id: 2, method: 'eth_call',
+                params: [{ to: '0x390Bdc27F8488915AC5De3fCd43c695b41f452FA', data: calldata }, 'latest']
+            })
+        });
+        const costJson = await costRes.json();
+        const ethCostBig = BigInt('0x' + costJson.result.slice(2, 66));
+        const ethWithBuffer = ethCostBig * 105n / 100n;
+        const ethValue = ethers.BigNumber.from(ethWithBuffer.toString());
 
         // Disable button and show loading
         const button = document.getElementById('purchase-button');
         const originalText = button.textContent;
         button.disabled = true;
         button.textContent = 'Waiting for wallet confirmation...';
-
-        // Execute transaction - pass token amount with 18 decimals
-        const tokenAmountWithDecimals = ethers.utils.parseEther(tokensReceived.toString());
 
         const tx = await web3State.presaleContract.buyTokens(tokenAmountWithDecimals, {
             value: ethValue,

@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Join the $HVNA presale at $0.001 before launch at $0.07+. $4.9M funding target. Governance token for the Havana Elephant creator economy platform. 1,000 Founding Member spots — limited by design. Doxxed founder with 35+ years experience.">
+    <meta name="description" content="$HVNA presale — Founder price $0.051. Real utility: ContentLynk creators already earn it, holders spend it on real products. Doxxed founder. No price targets, no hype.">
     <meta name="keywords" content="HVNA, token presale, cryptocurrency, Base blockchain, creator economy, Contentlynk, David Sime">
     <meta name="author" content="Havana Elephant Global S.A.">
 
     <!-- Open Graph / Social Media -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://presale.havanaelephant.com/">
-    <meta property="og:title" content="$HVNA Presale - Get In at $0.001 Before Launch">
-    <meta property="og:description" content="1,000 Founding Member spots — limited by design. Genesis Founders round at $0.001, launching at $0.07+. $4.9M funding target.">
+    <meta property="og:title" content="$HVNA Presale — Utility, Not Hype">
+    <meta property="og:description" content="Most presales sell you a chart. $HVNA already works: creators earn it, holders spend it. Founder price $0.051. Doxxed team, public roadmap.">
     <meta property="og:image" content="/images/og-image.jpg">
 
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://presale.havanaelephant.com/">
-    <meta property="twitter:title" content="$HVNA Presale - Get In at $0.001 Before Launch">
-    <meta property="twitter:description" content="1,000 Founding Member spots — limited by design. Genesis Founders round at $0.001, launching at $0.07+. $4.9M funding target.">
+    <meta property="twitter:title" content="$HVNA Presale — Utility, Not Hype">
+    <meta property="twitter:description" content="Most presales sell you a chart. $HVNA already works: creators earn it, holders spend it. Founder price $0.051. Doxxed team, public roadmap.">
     <meta property="twitter:image" content="/images/og-image.jpg">
 
     <!-- Favicon -->
@@ -36,7 +36,7 @@
     <!-- Styles -->
     <link rel="stylesheet" href="styles.css">
 
-    <title>$HVNA Presale - Get In at $0.001 Before Launch at $0.07+</title>
+    <title>$HVNA Presale — Utility, Not Hype | Havana Elephant</title>
 
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -65,7 +65,7 @@
                     <span class="header-token-name">$HVNA Presale</span>
                 </div>
                 <div class="header-info">
-                    <div class="header-price">Current: <strong>$0.001</strong></div>
+                    <div class="header-price">Founder price: <strong><span id="live-price-display-header">Loading…</span></strong></div>
                     <div id="header-countdown" class="header-countdown"></div>
                     <button class="btn btn-primary btn-header" onclick="openPurchaseModal()">Buy Now</button>
                 </div>
@@ -80,28 +80,24 @@
             <div class="hero-content">
                 <img src="/images/logo.jpg" alt="Havana Elephant Logo" class="hero-logo" width="200" height="200" fetchpriority="high">
 
-                <h1 class="hero-headline">Get $HVNA at $0.001 Before Launch at $0.07+</h1>
-                <p class="hero-subheadline">1,000 Founding Member Spots — Limited by Design</p>
+                <h1 class="hero-headline">Most presales sell you a chart. We sell you a token that already works.</h1>
+                <p class="hero-subheadline">$HVNA is the working unit of the Havana Elephant ecosystem — creators already earn it, holders already spend it on real products. No price targets, no 100x fairy tales.</p>
 
                 <!-- Current Phase Box -->
                 <div class="phase-indicator">
-                    <div class="phase-status">🔥 GENESIS FOUNDERS ACTIVE</div>
-                    <div class="phase-urgency" style="margin: 6px 0 2px; text-align: center; line-height: 1.5;">
-                        <p style="margin: 0; font-size: 0.82rem; color: #c2410c; font-weight: 600;">$0.001 now → $0.07 target listing price</p>
-                        <p style="margin: 2px 0 0; font-size: 0.82rem; color: #555555; font-weight: 400;">Phase 2 doubles to $0.003. Genesis window closing.</p>
-                    </div>
+                    <div class="phase-status">PRESALE ACTIVE</div>
                     <div class="phase-details">
                         <div class="phase-item">
-                            <span class="phase-label">Current Price:</span>
-                            <span class="phase-value">$0.001</span>
+                            <span class="phase-label">Founder price:</span>
+                            <span class="phase-value"><span id="live-price-display-hero">Loading…</span></span>
                         </div>
                         <div class="phase-item">
-                            <span class="phase-label">Next Phase:</span>
-                            <span class="phase-value">$0.003 <span class="phase-increase">(+100%)</span></span>
+                            <span class="phase-label">Public price:</span>
+                            <span class="phase-value">$0.073 (next tier)</span>
                         </div>
                         <div class="phase-item">
-                            <span class="phase-label">Blockchain:</span>
-                            <span class="phase-value" id="tokens-remaining">Loading...</span>
+                            <span class="phase-label">Network:</span>
+                            <span class="phase-value" id="tokens-remaining">Base</span>
                         </div>
                     </div>
                 </div>
@@ -157,30 +153,26 @@
     <!-- Honest Progress Dashboard -->
     <section id="progress-dashboard" class="presale-progress-section">
         <div class="container">
-            <h2>Presale Phase 1 Progress</h2>
-            <p class="subtitle">Track real-time progress across our presale journey</p>
+            <h2>Presale Progress</h2>
+            <p class="subtitle">Track real-time progress across the presale</p>
 
             <div class="progress-grid">
                 <!-- Phase Progress -->
                 <div class="progress-card">
                     <div class="progress-label">
                         <span class="icon">📅</span>
-                        <span>Presale Phase</span>
+                        <span>Presale Tier</span>
                     </div>
                     <div class="progress-visual">
                         <div class="phase-indicator">
                             <div class="phase active">1</div>
                             <div class="phase">2</div>
-                            <div class="phase">3</div>
-                            <div class="phase">4</div>
-                            <div class="phase">5</div>
-                            <div class="phase">6</div>
                         </div>
-                        <p class="progress-text">Phase 1 of 7 Active</p>
+                        <p class="progress-text">Founder Tier Active</p>
                     </div>
                     <div class="progress-detail">
-                        <span class="current-price">$0.001/token</span>
-                        <span class="next-price">Next: $0.003</span>
+                        <span class="current-price"><span id="live-price-display-progress">Loading…</span>/token</span>
+                        <span class="next-price">Public: $0.073</span>
                     </div>
                 </div>
 
@@ -274,67 +266,31 @@
     <!-- Opportunity Section -->
     <section id="opportunity" class="opportunity-section">
         <div class="container">
-            <h2 class="section-heading">The $0.001 Window Won't Last</h2>
+            <h2 class="section-heading">We're doing the opposite of every other presale.</h2>
 
-            <!-- Price Evolution Table -->
+            <!-- Presale Tier Table -->
             <div class="price-table-wrapper">
                 <table class="price-table">
                     <thead>
                         <tr>
-                            <th>Phase</th>
+                            <th>Tier</th>
                             <th>Price</th>
-                            <th>vs Now</th>
+                            <th>Tokens</th>
                             <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr class="phase-active">
-                            <td>Genesis Founders</td>
-                            <td>$0.001</td>
-                            <td>—</td>
+                            <td>Founder</td>
+                            <td><span id="live-price-display-table">Loading…</span></td>
+                            <td>5,000,000</td>
                             <td><span class="status-badge status-active">⚡ NOW ACTIVE</span></td>
                         </tr>
                         <tr>
-                            <td>Early Believers</td>
-                            <td>$0.003</td>
-                            <td>+100%</td>
-                            <td><span class="status-badge status-locked">🔒 Next Phase</span></td>
-                        </tr>
-                        <tr>
-                            <td>Community Builders</td>
-                            <td>$0.006</td>
-                            <td>+300%</td>
-                            <td><span class="status-badge status-locked">🔒 Upcoming</span></td>
-                        </tr>
-                        <tr>
-                            <td>Growth Partners</td>
-                            <td>$0.012</td>
-                            <td>+700%</td>
-                            <td><span class="status-badge status-locked">🔒 Upcoming</span></td>
-                        </tr>
-                        <tr>
-                            <td>Momentum Members</td>
-                            <td>$0.022</td>
-                            <td>+1,367%</td>
-                            <td><span class="status-badge status-locked">🔒 Upcoming</span></td>
-                        </tr>
-                        <tr>
-                            <td>Community Champions</td>
-                            <td>$0.038</td>
-                            <td>+2,433%</td>
-                            <td><span class="status-badge status-locked">🔒 Upcoming</span></td>
-                        </tr>
-                        <tr>
-                            <td>Final Access</td>
-                            <td>$0.052</td>
-                            <td>+3,367%</td>
-                            <td><span class="status-badge status-locked">🔒 Upcoming</span></td>
-                        </tr>
-                        <tr class="phase-launch">
-                            <td>Launch Target</td>
-                            <td>$0.07+</td>
-                            <td>+4,567%</td>
-                            <td><span class="status-badge status-launch">📈 Q4 2027</span></td>
+                            <td>Public</td>
+                            <td>$0.073</td>
+                            <td>10,000,000</td>
+                            <td><span class="status-badge status-locked">Upcoming</span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -356,18 +312,6 @@
                         <span class="result-label">You receive:</span>
                         <span class="result-value" id="tokens-received">0</span>
                         <span class="result-unit">$HVNA tokens</span>
-                    </div>
-
-                    <div class="calculator-result-item">
-                        <span class="result-label">If launch price hits $0.07:</span>
-                        <span class="result-value result-highlight" id="future-value">$0</span>
-                        <span class="result-icon">💰</span>
-                    </div>
-
-                    <div class="calculator-result-item">
-                        <span class="result-label">Potential gain:</span>
-                        <span class="result-value result-success" id="potential-gain">+0%</span>
-                        <span class="result-icon">🚀</span>
                     </div>
                 </div>
             </div>
@@ -560,21 +504,21 @@
 
                 <div class="faq-item">
                     <button class="faq-question" onclick="toggleFaq(this)">
-                        <span>❓ Why is the price so low now?</span>
+                        <span>❓ What is the Founder price?</span>
                         <span class="faq-icon">+</span>
                     </button>
                     <div class="faq-answer">
-                        <p>You're getting the earliest possible entry price before public launch. Each presale phase increases the price. Current Genesis Founders round: $0.001. Launch target: $0.07+.</p>
+                        <p>The Founder price ($0.051) is the early-supporter rate for the first 5M tokens — a thank-you for backing the ecosystem first. The remaining 10M tokens are at the Public price ($0.073). No projections, no promises — just the actual prices on the contract.</p>
                     </div>
                 </div>
 
                 <div class="faq-item">
                     <button class="faq-question" onclick="toggleFaq(this)">
-                        <span>❓ When does the price increase to $0.003?</span>
+                        <span>❓ When does the Founder tier close?</span>
                         <span class="faq-icon">+</span>
                     </button>
                     <div class="faq-answer">
-                        <p>When the current Genesis Founders round sells out or the countdown timer expires. This phase has limited tokens available (30M tokens).</p>
+                        <p>When the 5M Founder allocation sells through. The Public tier ($0.073) opens immediately after. The price step is the early-supporter differential — it rewards backing the ecosystem first, not a projected return.</p>
                     </div>
                 </div>
 
@@ -634,7 +578,7 @@
                         <span class="faq-icon">+</span>
                     </button>
                     <div class="faq-answer">
-                        <p>Tokens will be tradeable on DEXs after launch. Early buyers have the longest holding advantage for maximum potential gains.</p>
+                        <p>Tokens will be usable across the Havana Elephant ecosystem after TGE — ContentLynk creator earnings, store discounts, and governance. Secondary market trading follows TGE.</p>
                     </div>
                 </div>
 
@@ -674,38 +618,19 @@
     <!-- Urgency Section -->
     <section id="urgency" class="urgency-section">
         <div class="container">
-            <h2 class="section-heading">The $0.001 Window Is Closing</h2>
+            <h2 class="section-heading">Back the ecosystem at the founder price.</h2>
 
             <div class="urgency-content">
                 <!-- Transparency Box -->
                 <div class="transparency-box" style="background: rgba(255,107,53,0.1); border: 2px solid #FF6B35; border-radius: 12px; padding: 24px; margin-bottom: 24px;">
                     <h3 style="color: #FF6B35; margin-top: 0;">🔍 Complete Transparency</h3>
-                    <p style="margin-bottom: 16px;">All transactions are verifiable on Base blockchain. No hidden wallets, no fake numbers.</p>
+                    <p style="margin-bottom: 0;">All transactions are verifiable on Base blockchain. Price is read live from the smart contract — no hidden wallets, no fake numbers.</p>
                     <!-- BaseScan link temporarily removed during Genesis phase - restore when contract value >$5K -->
                     <!-- <a href="https://basescan.org/address/0x390Bdc27F8488915AC5De3fCd43c695b41f452FA" target="_blank" class="btn btn-secondary" style="display: inline-block;">View Contract on BaseScan →</a> -->
                 </div>
 
-                <p class="urgency-text">Ground floor opportunity at $0.001 - Next phase increases to $0.003</p>
-
-                <div class="urgency-countdown">
-                    <div class="urgency-countdown-label">⏰ Next Price Increase In:</div>
-                    <div id="urgency-countdown-display" class="urgency-countdown-numbers"></div>
-                </div>
-
-                <div class="price-change-reminder">
-                    <div class="reminder-row">
-                        <span class="reminder-label">Current Price:</span>
-                        <span class="reminder-value">$0.001</span>
-                    </div>
-                    <div class="reminder-row">
-                        <span class="reminder-label">Next Phase:</span>
-                        <span class="reminder-value">$0.003 <span class="reminder-increase">(+100%)</span></span>
-                    </div>
-                    <p class="reminder-warning">Waiting costs you half your tokens</p>
-                </div>
-
                 <button class="btn btn-primary btn-large btn-urgency" onclick="openPurchaseModal()">
-                    Lock In $0.001 Price Now →
+                    Buy $HVNA →
                 </button>
             </div>
         </div>
@@ -715,8 +640,8 @@
     <section id="final-cta" class="final-cta-section">
         <div class="cta-background"></div>
         <div class="container">
-            <h2 class="cta-headline">Don't Miss the $0.001 Entry Point</h2>
-            <p class="cta-subheadline">1,000 Founding Member spots — limited by design</p>
+            <h2 class="cta-headline">Back the ecosystem at the founder price.</h2>
+            <p class="cta-subheadline">No price targets. No pressure. Just utility you can use.</p>
 
             <button class="btn btn-primary btn-extra-large btn-glow" onclick="openPurchaseModal()">
                 Buy $HVNA Now →
@@ -835,7 +760,10 @@
             </div>
 
             <div id="modal-purchase-form" class="modal-screen">
-                <h2>Buy $HVNA at $0.001</h2>
+                <h2>Buy $HVNA</h2>
+                <div id="price-load-error" style="display:none;background:#7f1d1d;color:#fca5a5;padding:12px 16px;border-radius:8px;margin-bottom:12px;align-items:center;gap:8px;">
+                    ⚠️ Could not load live price. Showing last known rate — confirm before purchasing.
+                </div>
 
                 <div class="connected-wallet-info">
                     <div class="wallet-status">🟢 Connected: <span id="connected-address">0x0000...0000</span></div>
@@ -935,7 +863,7 @@
                         </div>
                         <div class="summary-row">
                             <span>Current rate:</span>
-                            <span>1 $HVNA = $0.001</span>
+                            <span>1 $HVNA = <span id="live-price-display-modal">Loading…</span></span>
                         </div>
                     </div>
 
@@ -1084,18 +1012,18 @@
         <div class="modal-content">
             <button class="modal-close" onclick="closeExitModal()">✖️</button>
 
-            <h2>⚠️ Wait! Special Offer</h2>
+            <h2>Wait — one more thing.</h2>
 
             <div class="exit-content">
-                <p class="exit-headline">Don't miss the $0.001 price!</p>
-                <p>The Genesis Founders round is filling fast. Once it's gone, the next price is <strong>$0.003 (+100%)</strong>.</p>
+                <p class="exit-headline">$HVNA already works before the hype.</p>
+                <p>ContentLynk Founders earn a 75% revenue share. Genesis NFT holders get 30% off the sustainable range. Utility you can use now — not a chart you have to pray for.</p>
 
                 <div class="exit-bonus">
-                    <h3>🎁 BONUS: Buy $100+ right now and we'll include:</h3>
+                    <h3>Founding backers also get:</h3>
                     <ul>
                         <li>• Priority Contentlynk beta access</li>
                         <li>• Exclusive founder updates</li>
-                        <li>• Early notification of next phase</li>
+                        <li>• Store discounts by presale spend: €150+ → 10%, €250+ → 20%, €500+ → 30%</li>
                     </ul>
                 </div>
 
@@ -1106,7 +1034,7 @@
                     <button class="btn-skip" onclick="closeExitModal()">No Thanks, I'll Pass</button>
                 </div>
 
-                <p class="exit-social-proof">✓ Genesis Founders round filling fast - Price doubles next phase ⚡</p>
+                <p class="exit-social-proof">✓ Doxxed founder. Public roadmap. Token you can use today.</p>
             </div>
         </div>
     </div>
@@ -1331,12 +1259,12 @@
                         <h2>📊 Key Community Metrics</h2>
                         <div class="stats-bar" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0;">
                             <div class="stat-item" style="background: rgba(255, 107, 53, 0.1); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid rgba(255, 107, 53, 0.3);">
-                                <span class="stat-number" style="font-size: 2em; font-weight: bold; color: #FF6B35; display: block; margin-bottom: 8px;">$4.9M</span>
-                                <span class="stat-label" style="color: #FBB03B; font-size: 0.9em;">Funding Target</span>
+                                <span class="stat-number" style="font-size: 2em; font-weight: bold; color: #FF6B35; display: block; margin-bottom: 8px;">≈€850K</span>
+                                <span class="stat-label" style="color: #FBB03B; font-size: 0.9em;">Raise Target (MiCA exemption)</span>
                             </div>
                             <div class="stat-item" style="background: rgba(255, 107, 53, 0.1); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid rgba(255, 107, 53, 0.3);">
-                                <span class="stat-number" style="font-size: 2em; font-weight: bold; color: #FF6B35; display: block; margin-bottom: 8px;">1B</span>
-                                <span class="stat-label" style="color: #FBB03B; font-size: 0.9em;">Initial Token Supply</span>
+                                <span class="stat-number" style="font-size: 2em; font-weight: bold; color: #FF6B35; display: block; margin-bottom: 8px;">100M</span>
+                                <span class="stat-label" style="color: #FBB03B; font-size: 0.9em;">Total Token Supply</span>
                             </div>
                             <div class="stat-item" style="background: rgba(255, 107, 53, 0.1); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid rgba(255, 107, 53, 0.3);">
                                 <span class="stat-number" style="font-size: 2em; font-weight: bold; color: #FF6B35; display: block; margin-bottom: 8px;">55-75%</span>
@@ -1511,85 +1439,46 @@
                             <table class="price-table">
                                 <thead>
                                     <tr>
-                                        <th>Phase</th>
-                                        <th>Timeline</th>
+                                        <th>Tier</th>
                                         <th>Price</th>
                                         <th>Tokens</th>
-                                        <th>Target Revenue</th>
+                                        <th>Revenue</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>Genesis Founders</td>
-                                        <td>Month 1-2</td>
-                                        <td>$0.001</td>
-                                        <td>30,000,000</td>
-                                        <td>$45,000</td>
+                                        <td>Founder</td>
+                                        <td>$0.051</td>
+                                        <td>5,000,000</td>
+                                        <td>≈$255,000</td>
                                     </tr>
                                     <tr>
-                                        <td>Early Believers</td>
-                                        <td>Month 3-4</td>
-                                        <td>$0.003</td>
-                                        <td>30,000,000</td>
-                                        <td>$90,000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Community Builders</td>
-                                        <td>Month 5-7</td>
-                                        <td>$0.006</td>
-                                        <td>40,000,000</td>
-                                        <td>$240,000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Growth Partners</td>
-                                        <td>Month 8-10</td>
-                                        <td>$0.012</td>
-                                        <td>35,000,000</td>
-                                        <td>$420,000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Momentum Members</td>
-                                        <td>Month 11-13</td>
-                                        <td>$0.022</td>
-                                        <td>35,000,000</td>
-                                        <td>$770,000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Community Champions</td>
-                                        <td>Month 14-16</td>
-                                        <td>$0.038</td>
-                                        <td>50,000,000</td>
-                                        <td>$1,900,000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Final Access</td>
-                                        <td>Month 17-18</td>
-                                        <td>$0.052</td>
-                                        <td>80,000,000</td>
-                                        <td>$4,160,000</td>
+                                        <td>Public</td>
+                                        <td>$0.073</td>
+                                        <td>10,000,000</td>
+                                        <td>≈$730,000</td>
                                     </tr>
                                     <tr style="background: rgba(255, 107, 53, 0.1); font-weight: bold;">
                                         <td><strong>Total</strong></td>
-                                        <td><strong>18 months</strong></td>
-                                        <td><strong>$0.001-0.052</strong></td>
-                                        <td><strong>300,000,000</strong></td>
-                                        <td><strong>~$4,900,000</strong></td>
+                                        <td><strong>$0.051–$0.073</strong></td>
+                                        <td><strong>15,000,000</strong></td>
+                                        <td><strong>≈€850,000</strong></td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </section>
 
-                    <!-- Why $4.9M -->
+                    <!-- Why ≈€850K -->
                     <section class="story-section highlight-section">
-                        <h2>💡 Why $4.9M?</h2>
-                        <p>Our revised funding target reflects a mature, market-informed approach to building a sustainable Web3 ecosystem. Unlike projects that launch with minimal liquidity and watch their token price collapse, we're ensuring professional-grade infrastructure from day one.</p>
+                        <h2>💡 Why ≈€850K?</h2>
+                        <p>The raise target sits deliberately under the €1M MiCA exemption threshold — a regulatory decision, not a funding constraint. It funds the first phase of platform development and initial liquidity without requiring full MiCA compliance overhead.</p>
                         <div class="numbers-showcase" style="background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(251, 176, 59, 0.1) 100%); border-left: 4px solid #FF6B35; padding: 20px; margin: 20px 0; border-radius: 8px;">
-                            <h4 style="color: #FBB03B; margin-bottom: 10px;">The $4.9M ensures:</h4>
+                            <h4 style="color: #FBB03B; margin-bottom: 10px;">The ≈€850K funds:</h4>
                             <ul style="margin-left: 20px;">
-                                <li><strong>$2.45M Operations & Growth (50%)</strong> - 18-24 month runway for ContentLynk development, team, marketing, and infrastructure</li>
-                                <li><strong>$2.2M Liquidity & Market Operations (45%)</strong> - DEX pools ($800K), CEX listings ($600K), market making ($400K), and reserve ($400K)</li>
-                                <li><strong>$250K Contingency Reserve (5%)</strong> - Emergency fund for regulatory changes, market conditions, or unexpected opportunities</li>
+                                <li><strong>ContentLynk platform development</strong> — 12–18 month engineering and community runway</li>
+                                <li><strong>DEX liquidity pool</strong> — sufficient depth for post-TGE trading</li>
+                                <li><strong>Operations reserve</strong> — legal, compliance, and contingency</li>
                             </ul>
                         </div>
                     </section>
@@ -1602,35 +1491,25 @@
                                 <thead>
                                     <tr>
                                         <th>Category</th>
-                                        <th>Amount</th>
-                                        <th>Percentage</th>
+                                        <th>Approx. %</th>
                                         <th>Purpose</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>Operations & Growth</td>
-                                        <td>$2,450,000</td>
-                                        <td>50%</td>
-                                        <td>ContentLynk development, team, marketing, infrastructure</td>
+                                        <td>Platform Development & Operations</td>
+                                        <td>~50%</td>
+                                        <td>ContentLynk engineering, team, marketing, infrastructure</td>
                                     </tr>
                                     <tr>
-                                        <td>Liquidity & Market Ops</td>
-                                        <td>$2,200,000</td>
-                                        <td>45%</td>
-                                        <td>DEX/CEX liquidity, market making, reserves</td>
+                                        <td>Liquidity & Market Operations</td>
+                                        <td>~45%</td>
+                                        <td>DEX liquidity pool, market making, reserves</td>
                                     </tr>
                                     <tr>
                                         <td>Contingency Reserve</td>
-                                        <td>$250,000</td>
-                                        <td>5%</td>
-                                        <td>Emergency fund and opportunities</td>
-                                    </tr>
-                                    <tr style="background: rgba(255, 107, 53, 0.1); font-weight: bold;">
-                                        <td><strong>Total</strong></td>
-                                        <td><strong>$4,900,000</strong></td>
-                                        <td><strong>100%</strong></td>
-                                        <td></td>
+                                        <td>~5%</td>
+                                        <td>Legal, compliance, and emergency fund</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -1640,40 +1519,7 @@
                     <!-- Liquidity & Market Operations -->
                     <section class="story-section">
                         <h2>🏦 Liquidity & Market Operations</h2>
-                        <p>A dedicated $2.2M allocation ensures professional-grade liquidity from day one:</p>
-                        <div class="price-table-wrapper">
-                            <table class="price-table">
-                                <thead>
-                                    <tr>
-                                        <th>Component</th>
-                                        <th>Allocation</th>
-                                        <th>Purpose</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>DEX Liquidity Pools</td>
-                                        <td>$800,000</td>
-                                        <td>Uniswap/Aerodrome on Base network</td>
-                                    </tr>
-                                    <tr>
-                                        <td>CEX Listings</td>
-                                        <td>$600,000</td>
-                                        <td>Tier 2-3 exchange listings and market making deposits</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Market Making</td>
-                                        <td>$400,000</td>
-                                        <td>Professional market maker engagement for price stability</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Liquidity Reserve</td>
-                                        <td>$400,000</td>
-                                        <td>Buffer for additional pools, cross-chain bridges</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                        <p>A significant portion of raise proceeds is allocated to post-TGE liquidity, covering DEX liquidity pools on Base (Uniswap/Aerodrome), initial exchange presence, and a liquidity reserve buffer. Specific allocations are detailed in the white paper and will be published on-chain at TGE.</p>
                     </section>
 
                     <!-- Development Roadmap -->

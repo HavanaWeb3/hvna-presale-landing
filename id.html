@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Bergabunglah dengan pra-penjualan $HVNA seharga $0.001 sebelum diluncurkan di $0.07+. Target pendanaan $4,9 juta. Token tata kelola untuk platform ekonomi kreator Havana Elephant. 1.000 tempat Anggota Pendiri — terbatas berdasarkan desain. Pendiri terverifikasi dengan 35+ tahun pengalaman.">
+    <meta name="description" content="Pra-penjualan $HVNA — Harga Pendiri $0.051. Token utilitas nyata: kreator ContentLynk sudah mendapatkannya, pemegang menggunakannya untuk produk nyata. Pendiri terverifikasi. Tanpa target harga, tanpa hype.">
     <meta name="keywords" content="HVNA, token presale, cryptocurrency, blockchain Base, ekonomi kreator, Contentlynk, David Sime">
     <meta name="author" content="Havana Elephant Global S.A.">
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://presale.havanaelephant.com/id.html">
-    <meta property="og:title" content="Pra-penjualan $HVNA - Masuk di $0.001 Sebelum Peluncuran">
-    <meta property="og:description" content="1.000 tempat Anggota Pendiri — terbatas berdasarkan desain. Ronde Genesis Founders di $0.001, diluncurkan di $0.07+. Target pendanaan $4,9 juta.">
+    <meta property="og:title" content="Pra-penjualan $HVNA — Utilitas, Bukan Hype">
+    <meta property="og:description" content="Harga Pendiri $0.051. Token $HVNA sudah bekerja: kreator mendapatkannya, pemegang menggunakannya. Pendiri terverifikasi, peta jalan publik.">
     <meta property="og:image" content="/images/og-image.jpg">
 
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://presale.havanaelephant.com/id.html">
-    <meta property="twitter:title" content="Pra-penjualan $HVNA - Masuk di $0.001 Sebelum Peluncuran">
-    <meta property="twitter:description" content="1.000 tempat Anggota Pendiri — terbatas berdasarkan desain. Ronde Genesis Founders di $0.001, diluncurkan di $0.07+. Target pendanaan $4,9 juta.">
+    <meta property="twitter:title" content="Pra-penjualan $HVNA — Utilitas, Bukan Hype">
+    <meta property="twitter:description" content="Harga Pendiri $0.051. Token $HVNA sudah bekerja: kreator mendapatkannya, pemegang menggunakannya. Pendiri terverifikasi, peta jalan publik.">
     <meta property="twitter:image" content="/images/og-image.jpg">
 
     <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
@@ -32,7 +32,7 @@
 
     <link rel="stylesheet" href="styles.css">
 
-    <title>Pra-penjualan $HVNA - Masuk di $0.001 Sebelum Peluncuran di $0.07+</title>
+    <title>Pra-penjualan $HVNA — Utilitas, Bukan Hype | Havana Elephant</title>
 
     <script type="application/ld+json">
     {
@@ -60,7 +60,7 @@
                     <span class="header-token-name">Pra-penjualan $HVNA</span>
                 </div>
                 <div class="header-info">
-                    <div class="header-price">Saat Ini: <strong>$0.001</strong></div>
+                    <div class="header-price">Harga Pendiri: <strong><span id="live-price-display-header">Memuat…</span></strong></div>
                     <div id="header-countdown" class="header-countdown"></div>
                     <button class="btn btn-primary btn-header" onclick="trackIndonesianBuyClick(); openPurchaseModal()">Beli Sekarang</button>
                 </div>
@@ -75,23 +75,23 @@
             <div class="hero-content">
                 <img src="/images/logo.jpg" alt="Logo Havana Elephant" class="hero-logo" width="200" height="200" fetchpriority="high">
 
-                <h1 class="hero-headline">Dapatkan $HVNA di $0.001 Sebelum Peluncuran di $0.07+</h1>
-                <p class="hero-subheadline">1.000 Tempat Anggota Pendiri — Terbatas Berdasarkan Desain</p>
+                <h1 class="hero-headline">Token $HVNA — Utilitas Nyata, Bukan Hype</h1>
+                <p class="hero-subheadline">Kreator sudah mendapatkan $HVNA. Pemegang sudah menggunakannya untuk produk nyata. Harga Pendiri $0.051.</p>
 
                 <div class="phase-indicator">
-                    <div class="phase-status">🔥 GENESIS FOUNDERS AKTIF</div>
+                    <div class="phase-status">PENJUALAN PENDIRI AKTIF</div>
                     <div class="phase-details">
                         <div class="phase-item">
-                            <span class="phase-label">Harga Saat Ini:</span>
-                            <span class="phase-value">$0.001</span>
+                            <span class="phase-label">Harga Pendiri:</span>
+                            <span class="phase-value"><span id="live-price-display-hero">Memuat…</span></span>
                         </div>
                         <div class="phase-item">
-                            <span class="phase-label">Fase Berikutnya:</span>
-                            <span class="phase-value">$0.003 <span class="phase-increase">(+100%)</span></span>
+                            <span class="phase-label">Harga Publik:</span>
+                            <span class="phase-value">$0.073 (tier berikutnya)</span>
                         </div>
                         <div class="phase-item">
                             <span class="phase-label">Blockchain:</span>
-                            <span class="phase-value" id="tokens-remaining">Memuat...</span>
+                            <span class="phase-value" id="tokens-remaining">Base</span>
                         </div>
                     </div>
                 </div>
@@ -143,36 +143,32 @@
     <!-- Progress Dashboard -->
     <section id="progress-dashboard" class="presale-progress-section">
         <div class="container">
-            <h2>Progres Fase Pra-penjualan 1</h2>
+            <h2>Progres Pra-penjualan</h2>
             <p class="subtitle">Lacak progres secara real-time dalam perjalanan pra-penjualan kami</p>
 
             <div class="progress-grid">
                 <div class="progress-card">
                     <div class="progress-label">
                         <span class="icon">📅</span>
-                        <span>Fase Pra-penjualan</span>
+                        <span>Tier Pra-penjualan</span>
                     </div>
                     <div class="progress-visual">
                         <div class="phase-indicator">
                             <div class="phase active">1</div>
                             <div class="phase">2</div>
-                            <div class="phase">3</div>
-                            <div class="phase">4</div>
-                            <div class="phase">5</div>
-                            <div class="phase">6</div>
                         </div>
-                        <p class="progress-text">Fase 1 dari 7 Aktif</p>
+                        <p class="progress-text">Tier Pendiri Aktif</p>
                     </div>
                     <div class="progress-detail">
-                        <span class="current-price">$0.001/token</span>
-                        <span class="next-price">Berikutnya: $0.003</span>
+                        <span class="current-price"><span id="live-price-display-progress">Memuat…</span>/token</span>
+                        <span class="next-price">Publik: $0.073</span>
                     </div>
                 </div>
 
                 <div class="progress-card">
                     <div class="progress-label">
                         <span class="icon">⏰</span>
-                        <span>Fase 1 Berakhir Dalam</span>
+                        <span>Tier Pendiri Berakhir Dalam</span>
                     </div>
                     <div class="progress-visual">
                         <div class="countdown">
@@ -192,7 +188,7 @@
                         <p class="progress-text">9 Juli 2026</p>
                     </div>
                     <div class="progress-detail">
-                        <span class="warning">⚡ Harga berlipat ganda setelah batas waktu</span>
+                        <span class="warning">⚡ Tier publik $0.073 terbuka setelah tier pendiri habis</span>
                     </div>
                 </div>
             </div>
@@ -247,66 +243,30 @@
     <!-- Opportunity Section -->
     <section id="opportunity" class="opportunity-section">
         <div class="container">
-            <h2 class="section-heading">Jendela $0.001 Tidak Akan Bertahan</h2>
+            <h2 class="section-heading">Struktur Pra-penjualan $HVNA</h2>
 
             <div class="price-table-wrapper">
                 <table class="price-table">
                     <thead>
                         <tr>
-                            <th>Fase</th>
+                            <th>Tier</th>
                             <th>Harga</th>
-                            <th>vs Sekarang</th>
+                            <th>Token</th>
                             <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr class="phase-active">
-                            <td>Genesis Founders</td>
-                            <td>$0.001</td>
-                            <td>—</td>
+                            <td>Pendiri</td>
+                            <td><span id="live-price-display-table">Memuat…</span></td>
+                            <td>5.000.000</td>
                             <td><span class="status-badge status-active">⚡ AKTIF SEKARANG</span></td>
                         </tr>
                         <tr>
-                            <td>Early Believers</td>
-                            <td>$0.003</td>
-                            <td>+100%</td>
-                            <td><span class="status-badge status-locked">🔒 Fase Berikutnya</span></td>
-                        </tr>
-                        <tr>
-                            <td>Community Builders</td>
-                            <td>$0.006</td>
-                            <td>+300%</td>
-                            <td><span class="status-badge status-locked">🔒 Akan Datang</span></td>
-                        </tr>
-                        <tr>
-                            <td>Growth Partners</td>
-                            <td>$0.012</td>
-                            <td>+700%</td>
-                            <td><span class="status-badge status-locked">🔒 Akan Datang</span></td>
-                        </tr>
-                        <tr>
-                            <td>Momentum Members</td>
-                            <td>$0.022</td>
-                            <td>+1,367%</td>
-                            <td><span class="status-badge status-locked">🔒 Akan Datang</span></td>
-                        </tr>
-                        <tr>
-                            <td>Community Champions</td>
-                            <td>$0.038</td>
-                            <td>+2,433%</td>
-                            <td><span class="status-badge status-locked">🔒 Akan Datang</span></td>
-                        </tr>
-                        <tr>
-                            <td>Final Access</td>
-                            <td>$0.052</td>
-                            <td>+3,367%</td>
-                            <td><span class="status-badge status-locked">🔒 Akan Datang</span></td>
-                        </tr>
-                        <tr class="phase-launch">
-                            <td>Target Peluncuran</td>
-                            <td>$0.07+</td>
-                            <td>+4,567%</td>
-                            <td><span class="status-badge status-launch">📈 K4 2027</span></td>
+                            <td>Publik</td>
+                            <td>$0.073</td>
+                            <td>10.000.000</td>
+                            <td><span class="status-badge status-locked">Akan Datang</span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -326,16 +286,6 @@
                         <span class="result-label">Anda menerima:</span>
                         <span class="result-value" id="tokens-received">0</span>
                         <span class="result-unit">token $HVNA</span>
-                    </div>
-                    <div class="calculator-result-item">
-                        <span class="result-label">Jika harga peluncuran mencapai $0.07:</span>
-                        <span class="result-value result-highlight" id="future-value">$0</span>
-                        <span class="result-icon">💰</span>
-                    </div>
-                    <div class="calculator-result-item">
-                        <span class="result-label">Potensi keuntungan:</span>
-                        <span class="result-value result-success" id="potential-gain">+0%</span>
-                        <span class="result-icon">🚀</span>
                     </div>
                 </div>
             </div>
@@ -708,21 +658,21 @@
 
                 <div class="faq-item">
                     <button class="faq-question" onclick="toggleFaq(this)">
-                        <span>❓ Mengapa harganya sangat rendah sekarang?</span>
+                        <span>❓ Apa itu Harga Pendiri?</span>
                         <span class="faq-icon">+</span>
                     </button>
                     <div class="faq-answer">
-                        <p>Anda mendapatkan harga masuk paling awal sebelum peluncuran publik. Setiap fase pra-penjualan meningkatkan harga. Ronde Genesis Founders saat ini: $0.001. Target peluncuran: $0.07+.</p>
+                        <p>Harga Pendiri ($0.051) adalah tarif early-supporter untuk 5 juta token pertama — sebagai penghargaan atas dukungan ekosistem pertama kali. 10 juta token berikutnya berada di harga Publik ($0.073). Tidak ada proyeksi, tidak ada janji — hanya harga aktual di kontrak.</p>
                     </div>
                 </div>
 
                 <div class="faq-item">
                     <button class="faq-question" onclick="toggleFaq(this)">
-                        <span>❓ Kapan harga naik menjadi $0.003?</span>
+                        <span>❓ Kapan Tier Pendiri ditutup?</span>
                         <span class="faq-icon">+</span>
                     </button>
                     <div class="faq-answer">
-                        <p>Ketika ronde Genesis Founders terjual habis atau timer hitung mundur berakhir. Fase ini memiliki 30 juta token yang tersedia.</p>
+                        <p>Ketika alokasi 5 juta token Pendiri terjual habis. Tier Publik ($0.073) terbuka segera setelahnya. Perbedaan harga adalah diferensial early-supporter — bukan proyeksi keuntungan.</p>
                     </div>
                 </div>
 
@@ -782,7 +732,7 @@
                         <span class="faq-icon">+</span>
                     </button>
                     <div class="faq-answer">
-                        <p>Token akan dapat diperdagangkan di DEX setelah peluncuran. Pembeli awal memiliki keunggulan holding terlama untuk potensi keuntungan maksimal.</p>
+                        <p>Token dapat digunakan di seluruh ekosistem Havana Elephant setelah TGE — pendapatan kreator ContentLynk, diskon toko, dan tata kelola. Perdagangan pasar sekunder mengikuti TGE.</p>
                     </div>
                 </div>
 
@@ -823,34 +773,15 @@
     <!-- Urgency -->
     <section id="urgency" class="urgency-section">
         <div class="container">
-            <h2 class="section-heading">Jendela $0.001 Sedang Menutup</h2>
+            <h2 class="section-heading">Dukung ekosistem dengan harga pendiri.</h2>
             <div class="urgency-content">
                 <div class="transparency-box" style="background: rgba(255,107,53,0.1); border: 2px solid #FF6B35; border-radius: 12px; padding: 24px; margin-bottom: 24px;">
                     <h3 style="color: #FF6B35; margin-top: 0;">🔍 Transparansi Penuh</h3>
-                    <p style="margin-bottom: 16px;">Semua transaksi dapat diverifikasi di blockchain Base. Tidak ada dompet tersembunyi, tidak ada angka palsu.</p>
-                </div>
-
-                <p class="urgency-text">Peluang lantai dasar di $0.001 — Fase berikutnya naik menjadi $0.003</p>
-
-                <div class="urgency-countdown">
-                    <div class="urgency-countdown-label">⏰ Kenaikan Harga Berikutnya Dalam:</div>
-                    <div id="urgency-countdown-display" class="urgency-countdown-numbers"></div>
-                </div>
-
-                <div class="price-change-reminder">
-                    <div class="reminder-row">
-                        <span class="reminder-label">Harga Saat Ini:</span>
-                        <span class="reminder-value">$0.001</span>
-                    </div>
-                    <div class="reminder-row">
-                        <span class="reminder-label">Fase Berikutnya:</span>
-                        <span class="reminder-value">$0.003 <span class="reminder-increase">(+100%)</span></span>
-                    </div>
-                    <p class="reminder-warning">Menunggu berarti Anda kehilangan setengah token Anda</p>
+                    <p style="margin-bottom: 0;">Semua transaksi dapat diverifikasi di blockchain Base. Harga dibaca langsung dari kontrak — tidak ada dompet tersembunyi, tidak ada angka palsu.</p>
                 </div>
 
                 <button class="btn btn-primary btn-large btn-urgency" onclick="trackIndonesianBuyClick(); openPurchaseModal()">
-                    Kunci Harga $0.001 Sekarang →
+                    Beli $HVNA →
                 </button>
             </div>
         </div>
@@ -860,8 +791,8 @@
     <section id="final-cta" class="final-cta-section">
         <div class="cta-background"></div>
         <div class="container">
-            <h2 class="cta-headline">Jangan Lewatkan Titik Masuk $0.001</h2>
-            <p class="cta-subheadline">1.000 tempat Anggota Pendiri — terbatas berdasarkan desain</p>
+            <h2 class="cta-headline">Dukung ekosistem dengan harga pendiri.</h2>
+            <p class="cta-subheadline">Tanpa target harga. Tanpa tekanan. Utilitas yang bisa Anda gunakan sekarang.</p>
 
             <button class="btn btn-primary btn-extra-large btn-glow" onclick="trackIndonesianBuyClick(); openPurchaseModal()">
                 Beli $HVNA Sekarang →
@@ -973,7 +904,10 @@
             </div>
 
             <div id="modal-purchase-form" class="modal-screen">
-                <h2>Beli $HVNA di $0.001</h2>
+                <h2>Beli $HVNA</h2>
+                <div id="price-load-error" style="display:none;background:#7f1d1d;color:#fca5a5;padding:12px 16px;border-radius:8px;margin-bottom:12px;align-items:center;gap:8px;">
+                    ⚠️ Tidak dapat memuat harga langsung. Menampilkan tarif terakhir yang diketahui — konfirmasi sebelum membeli.
+                </div>
 
                 <div class="connected-wallet-info">
                     <div class="wallet-status">🟢 Terhubung: <span id="connected-address">0x0000...0000</span></div>
@@ -1070,7 +1004,7 @@
                         </div>
                         <div class="summary-row">
                             <span>Kurs saat ini:</span>
-                            <span>1 $HVNA = $0.001</span>
+                            <span>1 $HVNA = <span id="live-price-display-modal">Memuat…</span></span>
                         </div>
                     </div>
 
@@ -1191,16 +1125,16 @@
         <div class="modal-overlay" onclick="closeExitModal()"></div>
         <div class="modal-content">
             <button class="modal-close" onclick="closeExitModal()">✖️</button>
-            <h2>⚠️ Tunggu! Penawaran Khusus</h2>
+            <h2>Tunggu — satu hal lagi.</h2>
             <div class="exit-content">
-                <p class="exit-headline">Jangan lewatkan harga $0.001!</p>
-                <p>Ronde Genesis Founders sedang terisi cepat. Setelah habis, harga berikutnya adalah <strong>$0.003 (+100%)</strong>.</p>
+                <p class="exit-headline">$HVNA sudah bekerja sebelum hype.</p>
+                <p>Pendiri ContentLynk mendapatkan bagi hasil 75%. Pemegang Genesis NFT mendapat diskon 30% untuk produk berkelanjutan. Utilitas yang bisa Anda gunakan sekarang — bukan grafik yang harus Anda doakan.</p>
                 <div class="exit-bonus">
-                    <h3>🎁 BONUS: Beli $100+ sekarang dan kami akan memberikan:</h3>
+                    <h3>Pendukung pendiri juga mendapatkan:</h3>
                     <ul>
                         <li>• Akses beta Contentlynk prioritas</li>
-                        <li>• Pembaruan pendiri eksklusif</li>
-                        <li>• Pemberitahuan awal fase berikutnya</li>
+                        <li>• Pembaruan eksklusif dari pendiri</li>
+                        <li>• Diskon toko berdasarkan jumlah pembelian pra-penjualan</li>
                     </ul>
                 </div>
                 <div class="exit-actions">
@@ -1209,7 +1143,7 @@
                     </button>
                     <button class="btn-skip" onclick="closeExitModal()">Tidak Terima Kasih, Saya Lewati</button>
                 </div>
-                <p class="exit-social-proof">✓ Ronde Genesis Founders terisi cepat — Harga berlipat ganda di fase berikutnya ⚡</p>
+                <p class="exit-social-proof">✓ Pendiri terverifikasi. Peta jalan publik. Token yang bisa Anda gunakan hari ini.</p>
             </div>
         </div>
     </div>
@@ -1410,31 +1344,26 @@
                         <h2>💸 Struktur Pra-penjualan Token</h2>
                         <div class="price-table-wrapper">
                             <table class="price-table">
-                                <thead><tr><th>Fase</th><th>Jadwal</th><th>Harga</th><th>Token</th><th>Target Pendapatan</th></tr></thead>
+                                <thead><tr><th>Tier</th><th>Harga</th><th>Token</th><th>Pendapatan</th></tr></thead>
                                 <tbody>
-                                    <tr><td>Genesis Founders</td><td>Bulan 1-2</td><td>$0.001</td><td>30.000.000</td><td>$45.000</td></tr>
-                                    <tr><td>Early Believers</td><td>Bulan 3-4</td><td>$0.003</td><td>30.000.000</td><td>$90.000</td></tr>
-                                    <tr><td>Community Builders</td><td>Bulan 5-7</td><td>$0.006</td><td>40.000.000</td><td>$240.000</td></tr>
-                                    <tr><td>Growth Partners</td><td>Bulan 8-10</td><td>$0.012</td><td>35.000.000</td><td>$420.000</td></tr>
-                                    <tr><td>Momentum Members</td><td>Bulan 11-13</td><td>$0.022</td><td>35.000.000</td><td>$770.000</td></tr>
-                                    <tr><td>Community Champions</td><td>Bulan 14-16</td><td>$0.038</td><td>50.000.000</td><td>$1.900.000</td></tr>
-                                    <tr><td>Final Access</td><td>Bulan 17-18</td><td>$0.052</td><td>80.000.000</td><td>$4.160.000</td></tr>
+                                    <tr><td>Pendiri</td><td>$0.051</td><td>5.000.000</td><td>≈$255.000</td></tr>
+                                    <tr><td>Publik</td><td>$0.073</td><td>10.000.000</td><td>≈$730.000</td></tr>
                                     <tr style="background: rgba(255,107,53,0.1); font-weight: bold;">
-                                        <td><strong>Total</strong></td><td><strong>18 bulan</strong></td><td><strong>$0.001–0.052</strong></td><td><strong>300.000.000</strong></td><td><strong>~$4.900.000</strong></td>
+                                        <td><strong>Total</strong></td><td><strong>$0.051–$0.073</strong></td><td><strong>15.000.000</strong></td><td><strong>≈€850.000</strong></td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </section>
                     <section class="story-section highlight-section">
-                        <h2>💡 Mengapa $4,9 Juta?</h2>
-                        <p>Target pendanaan kami yang direvisi mencerminkan pendekatan yang matang dan berdasarkan pasar untuk membangun ekosistem Web3 yang berkelanjutan.</p>
+                        <h2>💡 Mengapa ≈€850 Ribu?</h2>
+                        <p>Target penggalangan dana sengaja ditempatkan di bawah ambang pengecualian MiCA €1 juta — keputusan regulasi, bukan kendala pendanaan. Dana ini membiayai fase pertama pengembangan platform dan likuiditas awal.</p>
                         <div class="numbers-showcase" style="background: linear-gradient(135deg, rgba(255,107,53,0.1) 0%, rgba(251,176,59,0.1) 100%); border-left: 4px solid #FF6B35; padding: 20px; margin: 20px 0; border-radius: 8px;">
-                            <h4 style="color: #FBB03B; margin-bottom: 10px;">$4,9 juta memastikan:</h4>
+                            <h4 style="color: #FBB03B; margin-bottom: 10px;">≈€850 Ribu membiayai:</h4>
                             <ul style="margin-left: 20px;">
-                                <li><strong>$2,45 juta Operasi & Pertumbuhan (50%)</strong> — landasan pacu 18-24 bulan untuk pengembangan ContentLynk, tim, pemasaran, dan infrastruktur</li>
-                                <li><strong>$2,2 juta Likuiditas & Operasi Pasar (45%)</strong> — pool DEX ($800K), listing CEX ($600K), pembuatan pasar ($400K), dan cadangan ($400K)</li>
-                                <li><strong>$250K Cadangan Kontinjensi (5%)</strong> — dana darurat untuk perubahan regulasi, kondisi pasar, atau peluang tak terduga</li>
+                                <li><strong>Pengembangan platform ContentLynk</strong> — landasan pacu rekayasa dan komunitas 12–18 bulan</li>
+                                <li><strong>Pool likuiditas DEX</strong> — kedalaman yang cukup untuk perdagangan pasca-TGE</li>
+                                <li><strong>Cadangan operasi</strong> — hukum, kepatuhan, dan kontinjensi</li>
                             </ul>
                         </div>
                     </section>

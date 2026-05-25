@@ -255,68 +255,20 @@ const TOKEN_CONTRACT_CONFIG = {
 
 const PRESALE_PHASES = [
     {
-        name: 'Genesis Founders',
-        priceUsd: 0.001,
+        name: 'Founder',
+        priceUsd: 0.051,
         priceIncrease: '—',
         status: 'active',
-        tokensAllocated: 30000000,
-        endDate: '2026-07-09'
+        tokensAllocated: 5000000,
+        endDate: null
     },
     {
-        name: 'Early Believers',
-        priceUsd: 0.003,
-        priceIncrease: '+100%',
+        name: 'Public',
+        priceUsd: 0.073,
+        priceIncrease: 'early-supporter rate',
         status: 'upcoming',
-        tokensAllocated: 30000000,
-        endDate: '2026-07-09'
-    },
-    {
-        name: 'Community Builders',
-        priceUsd: 0.006,
-        priceIncrease: '+300%',
-        status: 'upcoming',
-        tokensAllocated: 40000000,
-        endDate: '2026-08-16'
-    },
-    {
-        name: 'Growth Partners',
-        priceUsd: 0.012,
-        priceIncrease: '+700%',
-        status: 'upcoming',
-        tokensAllocated: 35000000,
-        endDate: '2026-11-16'
-    },
-    {
-        name: 'Momentum Members',
-        priceUsd: 0.022,
-        priceIncrease: '+1,367%',
-        status: 'upcoming',
-        tokensAllocated: 35000000,
-        endDate: '2027-02-16'
-    },
-    {
-        name: 'Community Champions',
-        priceUsd: 0.038,
-        priceIncrease: '+2,433%',
-        status: 'upcoming',
-        tokensAllocated: 50000000,
-        endDate: '2027-05-16'
-    },
-    {
-        name: 'Final Access',
-        priceUsd: 0.052,
-        priceIncrease: '+3,367%',
-        status: 'upcoming',
-        tokensAllocated: 80000000,
-        endDate: '2027-08-16'
-    },
-    {
-        name: 'Launch Target',
-        priceUsd: 0.07,
-        priceIncrease: '+4,567%',
-        status: 'launch',
-        tokensAllocated: null,
-        endDate: '2027-10-01'
+        tokensAllocated: 10000000,
+        endDate: null
     }
 ];
 
@@ -373,9 +325,8 @@ const ANALYTICS_CONFIG = {
 const CONSTANTS = {
     MIN_PURCHASE_USD: 10,
     MAX_PURCHASE_USD: 100000,
-    CURRENT_PHASE: 0, // Index in PRESALE_PHASES array
-    LAUNCH_TARGET_PRICE: 0.07,
-    FUNDING_TARGET: 4900000,
+    CURRENT_PHASE: 0,
+    FUNDING_TARGET_EUR: 850000,
     CONTENTLYNK_BETA_SPOTS: 1000,
     CONTENTLYNK_BETA_REGISTERED: 470
 };
