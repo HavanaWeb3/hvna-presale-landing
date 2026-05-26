@@ -483,11 +483,12 @@ async function purchaseWithStablecoin(usdAmount) {
             web3State.signer
         );
 
+        const minEthOut = ethers.utils.parseEther((usdAmount * usdToEthRate * 0.98).toFixed(18));
         const tx = await wrapperContract.purchaseWithStablecoin(
             config.address,
             stablecoinAmount,
             hvnaTokenAmount,
-            0, // minEthOut = 0 (accept any slippage for now)
+            minEthOut,
             { gasLimit: 500000 }
         );
 
@@ -732,7 +733,7 @@ async function executePurchase() {
     }
 
     if (usdAmount < CONSTANTS.MIN_PURCHASE_USD) {
-        appHelpers.showNotification('Minimum purchase: 10,000 tokens ($' + CONSTANTS.MIN_PURCHASE_USD + ')', 'error');
+        appHelpers.showNotification('Minimum purchase: 1,000 tokens ($' + CONSTANTS.MIN_PURCHASE_USD + ')', 'error');
         return;
     }
 
@@ -762,7 +763,15 @@ async function executePurchase() {
             })
         });
         const costJson = await costRes.json();
+        if (!costJson.result || costJson.result === '0x') {
+            appHelpers.showNotification('Could not read ETH price from contract. Please try again.', 'error');
+            return;
+        }
         const ethCostBig = BigInt('0x' + costJson.result.slice(2, 66));
+        if (ethCostBig === 0n) {
+            appHelpers.showNotification('Contract returned zero ETH cost. Please try again.', 'error');
+            return;
+        }
         const ethWithBuffer = ethCostBig * 105n / 100n;
         const ethValue = ethers.BigNumber.from(ethWithBuffer.toString());
 
