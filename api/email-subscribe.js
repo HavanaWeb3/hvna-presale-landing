@@ -283,7 +283,7 @@ async function sendWelcomeEmail(email, subscriberData) {
         <ul>
             <li><strong>NOW:</strong> You have your $HVNA tokens</li>
             <li><strong>Ongoing:</strong> Presale continues through multiple phases</li>
-            <li><strong>Q2 2026:</strong> Contentlynk beta launch (you get priority access)</li>
+            <li><strong>Q2 2026:</strong> Contentlynk early access launch (you get priority access)</li>
             <li><strong>Q3 2026:</strong> Public token launch on DEXs</li>
         </ul>
 
@@ -341,7 +341,7 @@ Your Purchase Details:
 What Happens Next:
 - NOW: You have your $HVNA tokens
 - Ongoing: Presale continues through multiple phases
-- Q2 2026: Contentlynk beta launch (you get priority access)
+- Q2 2026: Contentlynk early access launch (you get priority access)
 - Q3 2026: Public token launch on DEXs
 
 Join the Community:
