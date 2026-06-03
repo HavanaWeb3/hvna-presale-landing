@@ -25,6 +25,10 @@ module.exports = async function handler(req, res) {
         return res.status(503).json({ error: 'KYC service not configured' });
     }
 
+    const proto = req.headers['x-forwarded-proto'] || 'https';
+    const host  = req.headers['x-forwarded-host'] || req.headers.host;
+    const callbackBase = host ? `${proto}://${host}` : 'https://presale.havanaelephant.com';
+
     let diditRes;
     try {
         diditRes = await fetch('https://verification.didit.me/v3/session/', {
@@ -36,7 +40,7 @@ module.exports = async function handler(req, res) {
             body: JSON.stringify({
                 workflow_id: workflowId,
                 vendor_data: walletLower,
-                callback: 'https://presale.havanaelephant.com/verify-complete.html',
+                callback: `${callbackBase}/verify-complete.html`,
                 callback_method: 'both'
             })
         });

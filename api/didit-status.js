@@ -1,6 +1,7 @@
 // GET /api/didit-status?wallet=0x...  (primary)
 //                      ?session_id=<uuid>  (fallback)
-// Returns { status, amlClear } for the most recent KYC session for a wallet.
+// Returns { status } for the most recent KYC session for a wallet.
+// Didit's top-level "Approved" already incorporates AML — no separate amlClear field needed.
 
 module.exports = async function handler(req, res) {
     res.setHeader('Access-Control-Allow-Origin', 'https://presale.havanaelephant.com');
@@ -53,14 +54,14 @@ module.exports = async function handler(req, res) {
 
         const results = Array.isArray(listBody.results) ? listBody.results : [];
         if (results.length === 0) {
-            return res.status(200).json({ status: 'Not Started', amlClear: null });
+            return res.status(200).json({ status: 'Not Started' });
         }
 
         // Most recent session — sort by created_at descending
         const sorted = results.slice().sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
         const latest = sorted[0];
 
-        // Fetch full decision for AML data
+        // Fetch full decision for authoritative top-level status
         let decisionRes;
         try {
             decisionRes = await fetch(
@@ -68,16 +69,16 @@ module.exports = async function handler(req, res) {
                 { headers: authHeaders }
             );
         } catch (err) {
-            // Network error on decision fetch — return basic status without AML
-            return res.status(200).json({ status: latest.status, amlClear: null });
+            // Network error on decision fetch — return list-level status as fallback
+            return res.status(200).json({ status: latest.status });
         }
 
         if (!decisionRes.ok) {
-            return res.status(200).json({ status: latest.status, amlClear: null });
+            return res.status(200).json({ status: latest.status });
         }
 
         try { decision = await decisionRes.json(); } catch {
-            return res.status(200).json({ status: latest.status, amlClear: null });
+            return res.status(200).json({ status: latest.status });
         }
 
     } else {
@@ -97,7 +98,7 @@ module.exports = async function handler(req, res) {
             return res.status(502).json({ error: 'Verification service authentication error' });
         }
         if (decisionRes.status === 404) {
-            return res.status(200).json({ status: 'Not Started', amlClear: null });
+            return res.status(200).json({ status: 'Not Started' });
         }
         if (!decisionRes.ok) {
             return res.status(502).json({ error: 'Verification service error', status: decisionRes.status });
@@ -109,16 +110,6 @@ module.exports = async function handler(req, res) {
     }
 
     return res.status(200).json({
-        status: decision.status || 'Not Started',
-        amlClear: extractAmlClear(decision.aml_screenings)
+        status: decision.status || 'Not Started'
     });
 };
-
-// amlClear = true only if an AML screening ran, found zero hits, and has no warnings.
-// Returns null if AML not yet run/configured.
-function extractAmlClear(amlScreenings) {
-    if (!Array.isArray(amlScreenings) || amlScreenings.length === 0) return null;
-    const aml = amlScreenings[amlScreenings.length - 1];
-    if (!aml || typeof aml.total_hits === 'undefined') return null;
-    return aml.total_hits === 0 && (!Array.isArray(aml.warnings) || aml.warnings.length === 0);
-}

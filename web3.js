@@ -425,6 +425,14 @@ async function approveStablecoin() {
         return;
     }
 
+    // KYC gate — approval is an on-chain tx; block unverified wallets the same as Buy
+    if (FEATURES.enableKycGate) {
+        let r;
+        try { r = await fetchKycStatus({ wallet: web3State.address.toLowerCase() }); }
+        catch (e) { appHelpers.showNotification('KYC check failed — please try again.', 'error'); return; }
+        if (r.status !== 'Approved') { showKycStep(r); return; }
+    }
+
     const config = STABLECOIN_CONFIG[symbol];
     const approveBtn = document.getElementById('approve-button');
     const originalText = approveBtn.textContent;
@@ -761,7 +769,7 @@ async function executePurchase() {
             appHelpers.showNotification('KYC check failed — please try again.', 'error');
             return;
         }
-        if (!(kycResult.status === 'Approved' && kycResult.amlClear !== false)) {
+        if (kycResult.status !== 'Approved') {
             showKycStep(kycResult);
             return;
         }
@@ -1001,7 +1009,7 @@ async function fetchKycStatus(opts) {
     const res = await fetch(API_ENDPOINTS.diditStatus + '?' + params.toString());
     const data = await res.json().catch(function() { return {}; });
     if (!res.ok) throw new Error(data.error || 'KYC status check failed');
-    return data; // { status, amlClear }
+    return data; // { status }
 }
 
 // ── Modal UI injection (works on index.html + id.html — no markup needed in either) ──
@@ -1021,8 +1029,8 @@ function injectKycStepUI() {
             '<p style="color:#888;margin-bottom:0;">Required to comply with EU/AML rules.</p>',
         '</div>',
         '<div style="background:rgba(255,107,53,0.07);border:1px solid rgba(255,107,53,0.2);',
-             'border-radius:10px;padding:16px;margin:20px 0;font-size:13px;line-height:1.65;color:#ccc;">',
-            '<strong style="color:#fff;">Privacy &amp; Consent</strong><br><br>',
+             'border-radius:10px;padding:16px;margin:20px 0;font-size:13px;line-height:1.65;color:#4b5563;">',
+            '<strong style="color:#1a1a1a;">Privacy &amp; Consent</strong><br><br>',
             'Havana Elephant Global S.A. requires this check; verification is performed by ',
             'Didit (processor). By continuing you consent to identity and biometric ',
             '(liveness/face match) checks.',
@@ -1039,7 +1047,7 @@ function injectKycStepUI() {
             '</div>',
         '</div>',
         '<label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;',
-               'font-size:14px;color:#ccc;margin-bottom:20px;">',
+               'font-size:14px;color:#4b5563;margin-bottom:20px;">',
             '<input type="checkbox" id="kyc-consent-checkbox" ',
                    'style="margin-top:3px;width:16px;height:16px;flex-shrink:0;cursor:pointer;">',
             '<span>I consent to identity and biometric verification as described above.</span>',
@@ -1079,7 +1087,7 @@ async function _manualKycCheck() {
     try {
         var s = await fetchKycStatus({ wallet: wallet });
         cacheKycStatus(wallet, s.status);
-        if (s.status === 'Approved' && s.amlClear !== false) {
+        if (s.status === 'Approved') {
             _clearKycPoll();
             _onKycApproved();
             return;
@@ -1119,6 +1127,7 @@ async function _startKycVerification() {
         var result = await createKycSession(wallet);
         cacheKycSession(wallet, result.sessionId);
         window.open(result.sessionUrl, '_blank');
+        if (verifyBtn) { verifyBtn.textContent = 'Waiting for verification…'; verifyBtn.disabled = true; }
         if (statusLine) statusLine.innerHTML = '<span style="color:#60a5fa;">🔄 Finish verifying in the tab we opened…</span>';
         var checkBtn = document.getElementById('kyc-check-btn');
         if (checkBtn) { checkBtn.style.display = 'block'; checkBtn.onclick = _manualKycCheck; }
