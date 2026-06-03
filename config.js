@@ -280,7 +280,9 @@ const API_ENDPOINTS = {
     emailSubscribe: '/api/email-subscribe',
     sendWelcomeEmail: '/api/send-welcome-email',
     getPhaseInfo: '/api/phase-info',
-    getExchangeRate: 'https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd'
+    getExchangeRate: 'https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd',
+    diditSession: '/api/didit-session',
+    diditStatus: '/api/didit-status'
 };
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -305,7 +307,8 @@ const FEATURES = {
     enableExitIntent: true,
     enableActivityFeed: true,
     enableLiveStats: false, // Set to true when backend is ready
-    testMode: false // Set to true for testing with testnet
+    testMode: false, // Set to true for testing with testnet
+    enableKycGate: true // KYC/AML gate via Didit — set false to bypass for testing
 };
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

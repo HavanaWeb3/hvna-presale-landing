@@ -23,6 +23,9 @@ const web3State = {
     stablecoinApproved: { USDT: false, USDC: false }
 };
 
+let _kycPollInterval = null;
+let _kycUsdAmount = 0;
+
 // USD to ETH exchange rate (should be fetched from API)
 let usdToEthRate = 0.00027; // Example: 1 USD = 0.00027 ETH (update dynamically)
 
@@ -255,6 +258,17 @@ async function onWalletConnected() {
         fetchStablecoinBalances();
         checkStablecoinApproval('USDT');
         checkStablecoinApproval('USDC');
+
+        // Silent KYC pre-check — UX optimisation so returning approved wallets never see the gate.
+        // The Buy-time check in executePurchase() remains the authority.
+        if (FEATURES.enableKycGate) {
+            const _walletLower = web3State.address.toLowerCase();
+            if (getCachedKycStatus(_walletLower) !== 'Approved') {
+                fetchKycStatus({ wallet: _walletLower })
+                    .then(function(s) { cacheKycStatus(_walletLower, s.status); })
+                    .catch(function() {});
+            }
+        }
 
     } catch (error) {
         console.error('Post-connection setup error:', error);
@@ -737,6 +751,22 @@ async function executePurchase() {
         return;
     }
 
+    // KYC gate — live server-side check on every Buy click. Cache is UX-only; this is the authority.
+    if (FEATURES.enableKycGate) {
+        _kycUsdAmount = usdAmount;
+        let kycResult;
+        try {
+            kycResult = await fetchKycStatus({ wallet: web3State.address.toLowerCase() });
+        } catch (err) {
+            appHelpers.showNotification('KYC check failed — please try again.', 'error');
+            return;
+        }
+        if (!(kycResult.status === 'Approved' && kycResult.amlClear !== false)) {
+            showKycStep(kycResult);
+            return;
+        }
+    }
+
     // Route to stablecoin purchase if USDT or USDC selected
     if (web3State.selectedToken === 'USDT' || web3State.selectedToken === 'USDC') {
         return purchaseWithStablecoin(usdAmount);
@@ -935,6 +965,214 @@ window.addEventListener('ethereum#initialized', function () {
 });
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// KYC / DIDIT GATE HELPERS
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+// ── localStorage cache (keyed by lowercased wallet) ──
+
+function cacheKycStatus(wallet, status) {
+    try { localStorage.setItem('kyc_status_' + wallet.toLowerCase(), status); } catch (e) {}
+}
+function getCachedKycStatus(wallet) {
+    try { return localStorage.getItem('kyc_status_' + wallet.toLowerCase()); } catch (e) { return null; }
+}
+function cacheKycSession(wallet, sessionId) {
+    try { localStorage.setItem('kyc_session_' + wallet.toLowerCase(), sessionId); } catch (e) {}
+}
+
+// ── API calls ──
+
+async function createKycSession(wallet) {
+    const res = await fetch(API_ENDPOINTS.diditSession, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ wallet: wallet.toLowerCase() })
+    });
+    const data = await res.json().catch(function() { return {}; });
+    if (!res.ok) throw new Error(data.detail || data.error || 'KYC session creation failed');
+    return data; // { sessionId, sessionUrl }
+}
+
+async function fetchKycStatus(opts) {
+    const params = new URLSearchParams();
+    if (opts.wallet) params.set('wallet', opts.wallet.toLowerCase());
+    else if (opts.sessionId) params.set('session_id', opts.sessionId);
+    else throw new Error('fetchKycStatus requires wallet or sessionId');
+    const res = await fetch(API_ENDPOINTS.diditStatus + '?' + params.toString());
+    const data = await res.json().catch(function() { return {}; });
+    if (!res.ok) throw new Error(data.error || 'KYC status check failed');
+    return data; // { status, amlClear }
+}
+
+// ── Modal UI injection (works on index.html + id.html — no markup needed in either) ──
+
+function injectKycStepUI() {
+    if (document.getElementById('modal-kyc-step')) return;
+    var modalContent = document.querySelector('#purchase-modal .modal-content');
+    if (!modalContent) return;
+    var div = document.createElement('div');
+    div.id = 'modal-kyc-step';
+    div.className = 'modal-screen';
+    div.innerHTML = [
+        '<div style="text-align:center;padding:8px 0 16px;">',
+            '<div style="font-size:48px;margin-bottom:12px;">🪪</div>',
+            '<h2 style="margin-bottom:8px;">One-time identity check</h2>',
+            '<p style="color:#888;margin-bottom:4px;">~2 minutes. Verified once per wallet.</p>',
+            '<p style="color:#888;margin-bottom:0;">Required to comply with EU/AML rules.</p>',
+        '</div>',
+        '<div style="background:rgba(255,107,53,0.07);border:1px solid rgba(255,107,53,0.2);',
+             'border-radius:10px;padding:16px;margin:20px 0;font-size:13px;line-height:1.65;color:#ccc;">',
+            '<strong style="color:#fff;">Privacy &amp; Consent</strong><br><br>',
+            'Havana Elephant Global S.A. requires this check; verification is performed by ',
+            'Didit (processor). By continuing you consent to identity and biometric ',
+            '(liveness/face match) checks.',
+            '<div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:6px 12px;font-size:12px;">',
+                '<a href="/privacy.html" target="_blank" rel="noopener" style="color:#FF6B35;">Privacy Policy</a>',
+                '<span style="color:#555;">·</span>',
+                '<a href="/terms.html" target="_blank" rel="noopener" style="color:#FF6B35;">Terms</a>',
+                '<span style="color:#555;">·</span>',
+                '<a href="https://didit.me/terms/verification-privacy-notice" target="_blank" ',
+                   'rel="noopener" style="color:#FF6B35;">Didit Privacy Notice</a>',
+                '<span style="color:#555;">·</span>',
+                '<a href="https://didit.me/terms/identity-verification" target="_blank" ',
+                   'rel="noopener" style="color:#FF6B35;">ID Verification Terms</a>',
+            '</div>',
+        '</div>',
+        '<label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;',
+               'font-size:14px;color:#ccc;margin-bottom:20px;">',
+            '<input type="checkbox" id="kyc-consent-checkbox" ',
+                   'style="margin-top:3px;width:16px;height:16px;flex-shrink:0;cursor:pointer;">',
+            '<span>I consent to identity and biometric verification as described above.</span>',
+        '</label>',
+        '<div id="kyc-status-line" style="min-height:24px;margin-bottom:12px;font-size:14px;text-align:center;"></div>',
+        '<button id="kyc-verify-btn" class="btn btn-primary btn-large" disabled ',
+                'style="width:100%;margin-bottom:10px;">Verify Identity →</button>',
+        '<button id="kyc-check-btn" class="btn btn-secondary" ',
+                'style="width:100%;display:none;">Check Status</button>'
+    ].join('');
+    modalContent.appendChild(div);
+    div.querySelector('#kyc-consent-checkbox').addEventListener('change', function() {
+        var btn = document.getElementById('kyc-verify-btn');
+        if (btn) btn.disabled = !this.checked;
+    });
+}
+
+// ── Polling ──
+
+function _clearKycPoll() {
+    if (_kycPollInterval) { clearInterval(_kycPollInterval); _kycPollInterval = null; }
+    window.removeEventListener('focus', _onFocusKycCheck);
+}
+
+function _startKycPolling() {
+    _clearKycPoll();
+    _kycPollInterval = setInterval(_manualKycCheck, 5000);
+    window.addEventListener('focus', _onFocusKycCheck);
+}
+
+function _onFocusKycCheck() { _manualKycCheck(); }
+
+async function _manualKycCheck() {
+    var wallet = web3State.address ? web3State.address.toLowerCase() : null;
+    if (!wallet) return;
+    var statusLine = document.getElementById('kyc-status-line');
+    try {
+        var s = await fetchKycStatus({ wallet: wallet });
+        cacheKycStatus(wallet, s.status);
+        if (s.status === 'Approved' && s.amlClear !== false) {
+            _clearKycPoll();
+            _onKycApproved();
+            return;
+        }
+        var terminal = ['Declined', 'Expired', 'Abandoned', 'Kyc Expired', 'In Review'];
+        if (terminal.indexOf(s.status) !== -1) {
+            _clearKycPoll();
+            showKycStep(s);
+            return;
+        }
+        if (statusLine) statusLine.innerHTML = '<span style="color:#60a5fa;">🔄 Finish verifying in the tab we opened…</span>';
+    } catch (err) {
+        if (statusLine) statusLine.innerHTML = '<span style="color:#888;">⚠ Could not check status — ' + err.message + '</span>';
+    }
+}
+
+// ── On approved: restore form with amount intact ──
+
+function _onKycApproved() {
+    appHelpers.showModalScreen('modal-purchase-form');
+    if (_kycUsdAmount > 0) {
+        var usdInput = document.getElementById('usd-amount');
+        if (usdInput) { usdInput.value = _kycUsdAmount.toFixed(2); updatePurchaseDetails(); }
+    }
+    appHelpers.showNotification('Identity verified ✓ — click Buy to continue.', 'success');
+}
+
+// ── Start verification: create session, open tab, begin polling ──
+
+async function _startKycVerification() {
+    var wallet = web3State.address.toLowerCase();
+    var verifyBtn = document.getElementById('kyc-verify-btn');
+    var statusLine = document.getElementById('kyc-status-line');
+    if (verifyBtn) { verifyBtn.disabled = true; verifyBtn.textContent = 'Creating session…'; }
+    if (statusLine) statusLine.innerHTML = '';
+    try {
+        var result = await createKycSession(wallet);
+        cacheKycSession(wallet, result.sessionId);
+        window.open(result.sessionUrl, '_blank');
+        if (statusLine) statusLine.innerHTML = '<span style="color:#60a5fa;">🔄 Finish verifying in the tab we opened…</span>';
+        var checkBtn = document.getElementById('kyc-check-btn');
+        if (checkBtn) { checkBtn.style.display = 'block'; checkBtn.onclick = _manualKycCheck; }
+        _startKycPolling();
+    } catch (err) {
+        if (statusLine) statusLine.innerHTML = '<span style="color:#f87171;">✗ ' + err.message + '</span>';
+        if (verifyBtn) { verifyBtn.disabled = false; verifyBtn.textContent = 'Verify Identity →'; }
+    }
+}
+
+// ── Show KYC step with status-appropriate UI ──
+
+function showKycStep(s) {
+    injectKycStepUI();
+    appHelpers.showModalScreen('modal-kyc-step');
+    var statusLine = document.getElementById('kyc-status-line');
+    var verifyBtn = document.getElementById('kyc-verify-btn');
+    var checkBtn = document.getElementById('kyc-check-btn');
+    var checkbox = document.getElementById('kyc-consent-checkbox');
+    var status = (s && s.status) || 'Not Started';
+
+    if (verifyBtn) {
+        verifyBtn.onclick = null;
+        verifyBtn.style.display = 'block';
+        verifyBtn.textContent = 'Verify Identity →';
+        verifyBtn.disabled = !(checkbox && checkbox.checked);
+    }
+    if (checkBtn) { checkBtn.style.display = 'none'; checkBtn.onclick = null; }
+
+    if (status === 'In Review') {
+        if (statusLine) statusLine.innerHTML = '<span style="color:#fbbf24;">⏳ Your verification is under review. You cannot purchase until it clears.</span>';
+        if (verifyBtn) verifyBtn.style.display = 'none';
+
+    } else if (status === 'Declined' || status === 'Expired' || status === 'Abandoned' || status === 'Kyc Expired') {
+        if (statusLine) statusLine.innerHTML = '<span style="color:#f87171;">✗ Verification unsuccessful.</span>';
+        if (verifyBtn) { verifyBtn.textContent = 'Retry Verification'; verifyBtn.onclick = _startKycVerification; }
+
+    } else {
+        // Not Started / In Progress / Awaiting User / Resubmitted
+        if (statusLine) {
+            statusLine.innerHTML = status !== 'Not Started'
+                ? '<span style="color:#60a5fa;">🔄 Finish verifying in the tab we opened…</span>'
+                : '';
+        }
+        if (verifyBtn) verifyBtn.onclick = _startKycVerification;
+        if (checkBtn && status !== 'Not Started') {
+            checkBtn.style.display = 'block';
+            checkBtn.onclick = _manualKycCheck;
+            _startKycPolling();
+        }
+    }
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // EXPORTS
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -945,5 +1183,10 @@ window.web3Helpers = {
     addTokenToWallet,
     selectPaymentToken,
     approveStablecoin,
-    web3State
+    web3State,
+    showKycStep,
+    createKycSession,
+    fetchKycStatus,
+    getCachedKycStatus,
+    cacheKycStatus
 };
