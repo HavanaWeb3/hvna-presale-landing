@@ -790,7 +790,7 @@ async function executePurchase() {
         const tokenAmountWithDecimals = ethers.utils.parseEther(tokensReceived.toString());
 
         // Get exact ETH cost from contract (Chainlink-priced), then add 5% buffer
-        const tokenHex = BigInt(tokensReceived).toString(16).padStart(64, '0');
+        const tokenHex = BigInt(tokenAmountWithDecimals.toString()).toString(16).padStart(64, '0');
         const calldata = '0x1d3fdfbb' + tokenHex + '0'.repeat(64);
         const costRes = await fetch('https://mainnet.base.org', {
             method: 'POST',
