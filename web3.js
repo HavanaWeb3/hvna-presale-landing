@@ -747,6 +747,12 @@ async function updatePurchaseDetails() {
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 async function executePurchase() {
+    // Fire-and-forget — never blocks purchase flow or throws
+    try {
+        var _btnName = window.location.pathname.includes('id.html') ? 'presale_buy_id' : 'presale_buy';
+        fetch('/api/track-click', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ button_name: _btnName }) }).catch(function() {});
+    } catch (e) {}
+
     const usdAmount = parseFloat(document.getElementById('usd-amount').value) || 0;
 
     if (usdAmount === 0) {
