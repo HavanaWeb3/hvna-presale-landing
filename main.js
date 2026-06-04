@@ -308,6 +308,12 @@ function openPurchaseModal(location = 'unknown') {
     showModalScreen('modal-wallet-selection');
 
     trackEvent('buy_button_clicked', { location });
+
+    // Fire-and-forget Supabase tracking — never blocks or throws
+    try {
+        var _btn = window.location.pathname.includes('id.html') ? 'presale_buy_id' : 'presale_buy';
+        fetch('/api/track-click', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ button_name: _btn }) }).catch(function() {});
+    } catch (e) {}
 }
 
 function closePurchaseModal() {
