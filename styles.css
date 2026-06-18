@@ -2933,6 +2933,30 @@ h3 {
 }
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   ECOSYSTEM SECTION
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.ecosystem-section {
+    background: var(--color-gray-light);
+    text-align: center;
+}
+
+.ecosystem-body {
+    max-width: 680px;
+    margin: 0 auto var(--space-xl);
+    font-size: var(--font-size-body);
+    color: var(--color-gray-dark);
+    line-height: 1.7;
+}
+
+.ecosystem-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    APPKIT CONNECT BUTTON
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 
