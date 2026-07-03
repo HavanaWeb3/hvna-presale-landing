@@ -7,7 +7,6 @@
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 const appState = {
-    phaseEndDate: null,
     exitIntentShown: false,
     scrollPosition: 0,
     currentPhase: {
@@ -25,10 +24,6 @@ const appState = {
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🐘 Havana Elephant Presale - Initialized');
 
-    // Initialize countdown timer - Phase ends July 9, 2026
-    appState.phaseEndDate = new Date('2026-07-09T23:59:59');
-
-    initializeCountdown();
     initializeInvestmentCalculator();
     initializeScrollEffects();
     initializeExitIntent();
@@ -41,64 +36,6 @@ document.addEventListener('DOMContentLoaded', function() {
         page_location: window.location.href
     });
 });
-
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// COUNTDOWN TIMER
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-function initializeCountdown() {
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
-}
-
-function updateCountdown() {
-    const now = new Date().getTime();
-    const distance = appState.phaseEndDate - now;
-
-    if (distance < 0) {
-        // Countdown ended
-        document.getElementById('main-countdown').innerHTML =
-            '<div class="countdown-ended">Phase Ended</div>';
-        return;
-    }
-
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-    // Update main countdown
-    document.getElementById('days').textContent = String(days).padStart(2, '0');
-    document.getElementById('hours').textContent = String(hours).padStart(2, '0');
-    document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
-    document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
-
-    // Update header countdown (compact format)
-    const headerCountdown = document.getElementById('header-countdown');
-    if (headerCountdown) {
-        headerCountdown.textContent = `${days}d ${hours}h ${minutes}m`;
-    }
-
-    // Update urgency countdown
-    const urgencyCountdown = document.getElementById('urgency-countdown-display');
-    if (urgencyCountdown) {
-        urgencyCountdown.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-    }
-
-    // Update dashboard countdown
-    const dashboardDays = document.getElementById('dashboard-days');
-    const dashboardHours = document.getElementById('dashboard-hours');
-    const dashboardMinutes = document.getElementById('dashboard-minutes');
-    if (dashboardDays) dashboardDays.textContent = String(days).padStart(2, '0');
-    if (dashboardHours) dashboardHours.textContent = String(hours).padStart(2, '0');
-    if (dashboardMinutes) dashboardMinutes.textContent = String(minutes).padStart(2, '0');
-
-    // Add urgent styling if less than 48 hours
-    const totalHours = days * 24 + hours;
-    if (totalHours < 48) {
-        document.getElementById('main-countdown').classList.add('countdown-urgent');
-    }
-}
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // INVESTMENT CALCULATOR
