@@ -47,18 +47,18 @@
     <button class="btn-secondary" id="setPhase2Btn" onclick="sendTx('forcePhaseChange(ENDED)', '0x65bb07e50000000000000000000000000000000000000000000000000000000000000002', this)" disabled>Set Phase: ENDED (enum 2)</button>
 
     <h2>Set Purchase Limits</h2>
-    <div class="warn">Current on-chain values: minPurchase = 1,000 tokens, maxPurchaseGenesis = 1,000,000 tokens, maxPurchasePublic = 1,000,000 tokens. setPurchaseLimits() overwrites ALL THREE values in a single transaction — the fields below are pre-filled to lower only the minimum to 400 and leave both caps unchanged, but you can edit any value before sending.</div>
+    <div class="warn" id="purchase-limits-warn">Reading current on-chain values…</div>
     <div style="margin: 12px 0;">
         <label style="display:block; font-size:0.85em; color:#aaa; margin-bottom:4px;">Min purchase (tokens)</label>
-        <input type="number" id="minPurchaseInput" value="400" min="1" step="1" style="width:100%; padding:10px; border-radius:6px; border:1px solid #444; background:#0d1b2a; color:#eee; font-size:1em; box-sizing:border-box;">
+        <input type="number" id="minPurchaseInput" min="1" step="1" style="width:100%; padding:10px; border-radius:6px; border:1px solid #444; background:#0d1b2a; color:#eee; font-size:1em; box-sizing:border-box;">
     </div>
     <div style="margin: 12px 0;">
         <label style="display:block; font-size:0.85em; color:#aaa; margin-bottom:4px;">Max purchase Genesis (tokens)</label>
-        <input type="number" id="maxGenesisInput" value="1000000" min="1" step="1" style="width:100%; padding:10px; border-radius:6px; border:1px solid #444; background:#0d1b2a; color:#eee; font-size:1em; box-sizing:border-box;">
+        <input type="number" id="maxGenesisInput" min="1" step="1" style="width:100%; padding:10px; border-radius:6px; border:1px solid #444; background:#0d1b2a; color:#eee; font-size:1em; box-sizing:border-box;">
     </div>
     <div style="margin: 12px 0;">
         <label style="display:block; font-size:0.85em; color:#aaa; margin-bottom:4px;">Max purchase Public (tokens)</label>
-        <input type="number" id="maxPublicInput" value="1000000" min="1" step="1" style="width:100%; padding:10px; border-radius:6px; border:1px solid #444; background:#0d1b2a; color:#eee; font-size:1em; box-sizing:border-box;">
+        <input type="number" id="maxPublicInput" min="1" step="1" style="width:100%; padding:10px; border-radius:6px; border:1px solid #444; background:#0d1b2a; color:#eee; font-size:1em; box-sizing:border-box;">
     </div>
     <button class="btn-action" id="setPurchaseLimitsBtn" onclick="setPurchaseLimits(this)" disabled>Set Purchase Limits</button>
 
@@ -208,6 +208,61 @@
             } finally {
                 btn.disabled = false;
                 btn.textContent = 'Check: Is Sale Active? (no wallet needed)';
+            }
+        }
+
+        async function loadCurrentLimits() {
+            var warnBox = document.getElementById('purchase-limits-warn');
+            var minInput = document.getElementById('minPurchaseInput');
+            var genesisInput = document.getElementById('maxGenesisInput');
+            var publicInput = document.getElementById('maxPublicInput');
+
+            warnBox.textContent = 'Reading current on-chain values…';
+
+            var calls = [
+                { key: 'min', sel: '0x33b5b62e' },
+                { key: 'genesis', sel: '0x751e82a7' },
+                { key: 'public', sel: '0x91b07311' }
+            ];
+
+            try {
+                var results = await Promise.all(calls.map(function(c) {
+                    return fetch(BASE_RPC, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            jsonrpc: '2.0', id: 1,
+                            method: 'eth_call',
+                            params: [{ to: CONTRACT, data: c.sel }, 'latest']
+                        })
+                    }).then(function(r) { return r.json(); });
+                }));
+
+                var values = {};
+                for (var i = 0; i < calls.length; i++) {
+                    var d = results[i];
+                    if (d.error) throw new Error(d.error.message);
+                    var raw = d.result || '0x';
+                    var val = raw && raw !== '0x' ? BigInt(raw) : 0n;
+                    values[calls[i].key] = val / BigInt('1000000000000000000');
+                }
+
+                warnBox.textContent =
+                    'Current on-chain values: minPurchase = ' + values.min.toLocaleString() + ' tokens, ' +
+                    'maxPurchaseGenesis = ' + values.genesis.toLocaleString() + ' tokens, ' +
+                    'maxPurchasePublic = ' + values.public.toLocaleString() + ' tokens. ' +
+                    'setPurchaseLimits() overwrites ALL THREE values in a single transaction — the fields below are pre-filled with the current on-chain values so an unedited click makes no change. Edit any value before sending to change it.';
+
+                minInput.value = values.min.toString();
+                genesisInput.value = values.genesis.toString();
+                publicInput.value = values.public.toString();
+            } catch (err) {
+                warnBox.textContent =
+                    'Could not read current on-chain values (' + err.message + '). ' +
+                    'setPurchaseLimits() overwrites ALL THREE values in a single transaction — the fields below have been left empty since the current values could not be confirmed. Enter all three values carefully before sending.';
+                minInput.value = '';
+                genesisInput.value = '';
+                publicInput.value = '';
             }
         }
 
@@ -366,7 +421,10 @@
             var data = '0x' + PURCHASE_LIMITS_SELECTOR + padBig(minWei) + padBig(genesisWei) + padBig(publicWei);
             var label = 'setPurchaseLimits(' + minTokens + ', ' + genesisTokens + ', ' + publicTokens + ')';
             await sendTx(label, data, btn);
+            loadCurrentLimits();
         }
+
+        loadCurrentLimits();
     </script>
 </body>
 </html>
