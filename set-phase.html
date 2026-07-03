@@ -32,15 +32,6 @@
 
     <button class="btn-connect" id="connectBtn" onclick="connectWallet()">Connect Wallet</button>
 
-    <h2>Fix: Update Public Phase Timestamps</h2>
-    <div class="warn">The contract's publicStartTime is set to March 16, 2026 (future) and publicEndTime is 0. This causes "Pre-sale has ended" for all Phase 2 purchases. This fix locks Genesis phase open until Dec 31, 2030 and pushes the public phase to the far future.</div>
-
-    <button class="btn-action" id="fixTimestampsBtn" onclick="fixTimestamps()" disabled>Fix Timestamps (Lock Genesis Open)</button>
-
-    <h2>Fix: Set Token Price to $0.001</h2>
-    <div class="warn">Contract currently charges $0.01/token (tokenPriceUSDMills=10). This sets it to $0.001/token (tokenPriceUSDMills=1) to match the UI price of ~$0.0015. Keeps 30% genesis discount.</div>
-    <button class="btn-action" id="setPricingBtn" onclick="sendTx('setPricing(1, 30)', '0xca05588a0000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000001e', this)" disabled>Set Price to $0.001/token</button>
-
     <h2>Other Actions</h2>
     <button class="btn-action" id="toggleSaleBtn"
             onclick="sendTx('toggleSale()', '0x7d8966e4', this)" disabled>Toggle Sale ON/OFF</button>
@@ -220,9 +211,6 @@
             }
         }
 
-        // setPhaseTiming(uint256,uint256,uint256,uint256) from TokenPreSaleVesting.sol
-        var TIMESTAMPS_SELECTOR = '9705fd13';
-
         // setPurchaseLimits(uint256,uint256,uint256) from TokenPreSaleVesting.sol
         var PURCHASE_LIMITS_SELECTOR = '67320dbb';
 
@@ -247,8 +235,6 @@
         }
 
         function enableButtons() {
-            document.getElementById('fixTimestampsBtn').disabled = false;
-            document.getElementById('setPricingBtn').disabled = false;
             document.getElementById('toggleSaleBtn').disabled = false;
             document.getElementById('setPhase0Btn').disabled = false;
             document.getElementById('setPhase1Btn').disabled = false;
@@ -380,64 +366,6 @@
             var data = '0x' + PURCHASE_LIMITS_SELECTOR + padBig(minWei) + padBig(genesisWei) + padBig(publicWei);
             var label = 'setPurchaseLimits(' + minTokens + ', ' + genesisTokens + ', ' + publicTokens + ')';
             await sendTx(label, data, btn);
-        }
-
-        async function fixTimestamps() {
-            if (!connectedAddress) { setStatus('Connect wallet first.', 'error'); return; }
-
-            var btn = document.getElementById('fixTimestampsBtn');
-            var origText = btn.textContent;
-            var genesisStart = 0x69429650;   // Dec 17, 2025 (keep)
-            var farFuture = 1924905600;      // Dec 31, 2030
-            var now = Math.floor(Date.now() / 1000) - 60;
-
-            // setPhaseTiming(genesisStart, genesisEnd, publicStart, publicEnd)
-            // Keep genesis open; set publicStart to now-60s so public phase is immediately active
-            var genesisEnd  = farFuture;   // Dec 31, 2030 — keep genesis active
-            var publicStart = now;         // now minus 60s — open public phase immediately
-            var publicEnd   = farFuture;   // Dec 31, 2030
-
-            var attempts = [
-                {
-                    label: 'setPhaseTiming(genesisStart, genesisEnd, publicStart, publicEnd)',
-                    data: '0x' + TIMESTAMPS_SELECTOR + pad(genesisStart) + pad(genesisEnd) + pad(publicStart) + pad(publicEnd)
-                }
-            ];
-
-            btn.disabled = true;
-
-            for (var i = 0; i < attempts.length; i++) {
-                var attempt = attempts[i];
-                try {
-                    btn.textContent = 'Trying: ' + attempt.label + '...';
-                    setStatus('Attempt ' + (i + 1) + '/' + attempts.length + ': ' + attempt.label + '\nConfirm in wallet if prompted...', 'pending');
-
-                    var txHash = await window.ethereum.request({
-                        method: 'eth_sendTransaction',
-                        params: [{ from: connectedAddress, to: CONTRACT, data: attempt.data }]
-                    });
-
-                    setStatus('Tx sent: ' + txHash + '\nWaiting for confirmation...', 'pending');
-                    var receipt = await waitForReceipt(txHash);
-
-                    if (receipt && receipt.status === '0x1') {
-                        setStatus('Timestamps updated! (' + attempt.label + ')\nTx: ' + txHash + '\n\nGenesis phase locked open until Dec 31, 2030. Public phase deferred.', 'success');
-                        btn.textContent = 'Done — Timestamps Updated!';
-                        return;
-                    } else if (receipt && receipt.status === '0x0') {
-                        setStatus('Attempt ' + (i + 1) + ' reverted (' + attempt.label + '). Trying next...', 'error');
-                        continue;
-                    }
-                } catch (err) {
-                    // User rejected or wallet error - try next encoding
-                    setStatus('Attempt ' + (i + 1) + ' failed: ' + err.message + '\nTrying next encoding...', 'error');
-                    continue;
-                }
-            }
-
-            setStatus('All timestamp encodings failed. The function may use a different parameter format. Check with the contract developer.', 'error');
-            btn.textContent = origText;
-            btn.disabled = false;
         }
     </script>
 </body>
