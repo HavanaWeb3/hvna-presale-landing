@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HVNA Presale Admin</title>
+    <style>
+        body { font-family: -apple-system, sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; background: #1a1a2e; color: #eee; }
+        h1 { font-size: 1.4em; }
+        h2 { font-size: 1.1em; color: #aaa; margin-top: 30px; }
+        .card { background: #16213e; border-radius: 12px; padding: 24px; margin: 20px 0; }
+        .info { font-size: 0.85em; color: #aaa; margin: 6px 0; word-break: break-all; }
+        button { width: 100%; padding: 16px; font-size: 1.05em; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; margin: 8px 0; }
+        .btn-connect { background: #4361ee; color: white; }
+        .btn-action { background: #e94560; color: white; }
+        .btn-action:disabled { background: #555; cursor: not-allowed; }
+        .btn-secondary { background: #2d6a4f; color: white; }
+        .btn-secondary:disabled { background: #555; cursor: not-allowed; }
+        #status { margin-top: 16px; padding: 12px; border-radius: 8px; display: none; font-size: 0.95em; white-space: pre-wrap; }
+        .success { background: #1b4332; color: #95d5b2; display: block !important; }
+        .error { background: #4a1525; color: #f4a0a0; display: block !important; }
+        .pending { background: #3a2e00; color: #ffd966; display: block !important; }
+        .warn { background: #4a3500; color: #ffd966; font-size: 0.85em; padding: 10px; border-radius: 8px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>HVNA Presale Admin</h1>
+
+    <div class="card">
+        <p class="info">Presale Contract: 0x390Bdc27F8488915AC5De3fCd43c695b41f452FA</p>
+        <p class="info">Network: Base (Chain ID 8453)</p>
+        <p class="info">Owner: 0x12edD8Ca5d79E4F1269E4cE9E941bD05c4CeEe05</p>
+    </div>
+
+    <button class="btn-connect" id="connectBtn" onclick="connectWallet()">Connect Wallet</button>
+
+    <h2>Fix: Update Public Phase Timestamps</h2>
+    <div class="warn">The contract's publicStartTime is set to March 16, 2026 (future) and publicEndTime is 0. This causes "Pre-sale has ended" for all Phase 2 purchases. This fix locks Genesis phase open until Dec 31, 2030 and pushes the public phase to the far future.</div>
+
+    <button class="btn-action" id="fixTimestampsBtn" onclick="fixTimestamps()" disabled>Fix Timestamps (Lock Genesis Open)</button>
+
+    <h2>Fix: Set Token Price to $0.001</h2>
+    <div class="warn">Contract currently charges $0.01/token (tokenPriceUSDMills=10). This sets it to $0.001/token (tokenPriceUSDMills=1) to match the UI price of ~$0.0015. Keeps 30% genesis discount.</div>
+    <button class="btn-action" id="setPricingBtn" onclick="sendTx('setPricing(1, 30)', '0xca05588a0000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000001e', this)" disabled>Set Price to $0.001/token</button>
+
+    <h2>Other Actions</h2>
+    <button class="btn-action" id="toggleSaleBtn"
+            onclick="sendTx('toggleSale()', '0x7d8966e4', this)" disabled>Toggle Sale ON/OFF</button>
+    <button class="btn-secondary" id="checkSaleBtn"
+            onclick="checkSaleActive()">Check: Is Sale Active? (no wallet needed)</button>
+    <div id="sale-active-result"
+         style="margin-top:12px; padding:14px; background:#0d1b2a;
+                border-radius:8px; font-size:0.88em; white-space:pre-wrap; display:none;">
+    </div>
+
+    <button class="btn-action" id="setPhase0Btn" onclick="sendTx('forcePhaseChange(GENESIS)', '0x65bb07e50000000000000000000000000000000000000000000000000000000000000000', this)" disabled>Set Phase: GENESIS (enum 0)</button>
+    <button class="btn-secondary" id="setPhase1Btn" onclick="sendTx('forcePhaseChange(PUBLIC)', '0x65bb07e50000000000000000000000000000000000000000000000000000000000000001', this)" disabled>Set Phase: PUBLIC (enum 1)</button>
+    <button class="btn-secondary" id="setPhase2Btn" onclick="sendTx('forcePhaseChange(ENDED)', '0x65bb07e50000000000000000000000000000000000000000000000000000000000000002', this)" disabled>Set Phase: ENDED (enum 2)</button>
+
+    <h2>Set Purchase Limits</h2>
+    <div class="warn">Current on-chain values: minPurchase = 1,000 tokens, maxPurchaseGenesis = 1,000,000 tokens, maxPurchasePublic = 1,000,000 tokens. setPurchaseLimits() overwrites ALL THREE values in a single transaction — the fields below are pre-filled to lower only the minimum to 400 and leave both caps unchanged, but you can edit any value before sending.</div>
+    <div style="margin: 12px 0;">
+        <label style="display:block; font-size:0.85em; color:#aaa; margin-bottom:4px;">Min purchase (tokens)</label>
+        <input type="number" id="minPurchaseInput" value="400" min="1" step="1" style="width:100%; padding:10px; border-radius:6px; border:1px solid #444; background:#0d1b2a; color:#eee; font-size:1em; box-sizing:border-box;">
+    </div>
+    <div style="margin: 12px 0;">
+        <label style="display:block; font-size:0.85em; color:#aaa; margin-bottom:4px;">Max purchase Genesis (tokens)</label>
+        <input type="number" id="maxGenesisInput" value="1000000" min="1" step="1" style="width:100%; padding:10px; border-radius:6px; border:1px solid #444; background:#0d1b2a; color:#eee; font-size:1em; box-sizing:border-box;">
+    </div>
+    <div style="margin: 12px 0;">
+        <label style="display:block; font-size:0.85em; color:#aaa; margin-bottom:4px;">Max purchase Public (tokens)</label>
+        <input type="number" id="maxPublicInput" value="1000000" min="1" step="1" style="width:100%; padding:10px; border-radius:6px; border:1px solid #444; background:#0d1b2a; color:#eee; font-size:1em; box-sizing:border-box;">
+    </div>
+    <button class="btn-action" id="setPurchaseLimitsBtn" onclick="setPurchaseLimits(this)" disabled>Set Purchase Limits</button>
+
+    <h2>Diagnostics: Read Contract State</h2>
+    <button class="btn-secondary" id="readPhaseBtn" onclick="readCurrentPhase()">Read Current Phase (no wallet needed)</button>
+    <div id="phase-result"
+         style="margin-top:12px; padding:14px; background:#0d1b2a;
+                border-radius:8px; font-size:0.88em; white-space:pre-wrap; display:none;">
+    </div>
+
+    <button class="btn-secondary" id="readPricingBtn"
+            onclick="readPricing()">Read Pricing (no wallet needed)</button>
+    <div id="pricing-result"
+         style="margin-top:12px; padding:14px; background:#0d1b2a;
+                border-radius:8px; font-size:0.88em; white-space:pre-wrap; display:none;">
+    </div>
+
+    <div id="status"></div>
+
+    <script>
+        var CONTRACT = '0x390Bdc27F8488915AC5De3fCd43c695b41f452FA';
+        var OWNER = '0x12edD8Ca5d79E4F1269E4cE9E941bD05c4CeEe05';
+        var BASE_CHAIN_ID = '0x2105';
+        var connectedAddress = null;
+
+        var BASE_RPC = 'https://mainnet.base.org';
+        var PHASE_NAMES = { 0: 'GENESIS (0)', 1: 'PUBLIC (1)', 2: 'ENDED (2)' };
+
+        async function readCurrentPhase() {
+            var btn = document.getElementById('readPhaseBtn');
+            var out = document.getElementById('phase-result');
+            btn.disabled = true;
+            btn.textContent = 'Reading...';
+            out.style.display = 'none';
+            try {
+                var resp = await fetch(BASE_RPC, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        jsonrpc: '2.0', id: 1,
+                        method: 'eth_call',
+                        params: [{ to: CONTRACT, data: '0x3d18b912' }, 'latest']
+                    })
+                });
+                var json = await resp.json();
+                if (json.error) throw new Error(json.error.message);
+                // ABI-decode: each uint256 return value occupies 32 bytes = 64 hex chars
+                var raw          = json.result.slice(2);
+                var phaseInt     = parseInt(raw.slice(0,   64), 16);
+                var priceInt     = parseInt(raw.slice(64,  128), 16);
+                var remainRaw    = BigInt('0x' + raw.slice(128, 192));
+                var remainTokens = (remainRaw / BigInt('1000000000000000000')).toLocaleString();
+                out.textContent = [
+                    'Raw phase integer : ' + phaseInt + '  →  ' + (PHASE_NAMES[phaseInt] || 'UNKNOWN (' + phaseInt + ')'),
+                    'Price (raw mills) : ' + priceInt,
+                    'Remaining tokens  : ' + remainTokens + ' HVNA'
+                ].join('\n');
+                out.style.color = '#95d5b2';
+                out.style.display = 'block';
+            } catch (err) {
+                out.textContent = 'Error: ' + err.message;
+                out.style.color = '#f4a0a0';
+                out.style.display = 'block';
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Read Current Phase (no wallet needed)';
+            }
+        }
+
+        async function readPricing() {
+            var btn = document.getElementById('readPricingBtn');
+            var out = document.getElementById('pricing-result');
+            btn.disabled = true;
+            btn.textContent = 'Reading...';
+            out.style.display = 'none';
+            try {
+                var calls = [
+                    { label: 'getETHUSDPrice (÷1e8)',                   sel: '0xbf4b1990' },
+                    { label: 'tokensSold (÷1e18)',                      sel: '0x518ab2a8' },
+                    { label: 'minPurchase (÷1e18 tokens)',              sel: '0x33b5b62e' },
+                    { label: '0x74fc06f3 — possible price/config (raw)', sel: '0x74fc06f3' },
+                    { label: '0xe3e0fa99 — token allocation A (÷1e18)', sel: '0xe3e0fa99' },
+                    { label: '0xe4ab7ca4 — token allocation B (÷1e18)', sel: '0xe4ab7ca4' }
+                ];
+                var results = await Promise.all(calls.map(function(c) {
+                    return fetch(BASE_RPC, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            jsonrpc: '2.0', id: 1,
+                            method: 'eth_call',
+                            params: [{ to: CONTRACT, data: c.sel }, 'latest']
+                        })
+                    }).then(function(r) { return r.json(); });
+                }));
+                var lines = calls.map(function(c, i) {
+                    var d = results[i];
+                    if (d.error) return c.label + ' : ERROR — ' + d.error.message;
+                    var raw = d.result || '0x';
+                    var val = raw && raw !== '0x' ? BigInt(raw) : 0n;
+                    var div18 = (val / BigInt('1000000000000000000')).toLocaleString();
+                    var div8  = (Number(val) / 1e8).toFixed(2);
+                    if (c.sel === '0xbf4b1990') return c.label + ' : $' + div8;
+                    if (c.sel === '0x74fc06f3') return c.label + ' : ' + val.toString();
+                    return c.label + ' : ' + div18 + ' (' + val.toString() + ' raw)';
+                });
+                out.textContent = lines.join('\n');
+                out.style.color = '#95d5b2';
+                out.style.display = 'block';
+            } catch (err) {
+                out.textContent = 'Error: ' + err.message;
+                out.style.color = '#f4a0a0';
+                out.style.display = 'block';
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Read Pricing (no wallet needed)';
+            }
+        }
+
+        async function checkSaleActive() {
+            var btn = document.getElementById('checkSaleBtn');
+            var out = document.getElementById('sale-active-result');
+            btn.disabled = true;
+            btn.textContent = 'Checking...';
+            out.style.display = 'none';
+            try {
+                var resp = await fetch(BASE_RPC, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        jsonrpc: '2.0', id: 1,
+                        method: 'eth_call',
+                        params: [{ to: CONTRACT, data: '0x68428a1b' }, 'latest']
+                    })
+                });
+                var json = await resp.json();
+                if (json.error) throw new Error(json.error.message);
+                var raw = json.result;
+                var isActive = raw && raw.slice(-1) === '1';
+                out.textContent = 'saleActive() raw : ' + raw + '\n→ Sale is ' + (isActive ? 'ON ✓' : 'OFF ✗');
+                out.style.color = isActive ? '#95d5b2' : '#f4a0a0';
+                out.style.display = 'block';
+            } catch (err) {
+                out.textContent = 'Error: ' + err.message;
+                out.style.color = '#f4a0a0';
+                out.style.display = 'block';
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Check: Is Sale Active? (no wallet needed)';
+            }
+        }
+
+        // setPhaseTiming(uint256,uint256,uint256,uint256) from TokenPreSaleVesting.sol
+        var TIMESTAMPS_SELECTOR = '9705fd13';
+
+        // setPurchaseLimits(uint256,uint256,uint256) from TokenPreSaleVesting.sol
+        var PURCHASE_LIMITS_SELECTOR = '67320dbb';
+
+        function setStatus(msg, type) {
+            var el = document.getElementById('status');
+            el.textContent = msg;
+            el.className = type;
+        }
+
+        function pad(num) {
+            var hex = Math.floor(num).toString(16);
+            while (hex.length < 64) hex = '0' + hex;
+            return hex;
+        }
+
+        // BigInt-safe version of pad() — token amounts * 10^18 exceed
+        // Number.MAX_SAFE_INTEGER, so they must stay BigInt end-to-end.
+        function padBig(bn) {
+            var hex = bn.toString(16);
+            while (hex.length < 64) hex = '0' + hex;
+            return hex;
+        }
+
+        function enableButtons() {
+            document.getElementById('fixTimestampsBtn').disabled = false;
+            document.getElementById('setPricingBtn').disabled = false;
+            document.getElementById('toggleSaleBtn').disabled = false;
+            document.getElementById('setPhase0Btn').disabled = false;
+            document.getElementById('setPhase1Btn').disabled = false;
+            document.getElementById('setPhase2Btn').disabled = false;
+            document.getElementById('setPurchaseLimitsBtn').disabled = false;
+        }
+
+        async function connectWallet() {
+            if (!window.ethereum) {
+                setStatus('No wallet detected. Please install Rabby or MetaMask.', 'error');
+                return;
+            }
+            try {
+                var accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                connectedAddress = accounts[0];
+                if (connectedAddress.toLowerCase() !== OWNER.toLowerCase()) {
+                    setStatus('Wrong wallet! Connected: ' + connectedAddress + '. Need owner: ' + OWNER, 'error');
+                    return;
+                }
+                var chainId = await window.ethereum.request({ method: 'eth_chainId' });
+                if (chainId !== BASE_CHAIN_ID) {
+                    setStatus('Switching to Base network...', 'pending');
+                    await window.ethereum.request({
+                        method: 'wallet_switchEthereumChain',
+                        params: [{ chainId: BASE_CHAIN_ID }]
+                    });
+                }
+                document.getElementById('connectBtn').textContent = 'Connected: ' + connectedAddress.substring(0, 6) + '...' + connectedAddress.substring(38);
+                enableButtons();
+                setStatus('Wallet connected on Base. Ready.', 'success');
+            } catch (err) {
+                setStatus('Connection failed: ' + err.message, 'error');
+            }
+        }
+
+        async function waitForReceipt(txHash) {
+            for (var i = 0; i < 30; i++) {
+                await new Promise(function(r) { setTimeout(r, 2000); });
+                var receipt = await window.ethereum.request({
+                    method: 'eth_getTransactionReceipt',
+                    params: [txHash]
+                });
+                if (receipt) return receipt;
+            }
+            return null;
+        }
+
+        async function sendTx(label, data, btn) {
+            if (!connectedAddress) { setStatus('Connect wallet first.', 'error'); return; }
+            var origText = btn.textContent;
+            try {
+                btn.disabled = true;
+                btn.textContent = 'Confirm in wallet...';
+                setStatus('Sending ' + label + '...', 'pending');
+
+                var txHash = await window.ethereum.request({
+                    method: 'eth_sendTransaction',
+                    params: [{ from: connectedAddress, to: CONTRACT, data: data }]
+                });
+
+                setStatus('Tx sent: ' + txHash + '\nWaiting for confirmation...', 'pending');
+                var receipt = await waitForReceipt(txHash);
+
+                if (receipt && receipt.status === '0x1') {
+                    setStatus(label + ' SUCCESS!\nTx: ' + txHash, 'success');
+                    btn.textContent = 'Done!';
+                } else if (receipt && receipt.status === '0x0') {
+                    setStatus(label + ' REVERTED.\nTx: ' + txHash, 'error');
+                    btn.textContent = origText;
+                    btn.disabled = false;
+                } else {
+                    setStatus('Sent but unconfirmed. Tx: ' + txHash, 'pending');
+                }
+            } catch (err) {
+                setStatus(label + ' failed: ' + err.message, 'error');
+                btn.textContent = origText;
+                btn.disabled = false;
+            }
+        }
+
+        async function setPurchaseLimits(btn) {
+            if (!connectedAddress) { setStatus('Connect wallet first.', 'error'); return; }
+
+            var minRaw = document.getElementById('minPurchaseInput').value.trim();
+            var genesisRaw = document.getElementById('maxGenesisInput').value.trim();
+            var publicRaw = document.getElementById('maxPublicInput').value.trim();
+
+            function isPositiveWholeNumber(s) {
+                return /^[0-9]+$/.test(s) && BigInt(s) > 0n;
+            }
+
+            if (!isPositiveWholeNumber(minRaw) || !isPositiveWholeNumber(genesisRaw) || !isPositiveWholeNumber(publicRaw)) {
+                setStatus('Min purchase, Max Genesis and Max Public must all be whole numbers greater than 0.', 'error');
+                return;
+            }
+
+            var minTokens = BigInt(minRaw);
+            var genesisTokens = BigInt(genesisRaw);
+            var publicTokens = BigInt(publicRaw);
+
+            if (genesisTokens < minTokens || publicTokens < minTokens) {
+                setStatus('Max Genesis and Max Public must each be >= Min purchase — the contract requires this and would otherwise revert.', 'error');
+                return;
+            }
+
+            var minWei = minTokens * 10n ** 18n;
+            var genesisWei = genesisTokens * 10n ** 18n;
+            var publicWei = publicTokens * 10n ** 18n;
+
+            var confirmMsg =
+                'This overwrites all three limits at once. Min → ' + minTokens.toLocaleString() +
+                ', Genesis max → ' + genesisTokens.toLocaleString() +
+                ', Public max → ' + publicTokens.toLocaleString() + '.\n\n' +
+                'Whole tokens:\n' +
+                '  Min purchase:        ' + minTokens.toLocaleString() + '\n' +
+                '  Max purchase Genesis: ' + genesisTokens.toLocaleString() + '\n' +
+                '  Max purchase Public:  ' + publicTokens.toLocaleString() + '\n\n' +
+                'Wei (as sent on-chain):\n' +
+                '  Min purchase:        ' + minWei.toString() + '\n' +
+                '  Max purchase Genesis: ' + genesisWei.toString() + '\n' +
+                '  Max purchase Public:  ' + publicWei.toString() + '\n\n' +
+                'Send this transaction?';
+
+            if (!window.confirm(confirmMsg)) {
+                setStatus('Cancelled — no transaction sent.', 'pending');
+                return;
+            }
+
+            var data = '0x' + PURCHASE_LIMITS_SELECTOR + padBig(minWei) + padBig(genesisWei) + padBig(publicWei);
+            var label = 'setPurchaseLimits(' + minTokens + ', ' + genesisTokens + ', ' + publicTokens + ')';
+            await sendTx(label, data, btn);
+        }
+
+        async function fixTimestamps() {
+            if (!connectedAddress) { setStatus('Connect wallet first.', 'error'); return; }
+
+            var btn = document.getElementById('fixTimestampsBtn');
+            var origText = btn.textContent;
+            var genesisStart = 0x69429650;   // Dec 17, 2025 (keep)
+            var farFuture = 1924905600;      // Dec 31, 2030
+            var now = Math.floor(Date.now() / 1000) - 60;
+
+            // setPhaseTiming(genesisStart, genesisEnd, publicStart, publicEnd)
+            // Keep genesis open; set publicStart to now-60s so public phase is immediately active
+            var genesisEnd  = farFuture;   // Dec 31, 2030 — keep genesis active
+            var publicStart = now;         // now minus 60s — open public phase immediately
+            var publicEnd   = farFuture;   // Dec 31, 2030
+
+            var attempts = [
+                {
+                    label: 'setPhaseTiming(genesisStart, genesisEnd, publicStart, publicEnd)',
+                    data: '0x' + TIMESTAMPS_SELECTOR + pad(genesisStart) + pad(genesisEnd) + pad(publicStart) + pad(publicEnd)
+                }
+            ];
+
+            btn.disabled = true;
+
+            for (var i = 0; i < attempts.length; i++) {
+                var attempt = attempts[i];
+                try {
+                    btn.textContent = 'Trying: ' + attempt.label + '...';
+                    setStatus('Attempt ' + (i + 1) + '/' + attempts.length + ': ' + attempt.label + '\nConfirm in wallet if prompted...', 'pending');
+
+                    var txHash = await window.ethereum.request({
+                        method: 'eth_sendTransaction',
+                        params: [{ from: connectedAddress, to: CONTRACT, data: attempt.data }]
+                    });
+
+                    setStatus('Tx sent: ' + txHash + '\nWaiting for confirmation...', 'pending');
+                    var receipt = await waitForReceipt(txHash);
+
+                    if (receipt && receipt.status === '0x1') {
+                        setStatus('Timestamps updated! (' + attempt.label + ')\nTx: ' + txHash + '\n\nGenesis phase locked open until Dec 31, 2030. Public phase deferred.', 'success');
+                        btn.textContent = 'Done — Timestamps Updated!';
+                        return;
+                    } else if (receipt && receipt.status === '0x0') {
+                        setStatus('Attempt ' + (i + 1) + ' reverted (' + attempt.label + '). Trying next...', 'error');
+                        continue;
+                    }
+                } catch (err) {
+                    // User rejected or wallet error - try next encoding
+                    setStatus('Attempt ' + (i + 1) + ' failed: ' + err.message + '\nTrying next encoding...', 'error');
+                    continue;
+                }
+            }
+
+            setStatus('All timestamp encodings failed. The function may use a different parameter format. Check with the contract developer.', 'error');
+            btn.textContent = origText;
+            btn.disabled = false;
+        }
+    </script>
+</body>
+</html>
