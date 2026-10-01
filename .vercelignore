@@ -1,0 +1,6 @@
+*.md
+docs/
+.git
+.gitignore
+.DS_Store
+.env*
