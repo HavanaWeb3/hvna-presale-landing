@@ -100,7 +100,7 @@ module.exports = async function handler(req, res) {
                     ``,
                     `Email: ${email}`,
                     `Wallet: ${walletAddress}`,
-                    `Amount: EUR ${purchaseAmount}`,
+                    `Amount: USD ${purchaseAmount}`,
                     `Tokens: ${tokenAmount} HVNA`,
                     `Tier: ${buyerTier}`,
                     `Phase: ${phase}`,
@@ -254,13 +254,13 @@ async function sendWelcomeEmail(email, subscriberData) {
     </div>
 
     <div class="content">
-        <p>Thank you for being an early believer in the Havana Elephant ecosystem!</p>
+        <p>Thank you for taking part in the $HVNA presale.</p>
 
         <div class="highlight-box">
             <h2>Your Purchase Details:</h2>
             <div class="detail-row">
                 <span>Amount:</span>
-                <strong>&euro;${amt.toFixed(2)}</strong>
+                <strong>$${amt.toFixed(2)}</strong>
             </div>
             <div class="detail-row">
                 <span>Tokens:</span>
@@ -268,7 +268,7 @@ async function sendWelcomeEmail(email, subscriberData) {
             </div>
             <div class="detail-row">
                 <span>Price:</span>
-                <strong>&euro;0.01 per token</strong>
+                <strong>The presale price shown on presale.havanaelephant.com at the time of purchase</strong>
             </div>
             <div class="detail-row">
                 <span>Transaction:</span>
@@ -277,15 +277,10 @@ async function sendWelcomeEmail(email, subscriberData) {
         </div>
 
         <h3>What This Means:</h3>
-        <p>You're now part of an exclusive group of early presale participants who got in at the ground floor. Your tokens are in your wallet and ready for the upcoming launch.</p>
+        <p>Your purchase has been recorded on Base. You can verify it at any time using the Basescan link above.</p>
 
         <h3>What Happens Next:</h3>
-        <ul>
-            <li><strong>NOW:</strong> You have your $HVNA tokens</li>
-            <li><strong>Ongoing:</strong> Presale continues through multiple phases</li>
-            <li><strong>Q2 2026:</strong> Contentlynk early access launch (you get priority access)</li>
-            <li><strong>Q3 2026:</strong> Public token launch on DEXs</li>
-        </ul>
+        <p>Your $HVNA allocation is recorded in the presale contract on Base and is delivered after the token generation event. Project information is set out in the Ecosystem &amp; $HVNA Information Document at <a href="https://presale.havanaelephant.com/Havana_Elephant_Ecosystem_HVNA_Information_Document_v8.0.pdf">https://presale.havanaelephant.com/Havana_Elephant_Ecosystem_HVNA_Information_Document_v8.0.pdf</a></p>
 
         <div style="text-align: center; margin: 30px 0;">
             <h3>Join the Community:</h3>
@@ -299,7 +294,6 @@ async function sendWelcomeEmail(email, subscriberData) {
             <li>Join our Discord for daily updates</li>
             <li>Follow us on X for announcements</li>
             <li>Bookmark havanaelephant.com for news</li>
-            <li>Watch your email for presale phase alerts</li>
         </ol>
 
         <p><strong>Questions?</strong> Reply to this email or join Discord for community support.</p>
@@ -307,7 +301,7 @@ async function sendWelcomeEmail(email, subscriberData) {
         <p style="margin-top: 30px;">
             <strong>Live Life Big in Style Celebrate,</strong><br>
             David Sime<br>
-            Founder &amp; CEO, Havana Elephant Global S.A.
+            Founder, Havana Elephant
         </p>
 
         <div style="text-align: center; margin: 20px 0;">
@@ -317,7 +311,7 @@ async function sendWelcomeEmail(email, subscriberData) {
     </div>
 
     <div class="footer">
-        <p>&copy; 2026 Havana Elephant Global S.A. | Panama</p>
+        <p>&copy; 2026 Havana Elephant</p>
         <p style="font-size: 12px; margin-top: 10px;">
             <a href="https://presale.havanaelephant.com/unsubscribe">Unsubscribe</a> |
             <a href="https://havanaelephant.com/privacy">Privacy Policy</a> |
@@ -330,19 +324,16 @@ async function sendWelcomeEmail(email, subscriberData) {
 
     const emailText = `Welcome to the $HVNA Journey!
 
-Thank you for being an early believer in the Havana Elephant ecosystem!
+Thank you for taking part in the $HVNA presale.
 
 Your Purchase Details:
-- Amount: EUR ${amt.toFixed(2)}
+- Amount: USD ${amt.toFixed(2)}
 - Tokens: ${tokens.toLocaleString('en-US')} $HVNA
-- Price: EUR 0.01 per token
+- Price: the presale price shown on presale.havanaelephant.com at the time of purchase
 - Transaction: ${basescanLink}
 
 What Happens Next:
-- NOW: You have your $HVNA tokens
-- Ongoing: Presale continues through multiple phases
-- Q2 2026: Contentlynk early access launch (you get priority access)
-- Q3 2026: Public token launch on DEXs
+Your $HVNA allocation is recorded in the presale contract on Base and is delivered after the token generation event. Project information is set out in the Ecosystem & $HVNA Information Document at https://presale.havanaelephant.com/Havana_Elephant_Ecosystem_HVNA_Information_Document_v8.0.pdf
 
 Join the Community:
 Discord: https://discord.gg/hzfTpjgy4
