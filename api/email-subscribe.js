@@ -344,7 +344,7 @@ Questions? Reply to this email or join Discord.
 
 Live Life Big in Style Celebrate,
 David Sime
-Founder & CEO, Havana Elephant Global S.A.
+Founder, Havana Elephant
     `;
 
     const { data, error } = await resend.emails.send({
