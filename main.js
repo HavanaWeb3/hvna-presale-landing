@@ -24,7 +24,7 @@ const appState = {
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🐘 Havana Elephant Presale - Initialized');
 
-    initializeInvestmentCalculator();
+    initializePurchaseCalculator();
     initializeScrollEffects();
     initializeExitIntent();
     initializeActivityFeed();
@@ -38,11 +38,11 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// INVESTMENT CALCULATOR
+// PURCHASE CALCULATOR
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-function initializeInvestmentCalculator() {
-    const input = document.getElementById('investment-amount');
+function initializePurchaseCalculator() {
+    const input = document.getElementById('purchase-amount');
     if (input) {
         input.addEventListener('input', updateCalculator);
         // Set default value
@@ -52,7 +52,7 @@ function initializeInvestmentCalculator() {
 }
 
 function updateCalculator() {
-    const usdAmount = parseFloat(document.getElementById('investment-amount').value) || 0;
+    const usdAmount = parseFloat(document.getElementById('purchase-amount').value) || 0;
     const currentPrice = window.livePricePerTokenUSD || 0.051;
     const tokensReceived = Math.floor(usdAmount / currentPrice);
     const tokensEl = document.getElementById('tokens-received');

@@ -280,7 +280,7 @@ async function sendWelcomeEmail(email, subscriberData) {
         <p>Your purchase has been recorded on Base. You can verify it at any time using the Basescan link above.</p>
 
         <h3>What Happens Next:</h3>
-        <p>Your $HVNA allocation is recorded in the presale contract on Base and is delivered after the token generation event. Project information is set out in the Ecosystem &amp; $HVNA Information Document at <a href="https://presale.havanaelephant.com/Havana_Elephant_Ecosystem_HVNA_Information_Document_v8.0.pdf">https://presale.havanaelephant.com/Havana_Elephant_Ecosystem_HVNA_Information_Document_v8.0.pdf</a></p>
+        <p>Your $HVNA allocation is recorded in the presale contract when your purchase is completed. After TGE, you claim your tokens to your verified wallet in three instalments: 40% when claiming opens, 40% after 90 days and 20% after 180 days. Project information is set out in the Ecosystem &amp; $HVNA Information Document at <a href="https://presale.havanaelephant.com/Havana_Elephant_Ecosystem_HVNA_Information_Document_v8.0.pdf">https://presale.havanaelephant.com/Havana_Elephant_Ecosystem_HVNA_Information_Document_v8.0.pdf</a></p>
 
         <div style="text-align: center; margin: 30px 0;">
             <h3>Join the Community:</h3>
@@ -333,7 +333,7 @@ Your Purchase Details:
 - Transaction: ${basescanLink}
 
 What Happens Next:
-Your $HVNA allocation is recorded in the presale contract on Base and is delivered after the token generation event. Project information is set out in the Ecosystem & $HVNA Information Document at https://presale.havanaelephant.com/Havana_Elephant_Ecosystem_HVNA_Information_Document_v8.0.pdf
+Your $HVNA allocation is recorded in the presale contract when your purchase is completed. After TGE, you claim your tokens to your verified wallet in three instalments: 40% when claiming opens, 40% after 90 days and 20% after 180 days. Project information is set out in the Ecosystem & $HVNA Information Document at https://presale.havanaelephant.com/Havana_Elephant_Ecosystem_HVNA_Information_Document_v8.0.pdf
 
 Join the Community:
 Discord: https://discord.gg/hzfTpjgy4
