@@ -1012,7 +1012,7 @@ async function fetchKycStatus(opts) {
     return data; // { status }
 }
 
-// ── Modal UI injection (works on index.html + id.html — no markup needed in either) ──
+// ── Modal UI injection (works on index.html — no markup needed in the page) ──
 
 function injectKycStepUI() {
     if (document.getElementById('modal-kyc-step')) return;
