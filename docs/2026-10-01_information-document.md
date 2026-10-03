@@ -1,5 +1,7 @@
 # Ecosystem & $HVNA Information Document v8.0
 
+Superseded by v8.1 on 3 October 2026. See `2026-10-03_information-document-v8.1.md`.
+
 1 October 2026
 
 - Filename: `Havana_Elephant_Ecosystem_HVNA_Information_Document_v8.0.pdf` (repository root)
