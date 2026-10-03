@@ -288,7 +288,8 @@ function setQuickAmount(amount) {
 function updatePurchaseCalculation() {
     const usdAmount = parseFloat(document.getElementById('usd-amount').value) || 0;
     const currentPrice = window.livePricePerTokenUSD || 0.051;
-    var minUsd = (typeof CONSTANTS !== 'undefined') ? CONSTANTS.MIN_PURCHASE_USD : 10;
+    var minUsd = (typeof CONSTANTS !== 'undefined') ? CONSTANTS.MIN_PURCHASE_USD : 20.40;
+    var minTokens = (typeof CONSTANTS !== 'undefined') ? CONSTANTS.MIN_PURCHASE_TOKENS : 400;
 
     const tokensReceived = Math.floor(usdAmount / currentPrice);
 
@@ -312,7 +313,7 @@ function updatePurchaseCalculation() {
             var inputWrapper = document.getElementById('usd-amount').parentElement;
             inputWrapper.parentElement.appendChild(minWarning);
         }
-        minWarning.textContent = 'Minimum purchase: ' + Math.floor(minUsd / currentPrice).toLocaleString('en-US') + ' tokens ($' + minUsd + ')';
+        minWarning.textContent = 'Minimum purchase: ' + minTokens.toLocaleString('en-US') + ' tokens ($' + minUsd.toFixed(2) + ')';
         minWarning.style.display = 'block';
     } else if (minWarning) {
         minWarning.style.display = 'none';

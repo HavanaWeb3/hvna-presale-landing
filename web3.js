@@ -640,7 +640,7 @@ async function updatePurchaseDetails() {
 
     const usdAmount = parseFloat(usdInput.value) || 0;
     const purchaseButton = document.getElementById('purchase-button');
-    const minUsd = CONSTANTS.MIN_PURCHASE_USD; // $10
+    const minUsd = CONSTANTS.MIN_PURCHASE_USD;
 
     if (usdAmount === 0) {
         if (purchaseButton) {
@@ -652,9 +652,9 @@ async function updatePurchaseDetails() {
 
     if (usdAmount < minUsd) {
         if (purchaseButton) {
-            const minPrice = window.livePricePerTokenUSD || 0.051;
+
             purchaseButton.disabled = true;
-            purchaseButton.textContent = 'Minimum purchase: ' + Math.floor(minUsd / minPrice).toLocaleString('en-US') + ' tokens ($' + minUsd + ')';
+            purchaseButton.textContent = 'Minimum purchase: ' + CONSTANTS.MIN_PURCHASE_TOKENS.toLocaleString('en-US') + ' tokens ($' + minUsd.toFixed(2) + ')';
         }
         return;
     }
@@ -755,7 +755,7 @@ async function executePurchase() {
     }
 
     if (usdAmount < CONSTANTS.MIN_PURCHASE_USD) {
-        appHelpers.showNotification('Minimum purchase: 1,000 tokens ($' + CONSTANTS.MIN_PURCHASE_USD + ')', 'error');
+        appHelpers.showNotification('Minimum purchase: ' + CONSTANTS.MIN_PURCHASE_TOKENS.toLocaleString('en-US') + ' tokens ($' + CONSTANTS.MIN_PURCHASE_USD.toFixed(2) + ')', 'error');
         return;
     }
 

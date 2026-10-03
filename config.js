@@ -326,7 +326,8 @@ const ANALYTICS_CONFIG = {
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 const CONSTANTS = {
-    MIN_PURCHASE_USD: 52, // = 1000-token contract floor at $0.051; bump if price tier steps to $0.073
+    MIN_PURCHASE_TOKENS: 400, // presale contract minPurchase() on 0x390Bdc27F8488915AC5De3fCd43c695b41f452FA
+    MIN_PURCHASE_USD: 20.40, // = 400 × the current price ($0.051). Must change to $29.20 on the day the price moves to $0.073
     MAX_PURCHASE_USD: 100000,
     CURRENT_PHASE: 0,
     FUNDING_TARGET_EUR: 850000,
