@@ -269,3 +269,79 @@ test('14. didit-status still resolves a wallet to its latest decision', async ()
     assert.ok(fetchCalls[1].url.includes('22222222-2222-4222-8222-222222222222'),
         'the most recent session is the one resolved');
 });
+
+// ── Same-origin GET gate ─────────────────────────────────────────────────
+// Browsers omit Origin on same-origin GETs but always send Sec-Fetch-Site.
+// didit-status is the only GET endpoint, so the rule applies there alone.
+
+function sessionsThenDecision() {
+    return H.stubFetch(call => {
+        if (call.url.includes('/v3/sessions?')) {
+            return H.fetchResponse({
+                status: 200, body: {
+                    results: [{
+                        session_id: '33333333-3333-4333-8333-333333333333',
+                        status: 'In Progress', created_at: '2026-10-10T00:00:00Z'
+                    }]
+                }
+            });
+        }
+        return H.fetchResponse({ status: 200, body: { status: 'Approved' } });
+    });
+}
+
+test('15. didit-status allows a same-origin GET that carries no Origin', async () => {
+    sessionsThenDecision();
+    const handler = H.freshHandler('didit-status.js');
+    const res = H.makeRes();
+
+    await handler(H.makeReq({
+        method: 'GET',
+        origin: null,
+        headers: { 'sec-fetch-site': 'same-origin' },
+        query: { wallet: WALLET }
+    }), res);
+
+    assert.equal(res.statusCode, 200, 'a real browser same-origin GET must be served');
+    assert.equal(res.body.status, 'Approved');
+});
+
+test('16. didit-status refuses a cross-site GET even if Origin looks right', async () => {
+    {
+        const fetchCalls = sessionsThenDecision();
+        const handler = H.freshHandler('didit-status.js');
+        const res = H.makeRes();
+        await handler(H.makeReq({
+            method: 'GET',
+            headers: { 'sec-fetch-site': 'cross-site' },
+            query: { wallet: WALLET }
+        }), res);
+        assert.equal(res.statusCode, 403, 'Sec-Fetch-Site: cross-site must win over a matching Origin');
+        assert.equal(fetchCalls.length, 0, 'no provider call may be made');
+    }
+
+    {
+        const fetchCalls = sessionsThenDecision();
+        const handler = H.freshHandler('didit-status.js');
+        const res = H.makeRes();
+        await handler(H.makeReq({
+            method: 'GET',
+            origin: null,
+            headers: { 'sec-fetch-site': 'same-site' },
+            query: { wallet: WALLET }
+        }), res);
+        assert.equal(res.statusCode, 403, 'same-site is a different subdomain, not us');
+        assert.equal(fetchCalls.length, 0, 'no provider call may be made');
+    }
+});
+
+test('17. didit-status refuses a GET carrying neither header', async () => {
+    const fetchCalls = sessionsThenDecision();
+    const handler = H.freshHandler('didit-status.js');
+    const res = H.makeRes();
+
+    await handler(H.makeReq({ method: 'GET', origin: null, query: { wallet: WALLET } }), res);
+
+    assert.equal(res.statusCode, 403, 'a bare curl supplies neither header and stays refused');
+    assert.equal(fetchCalls.length, 0, 'no provider call may be made');
+});

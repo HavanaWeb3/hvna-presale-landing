@@ -7,17 +7,39 @@ const ALLOWED_ORIGINS = ['https://presale.havanaelephant.com'];
 const WALLET_RE = /^0x[0-9a-fA-F]{40}$/;
 const UUID_RE = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
 
+// This endpoint is reached by a same-origin GET (web3.js fetchKycStatus), and
+// browsers do not send Origin on those — only on cross-origin requests and on
+// POSTs. Requiring Origin here therefore refuses every genuine buyer, so the
+// same-origin case is recognised by Sec-Fetch-Site instead, which browsers do
+// send on every fetch. The three POST endpoints always receive an Origin and
+// keep the simpler check.
+function isAllowedCaller(req) {
+    const origin = req.headers.origin;
+    const site = req.headers['sec-fetch-site'];
+
+    // An explicit cross-site or same-site value is a refusal whatever Origin says.
+    if (site === 'cross-site' || site === 'same-site') return false;
+
+    if (origin) return ALLOWED_ORIGINS.indexOf(origin) !== -1;
+
+    // No Origin: only a browser's own same-origin request qualifies. A bare
+    // curl sends neither header and stays refused.
+    return site === 'same-origin';
+}
+
 module.exports = async function handler(req, res) {
     const origin = req.headers.origin;
 
-    res.setHeader('Vary', 'Origin');
+    res.setHeader('Vary', 'Origin, Sec-Fetch-Site');
 
-    if (!origin || ALLOWED_ORIGINS.indexOf(origin) === -1) {
-        console.warn('didit-status: refused origin:', origin || '(none)');
+    if (!isAllowedCaller(req)) {
+        console.warn('didit-status: refused caller. origin:', origin || '(none)',
+            'sec-fetch-site:', req.headers['sec-fetch-site'] || '(none)');
         return res.status(403).json({ error: 'Forbidden' });
     }
 
-    res.setHeader('Access-Control-Allow-Origin', origin);
+    // Only meaningful for a cross-origin caller; a same-origin GET needs none.
+    if (origin) res.setHeader('Access-Control-Allow-Origin', origin);
     res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
