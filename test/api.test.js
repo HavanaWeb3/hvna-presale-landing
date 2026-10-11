@@ -345,3 +345,51 @@ test('17. didit-status refuses a GET carrying neither header', async () => {
     assert.equal(res.statusCode, 403, 'a bare curl supplies neither header and stays refused');
     assert.equal(fetchCalls.length, 0, 'no provider call may be made');
 });
+
+// ── Older-browser fallback ───────────────────────────────────────────────
+// Safari before 16.4 sends neither Origin nor Sec-Fetch-Site on a same-origin
+// GET. fetchKycStatus adds X-HVNA-Client, which a cross-origin page cannot set
+// without a preflight that the Origin rule already refuses.
+
+test('18. didit-status accepts X-HVNA-Client when a browser sends no Origin or Sec-Fetch headers', async () => {
+    sessionsThenDecision();
+    const handler = H.freshHandler('didit-status.js');
+    const res = H.makeRes();
+
+    await handler(H.makeReq({
+        method: 'GET',
+        origin: null,
+        headers: { 'x-hvna-client': 'web' },
+        query: { wallet: WALLET }
+    }), res);
+
+    assert.equal(res.statusCode, 200, 'an older Safari same-origin GET must be served');
+    assert.equal(res.body.status, 'Approved');
+});
+
+test('19. didit-status still refuses the same request without that header', async () => {
+    const fetchCalls = sessionsThenDecision();
+    const handler = H.freshHandler('didit-status.js');
+    const res = H.makeRes();
+
+    await handler(H.makeReq({ method: 'GET', origin: null, query: { wallet: WALLET } }), res);
+
+    assert.equal(res.statusCode, 403, 'no Origin, no Sec-Fetch-Site and no client header stays refused');
+    assert.equal(fetchCalls.length, 0, 'no provider call may be made');
+});
+
+test('20. didit-status refuses X-HVNA-Client on a cross-site request', async () => {
+    const fetchCalls = sessionsThenDecision();
+    const handler = H.freshHandler('didit-status.js');
+    const res = H.makeRes();
+
+    await handler(H.makeReq({
+        method: 'GET',
+        origin: null,
+        headers: { 'x-hvna-client': 'web', 'sec-fetch-site': 'cross-site' },
+        query: { wallet: WALLET }
+    }), res);
+
+    assert.equal(res.statusCode, 403, 'cross-site must win over the client header too');
+    assert.equal(fetchCalls.length, 0, 'no provider call may be made');
+});

@@ -6,6 +6,7 @@
 const ALLOWED_ORIGINS = ['https://presale.havanaelephant.com'];
 const WALLET_RE = /^0x[0-9a-fA-F]{40}$/;
 const UUID_RE = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
+const CLIENT_HEADER_VALUE = 'web';
 
 // This endpoint is reached by a same-origin GET (web3.js fetchKycStatus), and
 // browsers do not send Origin on those — only on cross-origin requests and on
@@ -17,20 +18,25 @@ function isAllowedCaller(req) {
     const origin = req.headers.origin;
     const site = req.headers['sec-fetch-site'];
 
-    // An explicit cross-site or same-site value is a refusal whatever Origin says.
+    // An explicit cross-site or same-site value is a refusal whatever else says.
     if (site === 'cross-site' || site === 'same-site') return false;
 
     if (origin) return ALLOWED_ORIGINS.indexOf(origin) !== -1;
 
-    // No Origin: only a browser's own same-origin request qualifies. A bare
-    // curl sends neither header and stays refused.
-    return site === 'same-origin';
+    if (site === 'same-origin') return true;
+
+    // Safari before 16.4 sends neither Origin nor Sec-Fetch-Site on a
+    // same-origin GET, so fetchKycStatus adds this header as a third proof.
+    // A cross-origin page cannot set it without a preflight, and that
+    // preflight carries an Origin which the rule above refuses. A bare curl
+    // sending none of the three stays refused.
+    return req.headers['x-hvna-client'] === CLIENT_HEADER_VALUE;
 }
 
 module.exports = async function handler(req, res) {
     const origin = req.headers.origin;
 
-    res.setHeader('Vary', 'Origin, Sec-Fetch-Site');
+    res.setHeader('Vary', 'Origin, Sec-Fetch-Site, X-HVNA-Client');
 
     if (!isAllowedCaller(req)) {
         console.warn('didit-status: refused caller. origin:', origin || '(none)',

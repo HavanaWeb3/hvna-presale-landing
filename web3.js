@@ -1018,7 +1018,11 @@ async function fetchKycStatus(opts) {
     if (opts.wallet) params.set('wallet', opts.wallet.toLowerCase());
     else if (opts.sessionId) params.set('session_id', opts.sessionId);
     else throw new Error('fetchKycStatus requires wallet or sessionId');
-    const res = await fetch(API_ENDPOINTS.diditStatus + '?' + params.toString());
+    // Sent so the endpoint can recognise a same-origin GET on browsers that
+    // predate Sec-Fetch-Site (Safari before 16.4).
+    const res = await fetch(API_ENDPOINTS.diditStatus + '?' + params.toString(), {
+        headers: { 'X-HVNA-Client': 'web' }
+    });
     const data = await res.json().catch(function() { return {}; });
     if (!res.ok) throw new Error(data.error || 'KYC status check failed');
     return data; // { status }
