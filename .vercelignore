@@ -5,3 +5,5 @@ docs/
 .DS_Store
 .env*
 set-phase.html
+test/
+node_modules/

@@ -1,6 +1,12 @@
 {
   "buildCommand": null,
   "outputDirectory": ".",
+  "rewrites": [
+    {
+      "source": "/unsubscribe",
+      "destination": "/unsubscribe.html"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
