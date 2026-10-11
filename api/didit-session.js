@@ -2,8 +2,20 @@
 // Creates a Didit v3 KYC session for the given wallet address.
 // Returns { sessionId, sessionUrl } on success.
 
+const SITE_ORIGIN = 'https://presale.havanaelephant.com';
+const ALLOWED_ORIGINS = [SITE_ORIGIN];
+
 module.exports = async function handler(req, res) {
-    res.setHeader('Access-Control-Allow-Origin', 'https://presale.havanaelephant.com');
+    const origin = req.headers.origin;
+
+    res.setHeader('Vary', 'Origin');
+
+    if (!origin || ALLOWED_ORIGINS.indexOf(origin) === -1) {
+        console.warn('didit-session: refused origin:', origin || '(none)');
+        return res.status(403).json({ error: 'Forbidden' });
+    }
+
+    res.setHeader('Access-Control-Allow-Origin', origin);
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
@@ -25,9 +37,10 @@ module.exports = async function handler(req, res) {
         return res.status(503).json({ error: 'KYC service not configured' });
     }
 
-    const proto = req.headers['x-forwarded-proto'] || 'https';
-    const host  = req.headers['x-forwarded-host'] || req.headers.host;
-    const callbackBase = host ? `${proto}://${host}` : 'https://presale.havanaelephant.com';
+    // Pinned rather than derived from request headers: a forged
+    // x-forwarded-host must not be able to steer where Didit sends the
+    // user once verification finishes.
+    const callbackBase = SITE_ORIGIN;
 
     let diditRes;
     try {
@@ -65,8 +78,10 @@ module.exports = async function handler(req, res) {
 
     // Error mapping — never echo the API key in error text
     if (diditRes.status === 400) {
-        const detail = body.detail || body.message || JSON.stringify(body);
-        return res.status(502).json({ error: 'Verification service rejected request', detail });
+        // Logged, never returned. web3.js reads data.detail || data.error, so
+        // omitting detail leaves its fallback working.
+        console.error('didit-session: Didit rejected request:', body.detail || body.message || body);
+        return res.status(502).json({ error: 'Verification service rejected request' });
     }
     if (diditRes.status === 401 || diditRes.status === 403) {
         console.error('didit-session: Didit auth error', diditRes.status);

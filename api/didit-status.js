@@ -3,18 +3,44 @@
 // Returns { status } for the most recent KYC session for a wallet.
 // Didit's top-level "Approved" already incorporates AML — no separate amlClear field needed.
 
+const ALLOWED_ORIGINS = ['https://presale.havanaelephant.com'];
+const WALLET_RE = /^0x[0-9a-fA-F]{40}$/;
+const UUID_RE = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
+
 module.exports = async function handler(req, res) {
-    res.setHeader('Access-Control-Allow-Origin', 'https://presale.havanaelephant.com');
+    const origin = req.headers.origin;
+
+    res.setHeader('Vary', 'Origin');
+
+    if (!origin || ALLOWED_ORIGINS.indexOf(origin) === -1) {
+        console.warn('didit-status: refused origin:', origin || '(none)');
+        return res.status(403).json({ error: 'Forbidden' });
+    }
+
+    res.setHeader('Access-Control-Allow-Origin', origin);
     res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
     if (req.method === 'OPTIONS') return res.status(200).end();
     if (req.method !== 'GET') return res.status(405).json({ error: 'Method not allowed' });
 
-    const { wallet, session_id } = req.query || {};
+    const query = req.query || {};
+    const wallet = typeof query.wallet === 'string' ? query.wallet.trim() : '';
+    const session_id = typeof query.session_id === 'string' ? query.session_id.trim() : '';
 
     if (!wallet && !session_id) {
         return res.status(400).json({ error: 'Provide wallet or session_id query parameter' });
+    }
+
+    // Both values are interpolated into provider URLs below, so both are
+    // format-checked here. Without this a session_id of '../../sessions'
+    // reaches Didit's session-list endpoint carrying our API key.
+    if (wallet && !WALLET_RE.test(wallet)) {
+        return res.status(400).json({ error: 'Invalid wallet address' });
+    }
+
+    if (session_id && !UUID_RE.test(session_id)) {
+        return res.status(400).json({ error: 'Invalid session_id' });
     }
 
     const apiKey = process.env.DIDIT_API_KEY;
@@ -65,7 +91,8 @@ module.exports = async function handler(req, res) {
         let decisionRes;
         try {
             decisionRes = await fetch(
-                'https://verification.didit.me/v3/session/' + latest.session_id + '/decision/',
+                'https://verification.didit.me/v3/session/' +
+                    encodeURIComponent(latest.session_id) + '/decision/',
                 { headers: authHeaders }
             );
         } catch (err) {
@@ -86,7 +113,8 @@ module.exports = async function handler(req, res) {
         let decisionRes;
         try {
             decisionRes = await fetch(
-                'https://verification.didit.me/v3/session/' + session_id + '/decision/',
+                'https://verification.didit.me/v3/session/' +
+                    encodeURIComponent(session_id) + '/decision/',
                 { headers: authHeaders }
             );
         } catch (err) {

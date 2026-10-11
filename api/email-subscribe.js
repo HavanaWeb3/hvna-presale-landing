@@ -7,13 +7,48 @@ const { Resend } = require('resend');
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+// Only the presale site may call this endpoint. Browsers send Origin on
+// cross-origin and same-origin POSTs alike, so requiring it also turns away
+// a bare curl. Rate limiting is handled by a Vercel Firewall rule on
+// /api/email-subscribe, not here — a serverless function keeps no state
+// between invocations, so an in-process counter would be worthless.
+const ALLOWED_ORIGINS = ['https://presale.havanaelephant.com'];
+
+// Caller-supplied strings are accepted only from these sets.
+const ALLOWED_PHASES = ['Seed Round'];
+const ALLOWED_SOURCES = ['Landing-Page-Purchase'];
+
+const WALLET_RE = /^0x[0-9a-fA-F]{40}$/;
+const TX_HASH_RE = /^0x[0-9a-fA-F]{64}$/;
+const MAX_EMAIL_LENGTH = 254;
+const MAX_PURCHASE_AMOUNT = 1000000;
+const MAX_TOKEN_AMOUNT = 1000000000;
+
+// RFC 8058 one-click unsubscribe needs an HTTPS endpoint, which we do not
+// have yet; a mailto List-Unsubscribe is honoured by Gmail and Apple Mail.
+const UNSUBSCRIBE_MAILTO = 'mailto:hello@contentlynk.com?subject=Unsubscribe';
+
 // Audience ID is created on first request and cached in memory.
 // Vercel cold starts will re-fetch it, which is fine.
 let cachedAudienceId = null;
 
+function escapeHtml(value) {
+    return String(value).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+}
+
 module.exports = async function handler(req, res) {
-    // CORS headers
-    res.setHeader('Access-Control-Allow-Origin', '*');
+    const origin = req.headers.origin;
+
+    res.setHeader('Vary', 'Origin');
+
+    if (!origin || ALLOWED_ORIGINS.indexOf(origin) === -1) {
+        console.warn('email-subscribe: refused origin:', origin || '(none)');
+        return res.status(403).json({ error: 'Forbidden' });
+    }
+
+    res.setHeader('Access-Control-Allow-Origin', origin);
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
@@ -26,26 +61,53 @@ module.exports = async function handler(req, res) {
     }
 
     try {
-        const {
-            email,
-            walletAddress,
-            purchaseAmount,
-            tokenAmount,
-            transactionHash,
-            phase,
-            source,
-            timestamp
-        } = req.body;
+        const body = req.body;
 
-        // Validate input
-        if (!email || !validateEmail(email)) {
+        if (!body || typeof body !== 'object') {
+            return res.status(400).json({ error: 'Invalid request' });
+        }
+
+        const str = function (v) { return typeof v === 'string' ? v.trim() : ''; };
+        const email = str(body.email);
+        const walletAddress = str(body.walletAddress);
+        const transactionHash = str(body.transactionHash);
+        const phase = str(body.phase);
+        const source = str(body.source);
+        const purchaseAmount = Number(body.purchaseAmount);
+        const tokenAmount = Number(body.tokenAmount);
+
+        // Validate input. Every caller field is format-checked and capped, so
+        // nothing unconstrained can reach an email body or the Resend audience.
+        if (email.length > MAX_EMAIL_LENGTH || !validateEmail(email)) {
             return res.status(400).json({ error: 'Invalid email address' });
         }
 
-        if (!walletAddress || !purchaseAmount || !tokenAmount) {
-            return res.status(400).json({ error: 'Missing required fields' });
+        if (!WALLET_RE.test(walletAddress)) {
+            return res.status(400).json({ error: 'Invalid wallet address' });
         }
 
+        if (!TX_HASH_RE.test(transactionHash)) {
+            return res.status(400).json({ error: 'Invalid transaction hash' });
+        }
+
+        if (!Number.isFinite(purchaseAmount) || purchaseAmount <= 0 || purchaseAmount > MAX_PURCHASE_AMOUNT) {
+            return res.status(400).json({ error: 'Invalid purchase amount' });
+        }
+
+        if (!Number.isFinite(tokenAmount) || tokenAmount <= 0 || tokenAmount > MAX_TOKEN_AMOUNT) {
+            return res.status(400).json({ error: 'Invalid token amount' });
+        }
+
+        if (ALLOWED_PHASES.indexOf(phase) === -1) {
+            return res.status(400).json({ error: 'Invalid phase' });
+        }
+
+        if (ALLOWED_SOURCES.indexOf(source) === -1) {
+            return res.status(400).json({ error: 'Invalid source' });
+        }
+
+        // The caller's timestamp is not trusted; record when the server saw this.
+        const timestamp = new Date().toISOString();
         const buyerTier = getBuyerTier(purchaseAmount);
 
         const subscriberData = {
@@ -127,11 +189,9 @@ module.exports = async function handler(req, res) {
         });
 
     } catch (error) {
+        // Detail stays in the Vercel log; the caller gets nothing back.
         console.error('Email subscription error:', error);
-        return res.status(500).json({
-            error: 'Internal server error',
-            message: error.message
-        });
+        return res.status(500).json({ error: 'Internal server error' });
     }
 };
 
@@ -272,7 +332,7 @@ async function sendWelcomeEmail(email, subscriberData) {
             </div>
             <div class="detail-row">
                 <span>Transaction:</span>
-                <a href="${basescanLink}" target="_blank">View on Basescan</a>
+                <a href="${escapeHtml(basescanLink)}" target="_blank">View on Basescan</a>
             </div>
         </div>
 
@@ -353,6 +413,9 @@ Founder, Havana Elephant
         subject: 'Welcome to the $HVNA Journey!',
         html: emailHtml,
         text: emailText,
+        headers: {
+            'List-Unsubscribe': '<' + UNSUBSCRIBE_MAILTO + '>'
+        },
         tags: [
             { name: 'category', value: 'welcome' },
             { name: 'tier', value: subscriberData.buyerTier }

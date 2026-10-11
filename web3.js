@@ -24,6 +24,18 @@ const web3State = {
 };
 
 let _kycPollInterval = null;
+
+// KYC status polling cadence. The Vercel Firewall rate-limits /api/*, so the
+// page must not poll faster than a real buyer needs: 15s while they verify,
+// 30s after two minutes, and stop after ten.
+const KYC_POLL_FAST_MS = 15000;
+const KYC_POLL_SLOW_MS = 30000;
+const KYC_POLL_BACKOFF_AFTER_MS = 120000;
+const KYC_POLL_GIVE_UP_AFTER_MS = 600000;
+const KYC_FOCUS_MIN_GAP_MS = 5000;
+let _kycPollStartedAt = 0;
+let _kycLastCheckAt = 0;
+let _kycPollSlowed = false;
 let _kycUsdAmount = 0;
 
 // USD to ETH exchange rate (should be fetched from API)
@@ -1069,16 +1081,39 @@ function injectKycStepUI() {
 
 function _clearKycPoll() {
     if (_kycPollInterval) { clearInterval(_kycPollInterval); _kycPollInterval = null; }
+    _kycPollSlowed = false;
     window.removeEventListener('focus', _onFocusKycCheck);
 }
 
 function _startKycPolling() {
     _clearKycPoll();
-    _kycPollInterval = setInterval(_manualKycCheck, 5000);
+    _kycPollStartedAt = Date.now();
+    _kycPollInterval = setInterval(_kycPollTick, KYC_POLL_FAST_MS);
     window.addEventListener('focus', _onFocusKycCheck);
 }
 
-function _onFocusKycCheck() { _manualKycCheck(); }
+function _kycPollTick() {
+    var elapsed = Date.now() - _kycPollStartedAt;
+
+    if (elapsed > KYC_POLL_GIVE_UP_AFTER_MS) { _clearKycPoll(); return; }
+
+    if (!_kycPollSlowed && elapsed > KYC_POLL_BACKOFF_AFTER_MS) {
+        _kycPollSlowed = true;
+        clearInterval(_kycPollInterval);
+        _kycPollInterval = setInterval(_kycPollTick, KYC_POLL_SLOW_MS);
+    }
+
+    _kycLastCheckAt = Date.now();
+    _manualKycCheck();
+}
+
+function _onFocusKycCheck() {
+    // Didit opens in a second tab, so focus fires repeatedly as the buyer
+    // moves between tabs. Debounce it so it cannot outpace the poll.
+    if (Date.now() - _kycLastCheckAt < KYC_FOCUS_MIN_GAP_MS) return;
+    _kycLastCheckAt = Date.now();
+    _manualKycCheck();
+}
 
 async function _manualKycCheck() {
     var wallet = web3State.address ? web3State.address.toLowerCase() : null;

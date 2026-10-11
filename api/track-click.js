@@ -2,8 +2,23 @@
 // Fire-and-forget click tracking into the shared Supabase button_clicks table.
 // Mirrors the main site's trackButtonClick() so both sites feed the same dashboard.
 
+const ALLOWED_ORIGINS = ['https://presale.havanaelephant.com'];
+
+// Only names this site actually sends. main.js sends presale_buy; add a name
+// here when you add a button, otherwise the insert is refused.
+const ALLOWED_BUTTONS = ['presale_buy'];
+
 module.exports = async function handler(req, res) {
-    res.setHeader('Access-Control-Allow-Origin', 'https://presale.havanaelephant.com');
+    const origin = req.headers.origin;
+
+    res.setHeader('Vary', 'Origin');
+
+    if (!origin || ALLOWED_ORIGINS.indexOf(origin) === -1) {
+        console.warn('track-click: refused origin:', origin || '(none)');
+        return res.status(403).json({ error: 'Forbidden' });
+    }
+
+    res.setHeader('Access-Control-Allow-Origin', origin);
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
@@ -20,11 +35,12 @@ module.exports = async function handler(req, res) {
 
     const { button_name } = req.body || {};
 
-    if (!button_name || typeof button_name !== 'string' || button_name.trim().length === 0) {
+    if (!button_name || typeof button_name !== 'string') {
         return res.status(400).json({ error: 'button_name is required' });
     }
-    if (button_name.length > 100) {
-        return res.status(400).json({ error: 'button_name exceeds maximum length' });
+    if (ALLOWED_BUTTONS.indexOf(button_name.trim()) === -1) {
+        console.warn('track-click: refused button_name of length', button_name.length);
+        return res.status(400).json({ error: 'Unrecognised button_name' });
     }
 
     try {
